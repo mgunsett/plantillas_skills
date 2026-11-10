@@ -1,0 +1,12 @@
+{
+  "name": "sportfolio-herramientas",
+  "private": true,
+  "type": "module",
+  "description": "Capturas de secciones e imagen OG. Requiere Google Chrome (variable CHROME si no está en /usr/bin/google-chrome).",
+  "dependencies": {
+    "@fontsource/barlow": "^5.0.0",
+    "@fontsource/barlow-condensed": "^5.0.0",
+    "@fontsource/bebas-neue": "^5.0.0",
+    "playwright-core": "^1.45.0"
+  }
+}

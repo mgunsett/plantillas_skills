@@ -1,0 +1,318 @@
+import { useRef, useEffect, useState } from 'react'
+import { Box, Flex, Text, AspectRatio } from '@chakra-ui/react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+import { playerData } from '../../data/playerData'
+import useScrubReveal from '../../hooks/useScrubReveal'
+import { VideoCard } from './VideoCard'
+import { InstagramRail } from './InstagramRail'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const MotionBox = motion(Box)
+
+export default function VideosSection() {
+  const videos = playerData.videos
+
+  const ghostRef = useRef(null)
+  const wrapRef = useRef(null)
+  const sliderRef = useRef(null)
+
+  const [active, setActive] = useState(0)
+  const [openVideo, setOpenVideo] = useState(null)
+
+  const sectionRef = useRef(null)
+  const headerRef = useRef(null)
+
+  useScrubReveal(sectionRef, {
+    elements: [{ ref: headerRef, fromVars: { y: 50, opacity: 0 }, vars: { y: 0, opacity: 1 } }],
+    start: 'top 80%',
+    end: 'top 40%',
+  })
+
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    // El header lo anima useScrubReveal (igual que el resto de las secciones)
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray('.video-card', wrapRef.current)
+      if (reduced) {
+        gsap.set(cards, { autoAlpha: 1, y: 0 })
+      } else {
+        gsap.fromTo(
+          cards,
+          { y: 55, autoAlpha: 0, rotateX: 6, transformPerspective: 1200 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            rotateX: 0,
+            duration: 1.1,
+            ease: 'power3.out',
+            stagger: 0.12,
+            scrollTrigger: { trigger: wrapRef.current, start: 'top 82%', once: true },
+          }
+        )
+      }
+
+      if (!reduced && ghostRef.current) {
+        gsap.to(ghostRef.current, {
+          yPercent: -18,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        })
+      }
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
+
+  useEffect(() => {
+    if (!openVideo) return
+    const onKey = (e) => e.key === 'Escape' && setOpenVideo(null)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [openVideo])
+
+  // slider mobile: detectar card activa según el scroll
+  const handleScroll = () => {
+    const el = sliderRef.current
+    if (!el || !el.children.length) return
+    const style = getComputedStyle(el)
+    const gap = parseFloat(style.columnGap || style.gap || '0') || 0
+    const itemW = el.children[0].offsetWidth + gap
+    if (!itemW) return
+    setActive(Math.round(el.scrollLeft / itemW))
+  }
+
+  // Centra la card i moviendo SOLO el slider. (scrollIntoView también desplazaba
+  // en horizontal la sección/página, y se corrían el título y el riel.)
+  const goTo = (i) => {
+    const el = sliderRef.current
+    const card = el?.children[i]
+    if (!card) return
+    const offset = card.getBoundingClientRect().left - el.getBoundingClientRect().left
+    const left = el.scrollLeft + offset - (el.clientWidth - card.offsetWidth) / 2
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    el.scrollTo({ left, behavior: reduce ? 'auto' : 'smooth' })
+  }
+
+  if (!videos.length) return null
+
+  return (
+    <Box
+      as="section"
+      id="videos"
+      ref={sectionRef}
+      position="relative"
+      minH="100vh"
+      bg="brand.dark"
+      px={{ base: 2, md: 12, lg: 40 }}
+      pt={{ base: 20, md: '10%' }}
+      pb={{ base: 12, md: '10%' }}
+      overflow="hidden"
+      // clip: además de recortar, impide que la sección se desplace en horizontal por código
+      sx={{ '@supports (overflow: clip)': { overflow: 'clip' } }}
+    >
+      {/* glows ambientales */}
+      <Box
+        position="absolute"
+        top={{ base: '10%', md: '5%' }}
+        right="-5%"
+        w={{ base: '65vw', md: '45vw' }}
+        h={{ base: '65vw', md: '45vw' }}
+        background="radial-gradient(ellipse, rgba(184,155,94,0.16) 0%, transparent 70%)"
+        pointerEvents="none"
+      />
+
+      {/* número fantasma gigante (dorsal) */}
+      <Text
+        ref={ghostRef}
+        aria-hidden
+        position="absolute"
+        top={{ base: '10%', md: '12%' }}
+        right={{ base: '-6%', md: '8%' }}
+        fontFamily="heading"
+        fontSize={{ base: '80vw', md: '45vw' }}
+        lineHeight={0.8}
+        color="transparent"
+        pointerEvents="none"
+        userSelect="none"
+        zIndex={0}
+        sx={{ WebkitTextStroke: '1.5px rgba(184,155,94,0.14)' }}
+      >
+        {playerData.number}
+      </Text>
+
+      <Box maxW="1320px" mx="auto" position="relative" zIndex={1}>
+        {/* ── Header ── */}
+        <Flex direction="column" align="flex-start" justify="flex-start" ref={headerRef} mb={{ base: 8, md: 12 }} ml={{ base: 0, md: '-30px', lg: '-90px' }}>
+          <Text fontFamily="mono" fontSize="10px" color="brand.bone" textTransform="uppercase" letterSpacing="widest">
+            HIGHLIGHTS
+          </Text>
+          <Text as="h2" fontFamily="heading" fontSize={{ base: '5xl', lg: '6xl' }} color="brand.amber" lineHeight={1}>
+            Videos
+          </Text>
+        </Flex>
+
+        {/* ── Cards ── */}
+        <Box ref={wrapRef} position="relative">
+          {/* Desktop: riel de Instagram + cards en fila (el riel toma la altura de las cards) */}
+          <Flex display={{ base: 'none', md: 'flex' }} justify="center" align="stretch" gap={{ md: 3, lg: 6 }}>
+            <InstagramRail width={{ md: '64px', lg: '84px' }} />
+            {videos.map((v) => (
+              // Tope por alto de viewport: la card (9:16) nunca supera ~78vh
+              <Box key={v.id} flex="1 1 0"
+                   maxW={{md: 'min(340px, calc(70vh * 9 / 16))', lg: 'min(400px, calc(78vh * 9 / 16))' }}>
+                <VideoCard video={v} onOpen={setOpenVideo} />
+              </Box>
+            ))}
+          </Flex>
+
+          {/* Mobile: slider con swipe */}
+          <Box display={{ base: 'block', md: 'none' }}>
+            <Flex align="stretch" gap={1} pl={2}>
+            <InstagramRail width="48px" />
+            <Flex
+              ref={sliderRef}
+              flex="1"
+              minW={0}
+              onScroll={handleScroll}
+              overflowX="auto"
+              scrollSnapType="x mandatory"
+              bg="transparent"
+              gap={4}
+              px="0%"
+              sx={{
+                scrollbarWidth: 'none',
+                '::-webkit-scrollbar': { display: 'none' },
+                WebkitOverflowScrolling: 'touch',
+              }}
+            >
+              {videos.map((v) => (
+                <Box key={v.id} flex="0 0 92%" scrollSnapAlign="center">
+                  <VideoCard video={v} onOpen={setOpenVideo}/>
+                </Box>
+              ))}
+            </Flex>
+
+            </Flex>
+            {/* flechas indicadoras */}
+            <Flex justify="center" align="center" gap={5} mt={6}>
+              <Box
+                as="button"
+                aria-label="Video anterior"
+                type="button"
+                onClick={() => goTo(active - 1)}
+                disabled={active === 0}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                color={active === 0 ? 'whiteAlpha.300' : 'brand.amber'}
+                pointerEvents={active === 0 ? 'none' : 'auto'}
+                transition="color 0.4s cubic-bezier(0.22,1,0.36,1), transform 0.4s cubic-bezier(0.22,1,0.36,1)"
+                _active={{ transform: 'translateX(-3px)' }}
+              >
+                <Box as={FiChevronLeft} fontSize="22px" />
+              </Box>
+
+              <Text fontFamily="mono" fontSize="11px" color="whiteAlpha.700" letterSpacing="wider" minW="42px" textAlign="center">
+                {String(active + 1).padStart(2, '0')} / {String(videos.length).padStart(2, '0')}
+              </Text>
+
+              <Box
+                as="button"
+                aria-label="Video siguiente"
+                type="button"
+                onClick={() => goTo(active + 1)}
+                disabled={active === videos.length - 1}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                color={active === videos.length - 1 ? 'whiteAlpha.300' : 'brand.amber'}
+                pointerEvents={active === videos.length - 1 ? 'none' : 'auto'}
+                transition="color 0.4s cubic-bezier(0.22,1,0.36,1), transform 0.4s cubic-bezier(0.22,1,0.36,1)"
+                _active={{ transform: 'translateX(3px)' }}
+              >
+                <Box as={FiChevronRight} fontSize="22px" />
+              </Box>
+            </Flex>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* ── Modal fullscreen (embed de Instagram) ── */}
+      <AnimatePresence>
+        {openVideo && (
+          <MotionBox
+            position="fixed"
+            inset={0}
+            zIndex={2000}
+            bg="rgba(10,5,5,0.95)"
+            backdropFilter="blur(12px)"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            p={{ base: 4, md: 12 }}
+            onClick={() => setOpenVideo(null)}
+          >
+            <Box
+              as="button"
+              position="absolute"
+              top={{ base: 16, md: 14 }}
+              right={{ base: 4, md: 60 }}
+              zIndex={2100}
+              aria-label="Cerrar video"
+              borderRadius="full"
+              p={1}
+              bg="brand.bgRef"
+              backdropFilter="blur(10px)"
+              color="white"
+              onClick={() => setOpenVideo(null)}
+              transition="color 0.3s ease, transform 0.3s ease"
+              _hover={{ color: 'brand.gray2', transform: 'rotate(90deg)' }}
+            >
+              <Box as={FiX} fontSize="32px" />
+            </Box>
+            <MotionBox
+              w="100%"
+              maxW={{ base: '100%', md: '420px' }}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              boxShadow="0 40px 120px rgba(0,0,0,0.7)"
+              borderRadius="16px"
+              overflow="hidden"
+              bg="#000"
+              mt={{ base: 0, md: '5%' }}
+            >
+              <AspectRatio ratio={{ base: 9 / 16, md: 9 / 15 }}>
+                <Box
+                  as="iframe"
+                  src={`https://www.instagram.com/reel/${openVideo.instagramId}/embed`}
+                  title={openVideo.fullTitle}
+                  border="none"
+                  scrolling="no"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  w="100%"
+                  h="100%"
+                />
+              </AspectRatio>
+            </MotionBox>
+          </MotionBox>
+        )}
+      </AnimatePresence>
+    </Box>
+  )
+}
