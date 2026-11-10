@@ -24,3 +24,16 @@
 **Para adaptar**
 - **Datos:** `name`, `fullName`, `number`, `position`, `nationality`, `nationalityFlag`, `currentClub`, `logoCurrentClub` e `image` en `playerData.js`.
 - **Recorte:** cada recorte tiene otras proporciones. Hay que ajustar el `left`, el `h` y el `objectPosition` de la imagen del jugador y revisarlo en 390, 820 y 1440 px.
+
+## Otros modelos (previews)
+
+| # | Modelo | Preview | Qué tiene |
+|---|---|---|---|
+| 1 | Recorte + apellido gigante (pulido) | [html](previews/opcion-1-recorte.html) · [jpg](previews/opcion-1-recorte.jpg) | Versión del aplicado: apellido enorme detrás del recorte, nombre arriba, dorsal y datos abajo a la izquierda, próximo partido abajo a la derecha. |
+| 2 | Ficha editorial | [html](previews/opcion-2-ficha.html) · [jpg](previews/opcion-2-ficha.jpg) | Nombre en dos líneas con chips de títulos, edad/altura/pie/país y dos CTA. Recorte sobre un panel en el color del club con el dorsal. Cinta de escudos de la trayectoria al pie. Conviene si tiene títulos importantes. |
+| 3 | Cinemático | [html](previews/opcion-3-cine.html) · [jpg](previews/opcion-3-cine.jpg) | Foto de detalle a pantalla completa (espejada), nombre grande abajo a la izquierda y barra con último resultado y próximo partido (de `/admin`). En desktop, foto de espaldas con el dorsal en B/N detrás del nombre. Conviene si hay una foto fuerte que no sea un recorte. |
+
+**Aplicado en Lisandro Alzugaray:** el 3. Lecciones:
+- Con GSAP, no espejar la foto con `transform` en CSS: GSAP lee `scaleX(-1)` como una rotación de 180° y la foto aparece dada vuelta. Dejar el espejado en el tween (`scaleX: -1, rotation: 0`).
+- No animar con GSAP el contenedor de un elemento `position: absolute`: el `transform` lo convierte en el bloque de referencia. Usar el contenedor posicionado para la entrada y el hijo para la salida con el scroll.
+- Si `/admin` no tiene partidos, la barra no se muestra: nada de partidos de ejemplo en `defaultMatches`.

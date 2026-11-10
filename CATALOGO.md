@@ -5,7 +5,7 @@
 | Sección | Modelos | Carpeta |
 |---|---|---|
 | **Navbar** | ✅ 1 Barra completa · 2 Píldora flotante · 3 Barra con partido | [00-navbar](modelos/00-navbar/) |
-| **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox | [01-hero](modelos/01-hero/) |
+| **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox · 2 Ficha editorial · 3 Cinemático | [01-hero](modelos/01-hero/) |
 | **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | [02-final](modelos/02-final/) |
 | **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés | [03-estadisticas](modelos/03-estadisticas/) |
 | **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | [04-videos](modelos/04-videos/) |
@@ -31,6 +31,8 @@
 | tiene un representante distinto para cada tema | Contacto 3 (¿Para qué escribís?) |
 | busca un cierre emotivo | Contacto 2 (Cierre con foto) o Footer 3 (Firma) |
 | está jugando una final | Final |
+| tiene muchos títulos para destacar de entrada | Hero 2 (Ficha editorial) |
+| tiene una foto de detalle fuerte, no un recorte | Hero 3 (Cinemático) |
 | juega seguido y quiere mostrar el próximo partido | Navbar 3 (Barra con partido) |
 | tiene un hero muy cargado y conviene un navbar liviano | Navbar 2 (Píldora flotante) |
 
