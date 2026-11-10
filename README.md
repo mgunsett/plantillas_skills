@@ -16,6 +16,7 @@ plantillas_skills/
 ├── CATALOGO.md            ← índice de todos los modelos, sección por sección
 ├── starter/               ← proyecto Vite + React listo para clonar (todas las secciones aplicadas)
 ├── modelos/
+│   ├── 00-navbar/         ← README + previews/ (3 opciones)
 │   ├── 01-hero/           ← README + capturas
 │   ├── 02-final/          ← sección "camino a la final" de una copa (Libertadores en Keki)
 │   ├── 03-estadisticas/   ← README + capturas + previews/ (3 opciones)

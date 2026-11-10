@@ -4,6 +4,7 @@
 
 | Sección | Modelos | Carpeta |
 |---|---|---|
+| **Navbar** | ✅ 1 Barra completa · 2 Píldora flotante · 3 Barra con partido | [00-navbar](modelos/00-navbar/) |
 | **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox | [01-hero](modelos/01-hero/) |
 | **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | [02-final](modelos/02-final/) |
 | **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés | [03-estadisticas](modelos/03-estadisticas/) |
@@ -30,6 +31,8 @@
 | tiene un representante distinto para cada tema | Contacto 3 (¿Para qué escribís?) |
 | busca un cierre emotivo | Contacto 2 (Cierre con foto) o Footer 3 (Firma) |
 | está jugando una final | Final |
+| juega seguido y quiere mostrar el próximo partido | Navbar 3 (Barra con partido) |
+| tiene un hero muy cargado y conviene un navbar liviano | Navbar 2 (Píldora flotante) |
 
 ## Reglas de diseño comunes a todos los modelos
 
