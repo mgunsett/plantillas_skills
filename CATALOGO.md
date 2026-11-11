@@ -12,7 +12,7 @@
 | **Galería** | ✅ 1 Pestañas y mosaico · 2 Álbumes · 3 Carriles | [05-galeria](modelos/05-galeria/) |
 | **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada · 4 Cronología · 5 Citas | [06-prensa](modelos/06-prensa/) |
 | **Contacto** | 1 Directorio · 2 Cierre con foto · 3 ¿Para qué escribís? · ✅ 4 Tarjetas mejoradas · 5 Bandas · 6 Mensaje listo | [07-contacto](modelos/07-contacto/) |
-| **Footer** | ✅ 1 Pulido · 2 Con navegación · 3 Firma | [08-footer](modelos/08-footer/) |
+| **Footer** | ✅ 1 Pulido · 2 Con navegación · 3 Firma · 4 Escudos · 5 Dorsal | [08-footer](modelos/08-footer/) |
 
 ## Cuándo conviene cada uno
 
@@ -35,6 +35,8 @@
 | tiene pocos contactos y quiere algo directo y tipográfico | Contacto 5 (Bandas) |
 | se lo contacta solo por mensaje directo de Instagram | Contacto 6 (Mensaje listo) |
 | busca un cierre emotivo | Contacto 2 (Cierre con foto) o Footer 3 (Firma) |
+| tiene un recorrido largo por varios clubes | Footer 4 (Escudos) |
+| se identifica con su dorsal | Footer 5 (Dorsal) |
 | está jugando una final | Final |
 | tiene muchos títulos para destacar de entrada | Hero 2 (Ficha editorial) |
 | tiene una foto de detalle fuerte, no un recorte | Hero 3 (Cinemático) |
