@@ -1,0 +1,151 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prensa · Opción 4 · Cronología</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500&family=Bebas+Neue&display=swap"><style>
+:root{
+  --bg:#1c1d1e; --bg2:#151617; --card:#232425; --line:rgba(255,255,255,.08);
+  --amber:#bda78e; --amberSoft:rgba(189,167,142,.28); --amberFaint:rgba(189,167,142,.08);
+  --granate:#7A1F1F; --dorado:#c0ab32; --bone:#ffffff; --cream:#efe6da; --gray:#9b948c; --paper:#efe6d6; --ink:#1d1a16;
+  --display:'Bebas Neue',Impact,'Arial Narrow',sans-serif; --cond:'Barlow Condensed','Arial Narrow',sans-serif; --text:'Barlow',system-ui,sans-serif;
+  --ease:cubic-bezier(.23,1,.32,1); color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--bone);font-family:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:6px}
+.pad{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{max-width:1240px;margin:0 auto}
+.intro{background:var(--bg2);border-bottom:1px solid var(--line);padding-block:28px}
+.intro .in{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 32px}
+.intro h1{margin:0;font:400 clamp(30px,4vw,44px)/1 var(--display);letter-spacing:.02em}
+.intro h1 span{color:var(--amber)}
+.intro p{margin:6px 0 0;color:var(--gray);font-size:14px;max-width:60ch;line-height:1.5}
+.jump{display:flex;flex-wrap:wrap;gap:8px}
+.jump a{font:600 13px var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--cream);padding:9px 14px;border:1px solid var(--amberSoft);border-radius:999px}
+.jump a.new{border-color:var(--dorado);color:var(--dorado)}
+@media (hover:hover) and (pointer:fine){.jump a:hover{background:var(--amberFaint)}}
+.opt{padding-block:72px 88px;border-bottom:1px solid var(--line)}
+.opt:nth-of-type(even){background:var(--bg2)}
+.badge{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font:600 12px var(--cond);letter-spacing:.14em;text-transform:uppercase;color:var(--dorado);margin:0 0 26px}
+.badge b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--dorado);color:#1a1410;font-weight:700;letter-spacing:0}
+.badge span{color:var(--gray);letter-spacing:.06em;text-transform:none;font-weight:500;font-size:13px}
+.badge i{font-style:normal;padding:3px 8px;border-radius:999px;border:1px solid var(--dorado);font-size:11px}
+.lbl{margin:0;font:500 12px var(--cond);letter-spacing:.3em;text-transform:uppercase;color:var(--cream)}
+h2{margin:6px 0 0;font:400 clamp(56px,7vw,96px)/.88 var(--display);color:var(--amber)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 32px;flex-wrap:wrap;margin-bottom:34px}
+.sub{margin:0;color:var(--gray);font-size:15px;line-height:1.6;max-width:42ch}
+.k{font:500 12px var(--cond);letter-spacing:.08em;color:var(--gray)}
+.logo{width:40px;height:40px;border-radius:10px;object-fit:contain;background:#fff;flex-shrink:0}
+.go{display:inline-flex;align-items:center;gap:6px;font:600 13px var(--cond);letter-spacing:.08em;color:var(--cream)}
+
+/* 1 · Titulares */
+.rows{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:230px minmax(0,1fr) 150px;gap:28px;align-items:center;padding:24px 14px;border-bottom:1px solid var(--line);border-radius:12px;transition:background .25s}
+.row .src{display:flex;align-items:center;gap:12px;min-width:0}
+.row .src b{display:block;font:600 15px var(--cond);letter-spacing:.03em}
+.row h3{margin:0;font:400 clamp(24px,2.6vw,34px)/1.05 var(--display);letter-spacing:.01em;text-wrap:balance}
+.row .meta{text-align:right}
+.row .meta b{display:block;font:600 14px var(--cond);color:var(--amber);letter-spacing:.04em}
+.row .meta .go{margin-top:6px}
+@media (hover:hover) and (pointer:fine){.row:hover{background:var(--amberFaint)}.row:hover .go{color:var(--amber)}}
+@media (max-width:760px){.row{grid-template-columns:1fr;gap:12px;padding:20px 4px}.row .meta{text-align:left;display:flex;gap:16px;align-items:center}.row .meta .go{margin:0}}
+
+/* 2 · Recortes */
+.clips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px;padding-top:18px}
+.clip{position:relative;display:block;color:var(--ink);filter:drop-shadow(0 18px 30px rgba(0,0,0,.45));transition:transform .4s var(--ease)}
+.paper{display:block;background:var(--paper);padding:26px 22px 32px;
+  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/14px 100%;mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/14px 100%}
+.clip:nth-child(1){transform:rotate(-1.6deg)}.clip:nth-child(2){transform:rotate(1.2deg) translateY(-10px)}.clip:nth-child(3){transform:rotate(-.6deg) translateY(6px)}
+.tape{position:absolute;left:50%;top:-12px;width:92px;height:26px;margin-left:-46px;background:rgba(192,171,50,.55);transform:rotate(-3deg);z-index:2}
+.clip .top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.clip .top span{display:flex;align-items:center;gap:8px;font:700 12px var(--cond);letter-spacing:.08em;text-transform:uppercase}
+.clip .top img{width:24px;height:24px;border-radius:5px;object-fit:contain;background:#fff}
+.clip .top small{font:600 12px var(--cond);color:#6b6258}
+.clip h3{margin:14px 0 8px;font:700 22px/1.15 var(--cond);letter-spacing:.01em;text-wrap:balance}
+.clip .t{font:500 12px var(--cond);color:#6b6258;letter-spacing:.04em}
+.clip .go{margin-top:14px;color:var(--granate);border-bottom:1.5px solid var(--granate);padding-bottom:2px}
+@media (hover:hover) and (pointer:fine){.clip:hover{transform:rotate(0) translateY(-6px)}}
+@media (max-width:900px){.clips{grid-template-columns:1fr;max-width:480px;gap:40px}}
+
+/* 3 · Destacada */
+.feat{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px}
+.big{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:440px;border-radius:18px;overflow:hidden;padding:30px;background:#111}
+.big>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%;opacity:.45}
+.big::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,.2),rgba(17,17,17,.92) 75%)}
+.big>*{position:relative;z-index:1}
+.big .q{font:400 90px/.6 var(--display);color:var(--amber);height:44px}
+.big h3{margin:10px 0 22px;font:400 clamp(32px,3.6vw,50px)/1 var(--display);letter-spacing:.01em;text-wrap:balance;max-width:20ch}
+.big .ft{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.big .ft span{display:flex;align-items:center;gap:12px}
+.big .ft b{display:block;font:600 15px var(--cond)}
+.big .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--cream);color:#1a1410;font:600 13px var(--cond);letter-spacing:.1em;text-transform:uppercase}
+.side{display:grid;gap:16px}
+.mini{display:flex;flex-direction:column;justify-content:space-between;gap:16px;padding:22px;border-radius:18px;border:1px solid var(--line);background:var(--card);transition:border-color .25s}
+.mini .src{display:flex;align-items:center;gap:10px}
+.mini .src b{display:block;font:600 14px var(--cond)}
+.mini h3{margin:0;font:400 24px/1.05 var(--display);letter-spacing:.01em;text-wrap:balance}
+@media (hover:hover) and (pointer:fine){.mini:hover{border-color:var(--amberSoft)}.big .btn:hover{background:#fff}}
+@media (max-width:860px){.feat{grid-template-columns:1fr}.big{min-height:380px;padding:22px}}
+
+/* 4 · Cronología (nuevo) */
+.tl{position:relative;display:grid;gap:0}
+.tl::before{content:"";position:absolute;left:50%;top:6px;bottom:6px;width:2px;margin-left:-1px;background:linear-gradient(var(--amber),var(--amberSoft))}
+.ev{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:64px;padding-block:18px}
+.ev .when{text-align:right;align-self:start;padding-top:10px}
+.ev .when b{display:block;font:400 clamp(44px,5vw,68px)/.9 var(--display);color:transparent;-webkit-text-stroke:1.2px var(--amber)}
+.ev .when small{display:block;margin-top:6px;font:600 12px var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+.ev::after{content:"";position:absolute;left:50%;top:34px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--bg);border:2px solid var(--amber)}
+.ev:first-child::after{background:var(--amber)}
+.ev:nth-child(even) .when{order:2;text-align:left}
+.ev:nth-child(even) .card{order:1}
+.ev .card{display:block;padding:22px 24px;border-radius:16px;border:1px solid var(--line);background:var(--card);transition:border-color .25s,transform .35s var(--ease)}
+.ev .card .src{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ev .card .src b{display:block;font:600 14px var(--cond)}
+.chip{display:inline-block;padding:3px 9px;border-radius:999px;border:1px solid var(--amberSoft);font:600 11px var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--cream)}
+.ev .card h3{margin:0 0 14px;font:400 26px/1.05 var(--display);letter-spacing:.01em;text-wrap:balance}
+@media (hover:hover) and (pointer:fine){.ev .card:hover{border-color:var(--amberSoft);transform:translateY(-3px)}}
+@media (max-width:760px){
+  .tl::before{left:7px}
+  .ev,.ev:nth-child(even){grid-template-columns:1fr;gap:10px;padding-left:34px}
+  .ev::after{left:7px;top:28px}
+  .ev .when,.ev:nth-child(even) .when{order:0;text-align:left;padding-top:0}
+  .ev .when b{font-size:44px}
+  .ev:nth-child(even) .card{order:1}
+}
+
+/* 5 · Citas (nuevo) */
+.quote{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:30px}
+.qbox{position:relative;min-height:300px;padding:10px 0 0 clamp(0px,5vw,90px)}
+.qbox .mark{position:absolute;left:0;top:-10px;font:400 clamp(110px,14vw,200px)/.8 var(--display);color:var(--granate)}
+.qbox blockquote{margin:0;position:relative}
+.qbox blockquote p{margin:0;font:400 clamp(38px,5.4vw,78px)/.96 var(--display);letter-spacing:.005em;text-wrap:balance;transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.qbox.chg blockquote p,.qbox.chg .cite{opacity:0;transform:translateY(8px)}
+.qbox .cite{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:24px;transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.qbox .cite b{font:600 15px var(--cond);letter-spacing:.04em}
+.qbox .cite .k{color:var(--amber)}
+.qbox .cite a{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:999px;border:1px solid var(--amberSoft);font:600 13px var(--cond);letter-spacing:.08em;color:var(--cream)}
+@media (hover:hover) and (pointer:fine){.qbox .cite a:hover{background:var(--amberFaint)}}
+.picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+.picker button{position:relative;display:flex;align-items:center;gap:12px;padding:18px 16px 16px 0;text-align:left;color:var(--gray);transition:color .25s}
+.picker button::before{content:"";position:absolute;left:0;right:16px;top:-1px;height:2px;background:var(--amber);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.picker button[aria-selected="true"]{color:var(--bone)}
+.picker button[aria-selected="true"]::before{transform:none}
+.picker img{width:34px;height:34px;border-radius:8px;object-fit:contain;background:#fff;opacity:.6;transition:opacity .25s}
+.picker button[aria-selected="true"] img{opacity:1}
+.picker b{display:block;font:600 14px var(--cond);letter-spacing:.03em}
+.picker small{display:block;font:500 12px var(--cond);color:var(--gray);margin-top:2px}
+@media (max-width:760px){.picker{grid-template-columns:1fr}.picker button{padding:14px 0;border-bottom:1px solid var(--line)}.picker button::before{right:auto;width:3px;top:0;bottom:0;transform:scaleY(0)}.picker button[aria-selected="true"]::before{transform:none}.picker button{padding-left:14px}.qbox{min-height:0;padding-left:0;padding-top:56px}.qbox .mark{top:-6px}}
+.foot{padding-block:28px;color:var(--gray);font-size:13px;text-align:center}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0s!important}}
+</style></head><body>
+<section class="opt pad" id="opcion-4" aria-label="Opción 4: Cronología"><div class="in">
+<p class="badge"><b>4</b>Cronología <span>· las notas en el tiempo</span><i>Nuevo</i></p>
+<div class="head"><div><p class="lbl">Medios</p><h2>Prensa</h2></div><p class="sub">Las menciones en orden, de la más reciente a la primera, con el momento de su carrera en que salieron.</p></div>
+<div class="tl"><div class="ev"><p class="when"><b>May 26</b><small>Universitario · Libertadores 2026</small></p>
+  <a class="card" href="https://www.instagram.com/p/DYSwt6NDBIC/" target="_blank" rel="noopener"><span class="src"><img class="logo" src="data:image/webp;base64,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" alt=""><span><b>CONMEBOL Libertadores</b><span class="chip">Publicación en Instagram</span></span></span>
+  <h3>Un delantero siempre presente en la CONMEBOL Libertadores: @lisandroalzugaray</h3><span class="go">Ver la publicación <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div><div class="ev"><p class="when"><b>Abr 26</b><small>Universitario · Libertadores 2026</small></p>
+  <a class="card" href="https://espndeportes.espn.com/futbol/copa-libertadores/nota/_/id/16648033/lisandro-alzugaray-volvio-con-gol-clave-para-universitario-en-conmebol-libertadores" target="_blank" rel="noopener"><span class="src"><img class="logo" src="data:image/webp;base64,UklGRp4EAABXRUJQVlA4WAoAAAAQAAAAXwAAXwAAQUxQSLoBAAABkAPbtmlL+9v/R7aN2HbbkW3bHXVo27Ztd2Tbevare/dp3ner3oqaETEBpNw7vKjr+NVPHMIt2fH5+vIp/WqifUh136y+G66/0pol4aYsOy3GT3e2Dyv0V8crbcQpDQuAbLg0PstbhZB2+/QsUJqOdglzKXLcE1kA5Zcz4pR5pMz+IMBql2Z5KEleZhBwLRszFUTNNgjAlsUxPwka/VFA/jwl9AceLR8I0M87eH4Xv1VCxQcziMh3iEbANo3zI8o6xbj4Qi55D9AK4LoB3lFbBXLeEll3F5q40zBYg007dpYFm23JLjs25/lHEjbW6BmbkO0CvQzvv/9/gWV4DkZnhPdWBidddWDjz8ss2JynJhqwWef2/IBNO7L8BrY79eGbGNr2KK8+GmSGoT6UfoqBXc4n8h2uw2We4E9ESbsZFR/KICLybPMU1Ys2nt9RyOTPmHQzQ+nHMfONiKxL4+jnKStNeKxrU0hpygINGt3SFFIeO+O5jISfz4wjV8Pa7jMwDPPBtqHkumfquEsGhmC8MjHdk1T1zxu2/b7WJrmTZNPe3zE8359U94lqGLLirtN9pPsrhjdE+ZByVlA4IL4CAAAQEgCdASpgAGAAPpFAm0elpCKhMBqo4LASCUAap8JoCf2m9/tzH9/RXtnfMB+u363Zct6AFk3tAEpMsmqB8wD9gDMwNo7ynxj2NGSVJgs6KNHagqWLcdtG1GiDNfi5/j0Yy2bodHyrgj/7iC9hN+m3mYoxee9twxB8j/fkd3fRfCP3prP22YHnSdGVbaiVgxy1xPl7+5d36EAA/vyDG3cBtpRONDN2oS3zF1Hl6NYEHuKqCZPVZBlfbYWRKdpyNkagxaWHKMaxV50PgHg5cNe5HKnHqJ9V85zKYnRmYxIdHGnv5jjSsVho59ZB+e3pRxVxN3Qx30yuc13Z5tV56Pfcs3NDa4PXE25iOiK+A5jsXOIeedPXO+ffOf+EBXBQfNCFSq2SYhHQFqSvVGFmlHY73aFDRIFXRoLm2RP638gv/WUbd/ff+Du/ANfr3GSmlKC5J+t1/t2RwTh6t5yMW9xsTv3Pibtn26Am9aR5yiNN+7kTgO4+/g+AW+y2VW1X43oJBC5k6HZvmzNrWKo/2VIUdvMXkoDQppnRM0DU4kAksfP6VPVHVdqv+cwt/oGVilNM2iz2VEhkFxa+RMxyyuS53QiEWEB50PXSmXrzWYxOkzCZcewhASj9F+sK6bMxKiW8UaV8UMeh5M3qUrOVJgKxt9sNs+fFYStQtyArp95be/vYfzsfK7wW/jEc2toqio8WBTWof9p0DKuAB8TE9Cg3jEsJwpNDhs1LxMwZ8oUxaQOVP00Ku/kDip/ZAd/z/zcH3WZ+jZ5hxXFLK5RbduDYgUhiZGuBij27r8rLyYIQmF/VckMPne+hXTJ+ffVulzObayKTU4Pen/iVbHgw1T/h3Ru03JGMdAwmQaKZgITBpX0McSlpX+uAIaYbES/UB7119svMoW0o8YBoW3+OmaRePqoCO91kD5CuxngAAAA=" alt=""><span><b>ESPN Deportes</b><span class="chip">Nota</span></span></span>
+  <h3>Lisandro Alzugaray volvió con gol clave para Universitario en CONMEBOL Libertadores</h3><span class="go">Leer la nota <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div><div class="ev"><p class="when"><b>Oct 25</b><small>Liga de Quito · Libertadores 2025</small></p>
+  <a class="card" href="https://x.com/Libertadores/status/1981820492257669422" target="_blank" rel="noopener"><span class="src"><img class="logo" src="data:image/webp;base64,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" alt=""><span><b>CONMEBOL Libertadores</b><span class="chip">Publicación en X</span></span></span>
+  <h3>¡El equipo de la semana! Lisandro Alzugaray en el 11 ideal tras la semifinal de ida de la CONMEBOL Libertadores.</h3><span class="go">Ver la publicación <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a></div></div></div></section></body></html>
