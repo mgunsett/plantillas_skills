@@ -4,7 +4,7 @@
 
 | Sección | Modelos | Carpeta |
 |---|---|---|
-| **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox | [01-hero](modelos/01-hero/) |
+| **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox · A Apellido gigante con rayas · B Portada · C Ficha | [01-hero](modelos/01-hero/) |
 | **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | [02-final](modelos/02-final/) |
 | **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés | [03-estadisticas](modelos/03-estadisticas/) |
 | **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | [04-videos](modelos/04-videos/) |
@@ -30,6 +30,8 @@
 | tiene un representante distinto para cada tema | Contacto 3 (¿Para qué escribís?) |
 | busca un cierre emotivo | Contacto 2 (Cierre con foto) o Footer 3 (Firma) |
 | está jugando una final | Final |
+| tiene un recorte de medio cuerpo o un dorsal icónico | Hero B (Portada) |
+| el sitio apunta a clubes y representantes | Hero C (Ficha) |
 
 ## Reglas de diseño comunes a todos los modelos
 

@@ -24,3 +24,15 @@
 **Para adaptar**
 - **Datos:** `name`, `fullName`, `number`, `position`, `nationality`, `nationalityFlag`, `currentClub`, `logoCurrentClub` e `image` en `playerData.js`.
 - **Recorte:** cada recorte tiene otras proporciones. Hay que ajustar el `left`, el `h` y el `objectPosition` de la imagen del jugador y revisarlo en 390, 820 y 1440 px.
+
+## Alternativas (previews HTML con navbar incluida)
+
+Diseñadas para Polaco Fydriszewski (Junior). Cada una trae su propia navbar.
+
+| Modelo | Preview | Qué tiene |
+|---|---|---|
+| A · Apellido gigante | [html](previews/hero-a-apellido-gigante.html) · ![](previews/hero-a-apellido-gigante.jpg) | Evolución del aplicado: navbar flotante de vidrio con escudo, rayas del club detrás del jugador, dorsal en contorno y MatchBox. |
+| B · Portada ✅ (Polaco) | [html](previews/hero-b-portada.html) · ![](previews/hero-b-portada.jpg) | Tapa de revista: dorsal gigante en contorno detrás, apellido a todo el ancho abajo, datos en las esquinas y próximo partido. Navbar de línea fina con barra de progreso y menú a pantalla completa en mobile. Sirve con recortes de medio cuerpo. |
+| C · Ficha | [html](previews/hero-c-ficha.html) · ![](previews/hero-c-ficha.jpg) | Layout dividido: datos clave y botones a la izquierda, foto en panel con franja del club a la derecha y cinta de trayectoria abajo. Navbar mínima con menú lateral. |
+
+Implementación React de B: `src/components/Hero/Hero.jsx` y `src/components/UI/Navbar.jsx` en `mgunsett/polaco_fydriszewski`.
