@@ -4,7 +4,7 @@
 |---|---|---|---|
 | 1 | **El mismo, pulido** | ✅ Aplicado en Keki (con cambios) | [html](previews/opcion-1-pulido.html) · ![](previews/opcion-1-pulido.jpg) |
 | 2 | Con navegación | Alternativa | [html](previews/opcion-2-navegacion.html) · ![](previews/opcion-2-navegacion.jpg) |
-| 3 | Firma | Alternativa | [html](previews/opcion-3-firma.html) · ![](previews/opcion-3-firma.jpg) |
+| 3 | Firma | Alternativa (aplicado en Ivan Colman) | [html](previews/opcion-3-firma.html) · ![](previews/opcion-3-firma.jpg) |
 
 ## 1. Pulido (aplicado)
 
@@ -18,3 +18,7 @@
 
 - **2. Con navegación:** logo, links a todas las secciones e íconos de redes en una fila; debajo, el copyright, el crédito y "Volver arriba".
 - **3. Firma:** una fila simple y, debajo, el apellido gigante en contorno como cierre visual de la página.
+
+## Crédito en fondos claros
+
+El logo de Sportfolio (`starter/assets/logo_sport.png`) es crema y blanco: sobre un footer claro no se ve. Para paletas claras usar `starter/assets/logo_sport_dark.webp`, en verde `dev.green`, con el mismo link (`https://matiasgunsett.netlify.app/sportfolio`). Así quedó en Ivan Colman, junto al modelo Firma: la firma ajusta su tamaño al ancho con un `ResizeObserver`.

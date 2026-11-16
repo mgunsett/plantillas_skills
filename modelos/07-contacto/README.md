@@ -5,7 +5,7 @@
 | 1 | Directorio | Alternativa | [html](previews/opcion-1-directorio.html) · ![](previews/opcion-1-directorio.jpg) |
 | 2 | Cierre con foto | Alternativa | [html](previews/opcion-2-cierre.html) · ![](previews/opcion-2-cierre.jpg) |
 | 3 | ¿Para qué escribís? | Alternativa | [html](previews/opcion-3-motivo.html) · ![](previews/opcion-3-motivo.jpg) |
-| 4 | **Tarjetas mejoradas** | ✅ Aplicado en Keki | [html](previews/opcion-4-tarjetas.html) · ![](previews/opcion-4-tarjetas.jpg) |
+| 4 | **Tarjetas mejoradas** | ✅ Aplicado en Keki y en Ivan Colman (paleta clara) | [html](previews/opcion-4-tarjetas.html) · ![](previews/opcion-4-tarjetas.jpg) |
 
 Los datos están en `playerData.socialMedia` (redes) y `playerData.contact` (representantes, con `title`, `label`, `image`, `handle`, `forWhom`, `cta` y `url`).
 
