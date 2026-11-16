@@ -9,7 +9,7 @@
 | **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés · 4 Anillos y tarjetas | [03-estadisticas](modelos/03-estadisticas/) |
 | **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | [04-videos](modelos/04-videos/) |
 | **Galería** | ✅ 1 Pestañas y mosaico · 2 Álbumes · 3 Carriles | [05-galeria](modelos/05-galeria/) |
-| **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada | [06-prensa](modelos/06-prensa/) |
+| **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada · 4 Zócalo · 5 Pase a pase | [06-prensa](modelos/06-prensa/) |
 | **Contacto** | 1 Directorio · 2 Cierre con foto · 3 ¿Para qué escribís? · ✅ 4 Tarjetas mejoradas | [07-contacto](modelos/07-contacto/) |
 | **Footer** | ✅ 1 Pulido · 2 Con navegación · 3 Firma | [08-footer](modelos/08-footer/) |
 
