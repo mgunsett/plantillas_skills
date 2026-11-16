@@ -4,7 +4,7 @@
 |---|---|---|---|
 | 1 | **Pestañas y mosaico** | ✅ Aplicado en Keki | [html](previews/opcion-1-pestanas.html) · ![](previews/opcion-1-pestanas.jpg) |
 | 2 | Álbumes | Alternativa | [html](previews/opcion-2-albumes.html) · ![](previews/opcion-2-albumes.jpg) |
-| 3 | Carriles | Alternativa | [html](previews/opcion-3-carriles.html) · ![](previews/opcion-3-carriles.jpg) |
+| 3 | Carriles | Alternativa (aplicado en Ivan Colman) | [html](previews/opcion-3-carriles.html) · ![](previews/opcion-3-carriles.jpg) |
 
 Las fotos se dividen por categoría (en Keki: Estudiantes, Entrenamiento y Clubes) en `playerData.galleries`.
 
@@ -30,3 +30,5 @@ Las fotos se dividen por categoría (en Keki: Estudiantes, Entrenamiento y Clube
 
 - **2. Álbumes:** arriba, una portada por categoría con fotos apiladas y la cantidad. Debajo, un visor con la foto grande y la grilla de miniaturas al costado. Es el modelo para muchas fotos por categoría.
 - **3. Carriles:** una fila horizontal por categoría, con el título en contorno y flechas. Se ven todas las categorías a la vez sin pestañas. Funciona bien con pocas fotos por categoría.
+  - Implementado en Ivan Colman (`GallerySection.jsx`). Cada foto lleva `shape` (`tall` | `square` | `wide`) en `playerData.galleries`: el ancho de la celda sale de esa forma y del alto del carril (240/280/340 px), así no hay saltos al cargar. En celular se ocultan las flechas y el carril se desliza.
+  - Contorno de los títulos: usar `WebkitTextStrokeWidth` y `WebkitTextStrokeColor` por separado. El atajo `WebkitTextStroke` responsive pisa el color y el texto desaparece.
