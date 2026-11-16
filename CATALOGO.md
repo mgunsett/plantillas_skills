@@ -6,7 +6,7 @@
 |---|---|---|
 | **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox | [01-hero](modelos/01-hero/) |
 | **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | [02-final](modelos/02-final/) |
-| **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés | [03-estadisticas](modelos/03-estadisticas/) |
+| **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés · 4 Anillos y tarjetas | [03-estadisticas](modelos/03-estadisticas/) |
 | **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | [04-videos](modelos/04-videos/) |
 | **Galería** | ✅ 1 Pestañas y mosaico · 2 Álbumes · 3 Carriles | [05-galeria](modelos/05-galeria/) |
 | **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada | [06-prensa](modelos/06-prensa/) |
@@ -20,6 +20,7 @@
 | tiene datos de scouting y una carrera larga | Estadísticas 1 (Ficha) |
 | se destaca por un número de la temporada | Estadísticas 2 (Marcador) |
 | tiene muchos títulos o distinciones | Estadísticas 3 (Palmarés) |
+| tiene carrera larga y pocos títulos | Estadísticas 4 (Anillos y tarjetas) o Marcador + tarjetas de clubes |
 | tiene pocos videos largos | Videos 1 (Programa) |
 | sube reels seguido | Videos 4b (riel) o 2 (Stories) |
 | tiene videos de varios clubes | Videos 3 (Temporadas) |
