@@ -1,0 +1,59 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Estadísticas 3 · Radar central</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.pills{display:grid;grid-template-columns:repeat(6,1fr);margin-top:56px;border-top:2px solid var(--lime);background:linear-gradient(180deg,#141810,transparent)}
+.pills span{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border-left:1px solid var(--line);font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gray)}
+.pills span:first-child{border-left:0}
+.pills span b{font-size:22px;letter-spacing:.02em;text-transform:none;color:var(--bone);font-weight:700}
+.pills span:first-child b{color:var(--lime)}
+@media (max-width:980px){.pills{grid-template-columns:repeat(2,1fr);margin-top:36px}.pills span{padding:14px 16px}.pills span:nth-child(odd){border-left:0}.pills span:nth-child(n+3){border-top:1px solid var(--line)}.pills span b{font-size:18px}}
+.wrap{display:grid;grid-template-columns:1fr minmax(320px,520px) 1fr;gap:40px;align-items:center}
+.side{display:grid;gap:26px}
+.side.r{text-align:right}
+.n b{display:block;font-size:clamp(48px,5vw,78px);font-weight:700;line-height:.9}
+.n small{font-size:11px;letter-spacing:.24em;color:var(--gray);text-transform:uppercase}
+.n.hl b{color:var(--mag)}
+.n{padding-bottom:20px;border-bottom:1px solid var(--line)}
+.side .n:last-child{border:0;padding:0}
+.radar{position:relative}
+.radar svg{width:100%;height:auto;display:block;overflow:visible}
+.poly{transform-origin:200px 200px;animation:rd 1.2s var(--ease) both}
+@keyframes rd{from{transform:scale(.3);opacity:0}}
+.media{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.media b{display:block;font-size:64px;line-height:.85;font-weight:700;color:#0C0E0A}
+.media small{font-size:10px;font-weight:700;letter-spacing:.24em;color:#0C0E0A}
+.lbl{font:700 11px Nippo,sans-serif;letter-spacing:.12em;fill:#d6dccd;text-transform:uppercase}
+.val{font:700 15px Nippo,sans-serif;fill:#B4F32A}
+.scale{font:400 9px Nippo,sans-serif;fill:#98A388}
+@media (max-width:980px){
+  .wrap{grid-template-columns:1fr 1fr;gap:20px}
+  .radar{grid-column:1/-1;grid-row:1;max-width:420px;margin:0 auto 10px;width:100%}
+  .side.r{text-align:left}
+  .n b{font-size:40px}
+  .lbl{font-size:17px}.val{font-size:21px}
+}
+</style></head><body>
+<section class="sec" id="estadisticas">
+  <div class="sh"><div class="k">Temporada {{seasonLabel}}</div><h2>Estadísticas</h2></div>
+  <div class="wrap">
+    <div class="side" id="sl"></div>
+    <div class="radar"><svg id="rad" viewBox="-80 -10 560 420" role="img" aria-label="Radar de atributos"></svg>
+      <div class="media"><b class="tab">{{media}}</b><small>MEDIA</small></div></div>
+    <div class="side r" id="sr"></div>
+  </div>
+  <div class="pills"><span>Posición<b>{{position}}</b></span><span>Pie<b>{{foot}}</b></span><span>Edad<b>{{age}} años</b></span><span>Altura<b>{{height}} m</b></span><span>Peso<b>{{weight}} kg</b></span><span>Origen<b>{{birthPlaceShort}}</b></span></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const A=ATTRS,half=Math.ceil(SEASON.length/2),cell=s=>`<div class="n${s.hl?' hl':''}"><b class="tab">${s.v}</b><small>${s.l}</small></div>`
+sl.innerHTML=SEASON.slice(0,half).map(cell).join('');sr.innerHTML=SEASON.slice(half).map(cell).join('')
+rad.setAttribute('aria-label','Radar de atributos: '+A.map(([l,v])=>l+' '+v).join(', '))
+const C=200,R=140,MIN=50,ang=i=>-Math.PI/2+i*Math.PI/3,pt=(i,v)=>{const r=R*(v-MIN)/(100-MIN);return[C+r*Math.cos(ang(i)),C+r*Math.sin(ang(i))]}
+let s=''
+for(const v of [60,70,80,90,100]){s+=`<polygon points="${A.map((_,i)=>pt(i,v).join(',')).join(' ')}" fill="none" stroke="${v===100?'#b4f32a66':'#ffffff14'}"/>`}
+s+=`<text class="scale" x="${C+4}" y="${pt(0,100)[1]-4}">100</text><text class="scale" x="${C+4}" y="${pt(0,75)[1]}">75</text>`
+A.forEach((_,i)=>{const[x,y]=pt(i,100);s+=`<line x1="${C}" y1="${C}" x2="${x}" y2="${y}" stroke="#ffffff14"/>`})
+s+=`<polygon class="poly" points="${A.map(([,v],i)=>pt(i,v).join(',')).join(' ')}" fill="#B4F32A" fill-opacity=".9" stroke="#B4F32A" stroke-width="2"/>`
+A.forEach(([l,v],i)=>{const[x,y]=pt(i,118);const a=Math.abs(x-C)<5?'middle':x>C?'start':'end';s+=`<text class="lbl" x="${x}" y="${y}" text-anchor="${a}">${l.toUpperCase()}</text><text class="val" x="${x}" y="${y+17}" text-anchor="${a}">${v}</text>`})
+document.getElementById('rad').innerHTML=s
+</script>
+</body></html>

@@ -1,0 +1,88 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comparador · Kit neón</title>
+<!-- Comparador de las 32 previews del kit: elegís sección y opción, y se ve en desktop 1440 y mobile 390.
+     Se abre directo (doble clic) o con un servidor estático en esta carpeta. Para mostrárselo a un cliente,
+     publicá esta carpeta (o la salida de empaquetar.mjs) y pasale el link. -->
+<style>
+@font-face{font-family:Nippo;font-weight:700;src:url(fonts/Nippo-Bold.woff2) format('woff2')}
+:root{--bg:#0C0E0A;--panel:#141810;--line:#2a3320;--fg:#EEF2E6;--muted:#98A388;--lime:#B4F32A;--mag:#FF2E9A;--display:Nippo,'Arial Narrow',system-ui,sans-serif;color-scheme:dark}
+*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.wrap{max-width:1500px;margin:0 auto;padding:28px 16px 48px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.k{font:700 11px/1 var(--display);letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(30px,4vw,48px)/1 var(--display);text-transform:uppercase;margin-top:8px}h1 span{color:var(--lime)}
+.tabs,.secs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs button,.secs button{font:700 12px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:var(--panel);border:1px solid var(--line);padding:12px 16px;border-radius:999px;cursor:pointer}
+.tabs button b{color:var(--lime);margin-right:8px}
+.tabs button[aria-selected="true"]{background:var(--lime);color:#0C0E0A;border-color:var(--lime)}.tabs button[aria-selected="true"] b{color:#0C0E0A}
+.secs button[aria-selected="true"]{background:var(--mag);color:#fff;border-color:var(--mag)}
+button:focus-visible{outline:2px solid var(--mag);outline-offset:2px}
+#tabs{margin-bottom:20px}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+.dev{min-width:0}.dev .lbl{display:flex;justify-content:space-between;margin-bottom:8px}
+.frame{position:relative;width:100%;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#000}
+.frame.d{aspect-ratio:1440/900}.frame.m{aspect-ratio:390/844;border-radius:26px;border-width:6px;border-color:#20261a}
+.frame iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0}
+.info{margin-top:22px;border-top:1px solid var(--line);padding-top:22px}
+.info h2{font:700 28px/1 var(--display);text-transform:uppercase}
+.info p{color:#c9d1bd;line-height:1.6;margin-top:10px;max-width:72ch}
+a.open{color:var(--lime);font:700 11px/1 var(--display);letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
+@media (max-width:900px){.stage{grid-template-columns:minmax(0,1fr)}.dev.m{max-width:320px;margin:0 auto;width:100%}}
+</style></head><body>
+<div class="wrap">
+  <header class="top"><div><div class="k">Kit neón · comparador</div><h1><span id="h1s">Hero</span> 4 opciones</h1></div><div class="secs" role="tablist" id="secs" aria-label="Sección"></div></header>
+  <div class="tabs" role="tablist" id="tabs" aria-label="Opción"></div>
+  <div class="stage">
+    <div class="dev d"><div class="lbl"><span class="k">Desktop 1440</span><a class="open" id="openD" target="_blank">Abrir completo ↗</a></div><div class="frame d"><iframe id="fd" title="Vista desktop" width="1440" height="900"></iframe></div></div>
+    <div class="dev m"><div class="lbl"><span class="k">Mobile 390</span></div><div class="frame m"><iframe id="fm" title="Vista mobile" width="390" height="844"></iframe></div></div>
+  </div>
+  <section class="info" aria-live="polite"><div class="k" id="iNum"></div><h2 id="iTitle"></h2><p id="iDesc"></p></section>
+</div>
+<script>
+const SECS={
+ hero:['Hero',[['hero-1-dorsal','Dorsal gigante','El dorsal en contorno ocupa toda la altura y el jugador aparece de espaldas con el mismo número. Nombre abajo a la izquierda y ficha a la derecha (club, nacionalidad, temporada).'],
+  ['hero-2-split','Split editorial','Texto, bio corta, 4 datos y dos botones a la izquierda; a la derecha un panel con el acento en diagonal y el recorte saliendo de él.'],
+  ['hero-3-marquesina','Marquesina','Bandas inclinadas con el nombre y la posición que corren en sentidos opuestos detrás del recorte, y un zócalo de partidos abajo.'],
+  ['hero-4-transmision','Transmisión TV','Foto de cancha a todo el ancho con gráficos de transmisión: marcador con el último y el próximo partido, zócalo con dorsal y nombre, y cuadro de la temporada abajo a la derecha.']]],
+ stats:['Estadísticas',[['stats-1-marcador','Marcador','El número que lo define en un bloque gigante y el resto en un tablero. Debajo, la ficha en una fila y los atributos en barras segmentadas.'],
+  ['stats-2-ficha','Ficha de scouting','Informe en tres paneles: perfil, cancha con la zona de influencia y atributos en barras (el mejor resaltado). Abajo, la temporada en 6 números.'],
+  ['stats-3-radar','Radar central','Los 6 atributos en un radar con la media en el centro, rodeado por los números de la temporada. Al pie, la ficha en una franja de 6 columnas.'],
+  ['stats-4-dossier','Dossier','Estilo revista: la temporada en una grilla tipográfica, los atributos en un ranking de mayor a menor y una frase de presentación al pie.']]],
+ clubes:['Clubes',[['clubes-1-linea','Línea de tiempo','Los clubes del más antiguo al actual sobre una línea que se ilumina hacia el presente. Cada parada con escudo, años, país y vínculo.'],
+  ['clubes-2-grilla','Grilla de escudos','Una baldosa por club con el escudo completo en gris de fondo. El actual en el acento y una última baldosa con clubes, países y títulos.'],
+  ['clubes-3-planilla','Planilla','Tabla tipo ficha de transferencias: temporada, club, país, vínculo y títulos. El club actual marcado con una barra.'],
+  ['clubes-4-arbol','Árbol de pases','Inicios, el club dueño del pase en el centro y, desde ahí, los préstamos hasta el club actual. Para jugadores que van a préstamo.']]],
+ videos:['Videos',[['videos-1-programa','Programa','Un reel grande y, al lado, título, club y la lista "Más videos" para cambiarlo. Para pocos videos.'],
+  ['videos-2-stories','Stories','Los reels como historias de Instagram, con barras de progreso, avance automático y círculos por club.'],
+  ['videos-3-temporadas','Temporadas','Cada video bajo su año gigante en contorno con el escudo del club. Cuenta la carrera a través de los videos.'],
+  ['videos-4-paneles','Paneles','Paneles a todo el ancho: el activo se abre grande a color y los otros quedan finos en blanco y negro. Hover en desktop, toque en mobile.']]],
+ galeria:['Galería',[['galeria-1-mosaico','Mosaico con pestañas','Grilla de 4 columnas con una foto grande cada cinco, filtros por club, "Ver más fotos" sin huecos y visor a pantalla completa.'],
+  ['galeria-2-carriles','Carriles','Dos filas de fotos que corren solas en sentidos opuestos. Se frenan al pasar el mouse y cualquier foto se abre grande.'],
+  ['galeria-3-album','Álbum editorial','Una foto destacada y cuatro al costado; "Siguientes" pasa de a cinco y "Ver todas" abre el visor.'],
+  ['galeria-4-hoja','Hoja de contactos','Visor grande con la foto completa (sin recortes) y una tira de película numerada en blanco y negro.']]],
+ prensa:['Prensa',[['prensa-1-titulares','Titulares','Lista limpia: logo del medio, fecha, titular grande y flecha. El renglón se pinta al pasar el mouse.'],
+  ['prensa-2-recortes','Recortes','Cada nota como un recorte de diario pegado con cinta, levemente torcido.'],
+  ['prensa-3-destacada','Nota destacada','La nota más importante grande con una foto de fondo y las otras al costado.'],
+  ['prensa-4-publicaron','Lo publicaron','Franja con los logos de los medios y, debajo, los titulares como citas.']]],
+ contacto:['Contacto',[['contacto-1-directorio','Directorio','Título a la izquierda y un renglón por contacto: representante, marketing e Instagram, con rol y para qué escribirle.'],
+  ['contacto-2-cierre','Cierre con foto','Media pantalla con una foto y del otro lado "¿Jugamos juntos?" con las agencias y un botón grande a Instagram.'],
+  ['contacto-3-motivo','¿Para qué escribís?','El visitante elige si es de un club, una marca o prensa/fan, y la tarjeta le muestra a quién escribirle.'],
+  ['contacto-4-tarjetas','Tarjetas grandes','Cuatro tarjetas 2x2 (Instagram, Transfermarkt, representante en el acento y marketing) con el logo en gris de fondo.']]],
+ footer:['Footer',[['footer-1-pulido','Pulido','Una sola línea: logo, redes, derechos y el crédito de desarrollo.'],
+  ['footer-2-navegacion','Con navegación','Columnas con logo y bajada, secciones, contactos y redes.'],
+  ['footer-3-firma','Firma','Escudo, posición y club, links, Volver arriba y el apellido gigante a todo el ancho.'],
+  ['footer-4-escudos','Escudos','Franja con los escudos de todos sus clubes en gris (el actual a color) y debajo logo, derechos, crédito y Volver arriba.']]],
+}
+const ORDER=Object.keys(SECS),tabs=document.getElementById('tabs'),secs=document.getElementById('secs'),fd=document.getElementById('fd'),fm=document.getElementById('fm')
+let sec='hero',cur={};try{const v=JSON.parse(localStorage.getItem('kitNeon')||'{}');if(SECS[v.sec])sec=v.sec;cur=v.cur||{}}catch(e){}
+ORDER.forEach(k=>{const b=document.createElement('button');b.role='tab';b.textContent=SECS[k][0];b.onclick=()=>pickSec(k);secs.appendChild(b)})
+function pickSec(k){sec=k;[...secs.children].forEach((b,j)=>b.setAttribute('aria-selected',ORDER[j]===k));h1s.textContent=SECS[k][0]
+ tabs.innerHTML='';SECS[k][1].forEach((o,i)=>{const b=document.createElement('button');b.role='tab';b.innerHTML='<b>'+(i+1)+'</b>'+o[1];b.onclick=()=>sel(i);tabs.appendChild(b)});sel(cur[k]||0)}
+function sel(i){cur[sec]=i;try{localStorage.setItem('kitNeon',JSON.stringify({sec,cur}))}catch(e){}const [f,t,d]=SECS[sec][1][i]
+ ;[...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));fd.src=fm.src=openD.href=f+'.html'
+ iNum.textContent=SECS[sec][0]+' · opción '+(i+1)+' · '+f+'.html';iTitle.textContent=t;iDesc.textContent=d}
+function fit(){[[fd,1440],[fm,390]].forEach(([f,w])=>{f.style.transform='scale('+(f.parentElement.clientWidth/w)+')'})}
+new ResizeObserver(fit).observe(document.querySelector('.stage'));fit();pickSec(sec)
+</script>
+</body></html>

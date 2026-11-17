@@ -1,0 +1,33 @@
+@font-face{font-family:Nippo;font-weight:300;src:url(fonts/Nippo-Light.woff2) format('woff2')}
+@font-face{font-family:Nippo;font-weight:400;src:url(fonts/Nippo-Regular.woff2) format('woff2')}
+@font-face{font-family:Nippo;font-weight:500;src:url(fonts/Nippo-Medium.woff2) format('woff2')}
+@font-face{font-family:Nippo;font-weight:700;src:url(fonts/Nippo-Bold.woff2) format('woff2')}
+:root{
+  --bg:#0C0E0A; --bg2:#141810; --lime:#B4F32A; --lime-d:#7FA800; --mag:#FF2E9A;
+  --bone:#fff; --gray:#98A388; --line:#b4f32a40; --ease:cubic-bezier(0.23,1,0.32,1);
+  --sv:1vh;
+}
+@supports (height:1svh){:root{--sv:1svh}}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--bone);font-family:Nippo,system-ui,sans-serif;overflow-x:hidden}
+img{display:block;max-width:none}
+button{font-family:inherit}
+.nav{position:absolute;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 60px}
+.nav a{color:var(--gray);text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.nav .links{display:flex;gap:32px;align-items:center}
+.nav .logo{font-weight:700;font-size:22px;color:var(--lime);letter-spacing:.05em}
+.nav .logo span{color:var(--mag)}
+.nav .cta{border:1.5px solid var(--lime);color:var(--lime);padding:8px 16px;border-radius:999px}
+.nav .burger{display:none;width:26px;height:16px;border-top:2px solid #fff;border-bottom:2px solid #fff;position:relative}
+.nav .burger:after{content:"";position:absolute;left:0;right:0;top:5px;border-top:2px solid #fff}
+@media (max-width:820px){.nav{padding:18px 20px}.nav .links,.nav .cta{display:none}.nav .burger{display:block}}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
+.rv{opacity:0;transform:translateY(28px);animation:rv 1s var(--ease) forwards}
+@keyframes rv{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}}
+.sec{position:relative;padding:96px 60px;background:var(--bg);overflow:hidden}
+.sh{margin-bottom:44px}
+.sh .k{font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--mag)}
+.sh h2{font-weight:700;font-size:clamp(44px,5.4vw,84px);line-height:.9;color:var(--lime);text-transform:uppercase;margin-top:8px}
+.tab{font-variant-numeric:tabular-nums}
+@media (max-width:820px){.sec{padding:64px 20px}.sh{margin-bottom:28px}}

@@ -1,0 +1,44 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Videos 4 · Paneles</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.panels{display:flex;gap:10px;height:min(620px,70vh)}
+.pn{position:relative;flex:1 1 0;min-width:140px;overflow:hidden;background:#000;border:0;padding:0;cursor:pointer;color:inherit;font:inherit;text-align:left;transition:flex-grow .7s var(--ease)}
+.pn.on{flex:4.2}
+.pn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(.55);transition:filter .6s var(--ease),transform .9s var(--ease)}
+.pn.on img{filter:none}
+.pn:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,#0C0E0Af2)}
+.pn .vt{position:absolute;left:50%;bottom:28px;z-index:2;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;transition:opacity .3s}
+.pn .vt em{font-style:normal;color:var(--lime)}
+.pn.on .vt{opacity:0}
+.pn .num{position:absolute;top:18px;left:18px;z-index:2;font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--lime)}
+.pn .det{position:absolute;left:30px;right:30px;bottom:28px;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;opacity:0;transform:translateY(16px);transition:opacity .4s var(--ease),transform .5s var(--ease)}
+.pn.on .det{opacity:1;transform:none;transition-delay:.25s}
+.det b{display:block;font-size:clamp(30px,3.4vw,52px);font-weight:700;text-transform:uppercase;line-height:.95}
+.det small{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:#d6dccd;letter-spacing:.08em}
+.det small img{position:static;width:24px;height:24px;object-fit:contain;filter:none}
+.det .go{flex-shrink:0;display:flex;align-items:center;gap:10px;background:var(--lime);color:#0C0E0A;font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 20px;border-radius:999px}
+.pn:focus-visible{outline:2px solid var(--mag);outline-offset:3px}
+@media (max-width:820px){
+  .panels{flex-direction:column;height:auto}
+  .pn,.pn.on{flex:none;min-width:0;height:76px;transition:height .6s var(--ease)}
+  .pn.on{height:460px}
+  .pn .vt{writing-mode:horizontal-tb;transform:none;left:18px;bottom:auto;top:50%;transform:translateY(-50%);font-size:17px;padding-left:34px}
+  .pn .num{top:50%;transform:translateY(-50%)}
+  .pn.on .num{top:18px;transform:none}
+  .pn .det{left:18px;right:18px;bottom:18px;flex-direction:column;align-items:flex-start}
+  .det b{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){.pn,.pn img,.pn .det{transition:none}}
+</style></head><body>
+<section class="sec" id="videos">
+  <div class="sh"><div class="k">Highlights</div><h2>Videos</h2></div>
+  <div class="panels" id="pp"></div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+pp.innerHTML=VIDS.map((v,i)=>`<button class="pn${i?'':' on'}" type="button" aria-expanded="${!i}"><img src="${v.img}" alt=""><span class="num">${String(i+1).padStart(2,'0')}</span>
+<span class="vt">${v.club} <em>'${v.yr}</em></span><span class="det"><span><b>${v.f}</b><small><img src="${v.crest}" alt="">${v.club} · ${v.lg}</small></span><span class="go">${PLAY} Ver reel</span></span></button>`).join('')
+const PN=[...pp.children];PN.forEach((p,i)=>{const open=()=>PN.forEach((q,j)=>{q.classList.toggle('on',i===j);q.setAttribute('aria-expanded',i===j)})
+ p.addEventListener('click',open);if(matchMedia('(hover:hover) and (pointer:fine)').matches)p.addEventListener('mouseenter',open)})
+</script>
+</body></html>

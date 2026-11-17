@@ -40,3 +40,22 @@ Tres columnas en un marco: perfil, atributos en anillos de progreso y la tempora
 Preview en paleta clara (crema, negro y dorado) con tipografía Nippo, la de Ivan Colman. En Ivan se combinó el **Marcador** (opción 2) con estas **tarjetas de clubes**: `ScoreboardStats.jsx` + `ClubsCards.jsx`.
 
 Sirve para un jugador con carrera larga y pocos títulos, cuando se quiere una lectura rápida y visual de los atributos.
+
+## Kit neón (diseñado para Héctor Fertoli)
+
+Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía Nippo. Salen de [`kits/neon`](../../kits/neon/): los datos del jugador están en `player.js`, así que se pueden regenerar con otro jugador (ver el [README del kit](../../kits/neon/README.md)).
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| N1 | Marcador | Alternativa | [html](previews/neon-1-marcador.html) · ![](previews/neon-1-marcador.jpg) |
+| N2 | Ficha de scouting | Alternativa | [html](previews/neon-2-ficha.html) · ![](previews/neon-2-ficha.jpg) |
+| N3 | **Radar central** | ✅ Aplicado en Héctor Fertoli | [html](previews/neon-3-radar.html) · ![](previews/neon-3-radar.jpg) |
+| N4 | Dossier | Alternativa | [html](previews/neon-4-dossier.html) · ![](previews/neon-4-dossier.jpg) |
+
+- **N1. Marcador:** el número que lo define (el primero de `season`) en un bloque gigante del acento, con una frase, y el resto en un tablero. Debajo, la ficha en una fila y los atributos en barras de 10 segmentos.
+- **N2. Ficha de scouting:** informe en tres paneles: perfil con dorsal, cancha en SVG con la zona de influencia y atributos en barras finas (el mejor en magenta). Abajo, la temporada en 6 números. Es la versión neón de la opción 1.
+- **N3. Radar central (aplicado en Fertoli):** los 6 atributos en un radar (escala de 50 a 100 para que se noten las diferencias) con la media en el centro, rodeado por los números de la temporada, mitad a cada lado. Al pie, la ficha en una franja de 6 columnas (2 en mobile).
+  - **React:** [`react/RadarCenterStats.jsx`](react/RadarCenterStats.jsx). Se monta dentro de `StatsSection.jsx` con un selector (`STATS_DESIGN = 'radarCentral'`) y lee `stats`, `seasonStats`, `position`, `foot`, `age`, `height`, `weight` y `birthPlace`.
+- **N4. Dossier:** estilo revista: la temporada en una grilla tipográfica, los atributos en un ranking de mayor a menor con una línea proporcional y una frase de presentación al pie.
+
+Los clubes, que en Keki van dentro de esta sección, en el kit neón tienen sus propios modelos en [`09-clubes`](../09-clubes/).

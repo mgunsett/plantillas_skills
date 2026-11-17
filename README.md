@@ -2,10 +2,13 @@
 
 Modelos de diseño reutilizables para landings de jugadores de fútbol, sacados del sitio de **Ezequiel "Keki" Piovi** ([kekipiovi.com](https://kekipiovi.com)).
 
+Después se sumó el **kit neón**, con 4 opciones por sección diseñadas para **Héctor Fertoli** y convertidas en plantillas: los datos del jugador van en un solo archivo y las previews se regeneran para cualquier otro.
+
 Cada sección de la landing tiene varios modelos:
 
 - **Aplicado:** está implementado en React dentro de [`starter/`](starter/) y se puede usar tal cual.
 - **Alternativa:** es una preview HTML que se descartó en Keki pero sirve para otro jugador. Si se elige, se porta a React con los mismos patrones del aplicado.
+- **Kit neón (N1 a N4):** previews HTML generadas desde [`kits/neon/`](kits/neon/). Las que se eligieron en Fertoli tienen además su componente React en `modelos/<sección>/react/`.
 
 La skill [`skill/sportfolio-landing`](skill/sportfolio-landing/SKILL.md) le enseña a Claude a usar este repo. Ofrece 3 opciones por sección, arma la landing desde el starter y adapta datos, colores y SEO al jugador nuevo.
 
@@ -15,18 +18,22 @@ La skill [`skill/sportfolio-landing`](skill/sportfolio-landing/SKILL.md) le ense
 plantillas_skills/
 ├── CATALOGO.md            ← índice de todos los modelos, sección por sección
 ├── starter/               ← proyecto Vite + React listo para clonar (todas las secciones aplicadas)
+├── kits/
+│   └── neon/              ← 32 diseños (4 por sección) + player.js con los datos del jugador + comparador
 ├── modelos/
-│   ├── 01-hero/           ← README + capturas
+│   ├── 01-hero/           ← README + capturas + previews/ (4 neón) + react/
 │   ├── 02-final/          ← sección "camino a la final" de una copa (Libertadores en Keki)
-│   ├── 03-estadisticas/   ← README + capturas + previews/ (3 opciones)
-│   ├── 04-videos/         ← 5 opciones
-│   ├── 05-galeria/        ← 3 opciones
-│   ├── 06-prensa/         ← 3 opciones
-│   ├── 07-contacto/       ← 4 opciones
-│   └── 08-footer/         ← 3 opciones
+│   ├── 03-estadisticas/   ← README + capturas + previews/ (4 clásicas + 4 neón) + react/
+│   ├── 04-videos/         ← 5 clásicas + 4 neón
+│   ├── 05-galeria/        ← 3 clásicas + 4 neón
+│   ├── 06-prensa/         ← 5 clásicas + 4 neón
+│   ├── 07-contacto/       ← 4 clásicas + 4 neón
+│   ├── 08-footer/         ← 3 clásicas + 4 neón
+│   └── 09-clubes/         ← trayectoria como sección propia (4 neón)
 ├── herramientas/
 │   ├── favicon/favicon.py ← genera favicon.svg/.ico/PNGs con el logo del navbar
 │   ├── og/                ← plantilla de imagen para redes (og.html → og-image.jpg)
+│   ├── previews/          ← empaquetar.mjs: arma las previews autocontenidas de un kit
 │   └── capturas/capt.mjs  ← captura cada sección en desktop y mobile
 └── skill/sportfolio-landing/SKILL.md
 ```
@@ -35,6 +42,7 @@ plantillas_skills/
 
 - **Previews:** cada `modelos/*/previews/*.html` es un archivo autocontenido (fotos y estilos adentro) que se abre con doble clic. Al lado hay un `.jpg` con la miniatura.
 - **Capturas:** `modelos/*/capturas/` muestra cómo quedó el modelo aplicado en el sitio real, en desktop y mobile.
+- **Comparador del kit neón:** `kits/neon/index.html` muestra las 32 opciones, sección por sección, en desktop y mobile a la vez.
 
 ## Arrancar una landing nueva
 

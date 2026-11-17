@@ -1,0 +1,62 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clubes 4 · Árbol de pases</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.tree{display:grid;grid-template-columns:1fr auto 1.4fr;gap:0;align-items:center}
+.before{display:flex;flex-direction:column;gap:18px;align-items:flex-end;padding-right:40px;position:relative}
+.n{display:flex;align-items:center;gap:14px;background:var(--bg2);border:1px solid var(--line);padding:14px 18px;min-width:250px;position:relative}
+.n img{width:42px;height:42px;object-fit:contain}
+.n b{display:block;font-size:15px;font-weight:700;text-transform:uppercase;line-height:1.1}
+.n small{font-size:11px;letter-spacing:.14em;color:var(--gray)}
+.lbl{font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--gray);margin-bottom:4px}
+.owner{position:relative;width:250px;padding:30px 26px;text-align:center;background:var(--bg2);border:2px solid var(--mag)}
+.owner img{width:96px;height:96px;object-fit:contain;margin:0 auto 14px}
+.owner b{display:block;font-size:26px;font-weight:700;text-transform:uppercase}
+.owner small{display:block;font-size:12px;color:var(--gray);letter-spacing:.14em;margin-top:6px}
+.owner .k{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--mag);color:#fff;font-size:10px;font-weight:700;letter-spacing:.2em;padding:5px 10px;white-space:nowrap}
+.owner .tt{margin-top:14px;font-size:12px;color:var(--lime)}
+.loans{display:flex;flex-direction:column;gap:14px;padding-left:64px;position:relative}
+.loans:before{content:"";position:absolute;left:24px;top:34px;bottom:34px;border-left:2px dashed #b4f32a55}
+.loans .n{width:100%;max-width:440px}
+.loans .n:before{content:"";position:absolute;left:-40px;top:50%;width:40px;border-top:2px dashed #b4f32a55}
+.loans .n .yr{margin-left:auto;font-size:13px;font-weight:700;color:var(--gray);text-align:right}
+.loans .n.cur{background:var(--lime);border-color:var(--lime);color:#0C0E0A}
+.loans .n.cur small,.loans .n.cur .yr{color:#0C0E0A}
+.loans .n.cur:before{border-top-style:solid;border-color:var(--lime)}
+.bridge{position:absolute;right:0;top:50%;width:40px;border-top:2px solid var(--line)}
+.ownwrap{position:relative}
+.ownwrap:after{content:"";position:absolute;right:-40px;top:50%;width:40px;border-top:2px dashed #b4f32a55}
+.legend{display:flex;gap:24px;margin-top:40px;font-size:12px;color:var(--gray)}
+.legend i{display:inline-block;width:22px;border-top:2px dashed #b4f32a88;vertical-align:middle;margin-right:8px}
+.legend i.s{border-top:2px solid var(--line)}
+@media (max-width:1000px){
+  .tree{grid-template-columns:1fr;gap:34px;justify-items:center}
+  .before{align-items:stretch;padding:0;width:100%}
+  .before .n{min-width:0}
+  .bridge{display:none}
+  .owner{width:100%}
+  .ownwrap{width:100%}.ownwrap:after{display:none}
+  .loans{padding-left:40px;width:100%}
+  .loans:before{left:14px;top:-34px}
+  .loans .n:before{left:-26px;width:26px}
+  .legend{flex-direction:column;gap:8px}
+}
+</style></head><body>
+<section class="sec" id="clubes">
+  <div class="sh"><div class="k">Trayectoria</div><h2>Clubes</h2></div>
+  <div class="tree">
+    <div class="before" id="before"><div class="lbl">Inicios</div><span class="bridge"></span></div>
+    <div class="ownwrap" id="own"></div>
+    <div class="loans" id="loans"></div>
+  </div>
+  <div class="legend"><span><i class="s"></i>Pase</span><span><i></i>Préstamo</span></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script>
+<script>
+// Árbol: necesita un club con own:true (dueño del pase). Inicios = clubes anteriores a ese pase; préstamos = i:'Préstamo'.
+const asc=[...CLUBS].sort((a,b)=>a.y0-b.y0),O=CLUBS.find(c=>c.own)||asc[0]
+const node=(c,yr)=>`<div class="n${c.cur?' cur':''}"><img src="${c.l}" alt="Escudo de ${c.n}"><div><b>${c.n}</b><small>${yr?c.c:c.y0+' · '+c.c}${c.cur?' · club actual':''}</small></div>${yr?`<span class="yr">${c.y}</span>`:''}</div>`
+before.insertAdjacentHTML('beforeend',asc.filter(c=>c.y0<O.y0).map(c=>node(c)).join(''));before.appendChild(before.querySelector('.bridge'))
+own.innerHTML=`<div class="owner"><span class="k">DUEÑO DEL PASE</span><img src="${O.l}" alt="Escudo de ${O.n}"><b>${O.n}</b><small>${O.y.toUpperCase().replace('ACT.','ACTUALIDAD')}</small>${O.t.map(t=>`<div class="tt">★ ${t}</div>`).join('')}</div>`
+loans.innerHTML=`<div class="lbl">Préstamos desde ${O.n.replace(/ Club$/,'')}</div>`+asc.filter(c=>c.i==='Préstamo'&&c.y0>=O.y0).map(c=>node(c,1)).join('')
+</script>
+</body></html>

@@ -2,16 +2,22 @@
 
 ✅ = aplicado en el starter (React). Las demás opciones son previews HTML para portar si se eligen.
 
-| Sección | Modelos | Carpeta |
-|---|---|---|
-| **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox | [01-hero](modelos/01-hero/) |
-| **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | [02-final](modelos/02-final/) |
-| **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés · 4 Anillos y tarjetas | [03-estadisticas](modelos/03-estadisticas/) |
-| **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | [04-videos](modelos/04-videos/) |
-| **Galería** | ✅ 1 Pestañas y mosaico · 2 Álbumes · 3 Carriles | [05-galeria](modelos/05-galeria/) |
-| **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada · 4 Zócalo · 5 Pase a pase | [06-prensa](modelos/06-prensa/) |
-| **Contacto** | 1 Directorio · 2 Cierre con foto · 3 ¿Para qué escribís? · ✅ 4 Tarjetas mejoradas | [07-contacto](modelos/07-contacto/) |
-| **Footer** | ✅ 1 Pulido · 2 Con navegación · 3 Firma | [08-footer](modelos/08-footer/) |
+Hay dos estilos:
+
+- **Clásico (Keki / Ivan Colman):** opciones numeradas 1, 2, 3… Paleta del club sobre fondo oscuro cálido, Bebas Neue y Barlow.
+- **Kit neón (Héctor Fertoli):** opciones N1 a N4 en cada sección. Fondo casi negro, acento lima y magenta, tipografía Nippo. Los datos del jugador están en un solo archivo ([`kits/neon/player.js`](kits/neon/)), así que se regeneran para otro jugador con `herramientas/previews/empaquetar.mjs`. Las opciones con ⚛ tienen el componente React en `modelos/<sección>/react/`.
+
+| Sección | Clásico | Kit neón | Carpeta |
+|---|---|---|---|
+| **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox | N1 Dorsal gigante · N2 Split editorial · N3 Marquesina · ⚛ N4 Transmisión TV | [01-hero](modelos/01-hero/) |
+| **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | — | [02-final](modelos/02-final/) |
+| **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés · 4 Anillos y tarjetas | N1 Marcador · N2 Ficha de scouting · ⚛ N3 Radar central · N4 Dossier | [03-estadisticas](modelos/03-estadisticas/) |
+| **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | N1 Programa · N2 Stories · ⚛ N3 Temporadas · N4 Paneles | [04-videos](modelos/04-videos/) |
+| **Galería** | ✅ 1 Pestañas y mosaico · 2 Álbumes · 3 Carriles | ⚛ N1 Mosaico con pestañas · N2 Carriles · N3 Álbum editorial · N4 Hoja de contactos | [05-galeria](modelos/05-galeria/) |
+| **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada · 4 Zócalo · 5 Pase a pase | N1 Titulares · N2 Recortes · ⚛ N3 Nota destacada · N4 Lo publicaron | [06-prensa](modelos/06-prensa/) |
+| **Contacto** | 1 Directorio · 2 Cierre con foto · 3 ¿Para qué escribís? · ✅ 4 Tarjetas mejoradas | N1 Directorio · N2 Cierre con foto · N3 ¿Para qué escribís? · ⚛ N4 Tarjetas grandes | [07-contacto](modelos/07-contacto/) |
+| **Footer** | ✅ 1 Pulido · 2 Con navegación · 3 Firma | N1 Pulido · N2 Con navegación · ⚛ N3 Firma · N4 Escudos | [08-footer](modelos/08-footer/) |
+| **Clubes** | (dentro de Estadísticas) | N1 Línea de tiempo · ⚛ N2 Grilla de escudos · N3 Planilla · N4 Árbol de pases | [09-clubes](modelos/09-clubes/) |
 
 ## Cuándo conviene cada uno
 
@@ -31,8 +37,23 @@
 | tiene un representante distinto para cada tema | Contacto 3 (¿Para qué escribís?) |
 | busca un cierre emotivo | Contacto 2 (Cierre con foto) o Footer 3 (Firma) |
 | está jugando una final | Final |
+| tiene una buena foto de cancha en alta (mejor horizontal) | Hero N4 (Transmisión TV) |
+| tiene un recorte de espaldas con el dorsal | Hero N1 (Dorsal gigante) |
+| busca contactos con clubes y marcas desde el inicio | Hero N2 (Split editorial) |
+| quiere el próximo partido bien visible | Hero N3 (Marquesina) o N4 |
+| tiene atributos parejos y se quiere una imagen fuerte | Estadísticas N3 (Radar central) |
+| juega a préstamo y el pase es de otro club | Clubes N4 (Árbol de pases) o N2 (Grilla de escudos) |
+| tiene muchos clubes | Clubes N2 (Grilla) o N3 (Planilla) |
+| tiene pocos reels pero de distintas temporadas | Videos N3 (Temporadas) |
+| quiere algo cinematográfico con 3 o 4 videos | Videos N4 (Paneles) |
+| tiene fotos verticales y horizontales mezcladas | Galería N4 (Hoja de contactos) |
+| tiene notas en medios conocidos | Prensa N4 (Lo publicaron) |
+| tiene representante y agencia de marketing | Contacto N4 (Tarjetas grandes) o N3 |
+| tiene un apellido corto o con fuerza | Footer N3 (Firma) |
 
 ## Reglas de diseño comunes a todos los modelos
+
+El kit neón cambia la paleta y la tipografía (ver [`kits/neon/README.md`](kits/neon/README.md)), pero sigue el resto de estas reglas.
 
 - **Fondo y texto:** fondo oscuro cálido (`brand.dark`), texto crema (`brand.bone`) y gris cálido para lo secundario. Un acento del club (`brand.amber`) y un dorado (`brand.dorado`).
 - **Tipografía:**

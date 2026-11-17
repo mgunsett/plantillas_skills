@@ -1,15 +1,15 @@
 ---
 name: sportfolio-landing
-description: Arma o rediseña la landing de un jugador de fútbol con los modelos del repo mgunsett/plantillas_skills (React + Chakra + GSAP). Ofrece 3 opciones por sección, adapta datos, colores y SEO, y guarda los modelos nuevos en el catálogo.
+description: Arma o rediseña la landing de un jugador de fútbol con los modelos del repo mgunsett/plantillas_skills (React + Chakra + GSAP). Ofrece al menos 4 opciones por sección en un comparador, adapta datos, colores y SEO, y guarda los modelos nuevos en el catálogo.
 ---
 
 # Landing Sportfolio para jugadores
 
-Las landings de jugadores se arman con un starter y un catálogo de modelos de diseño por sección, guardados en el repo **mgunsett/plantillas_skills**. Esta skill dice cómo usarlos.
+Las landings de jugadores se arman con un starter y un catálogo de modelos de diseño por sección, guardados en el repo **mgunsett/plantillas_skills**. Hay dos estilos: el **clásico** (Keki, Ivan Colman) y el **kit neón** (Héctor Fertoli, en `kits/neon/`, con los datos del jugador en un solo archivo). Esta skill dice cómo usarlos.
 
 ## 0. Preparación
 
-1. **Traer el repo:** sumá `mgunsett/plantillas_skills` a la sesión y clonalo. Leé primero `CATALOGO.md` y, para cada sección que se trabaje, el `README.md` de `modelos/<sección>/`.
+1. **Traer el repo:** sumá `mgunsett/plantillas_skills` a la sesión y clonalo. Leé primero `CATALOGO.md`, `kits/neon/README.md` y, para cada sección que se trabaje, el `README.md` de `modelos/<sección>/`.
 2. **Proyecto destino:**
    - Si es una landing nueva, copiá `starter/` a su repo.
    - Si ya existe, trabajá sobre ese repo y usá el catálogo como referencia.
@@ -21,19 +21,20 @@ Las landings de jugadores se arman con un starter y un catálogo de modelos de d
 
 ## 1. Flujo por sección
 
-Se trabaja de a una sección, en este orden: hero, final (si aplica), estadísticas, videos, galería, prensa, contacto y footer.
+Se trabaja de a una sección (o de a varias, si el usuario lo pide), en este orden: navbar, hero, final (si aplica), estadísticas, clubes, videos, galería, prensa, contacto y footer. El usuario suele elegir varias secciones juntas al final: no implementes nada hasta que elija.
 
-1. **Ofrecer 3 opciones,** tomadas del catálogo de esa sección:
-   - El modelo aplicado, más las alternativas que mejor encajen según la tabla "Cuándo conviene" de `CATALOGO.md`.
+1. **Ofrecer al menos 4 opciones** por sección, tomadas del catálogo:
+   - Del estilo clásico, del kit neón o mezcladas, según la tabla "Cuándo conviene" de `CATALOGO.md` y la identidad que ya tenga el jugador (colores, tipografía).
+   - **Kit neón:** copiá `kits/neon` a una carpeta de trabajo, cargá los datos y fotos del jugador en `player.js` y `img/`, ajustá los colores en `base.css` y ya tenés las 32 opciones con sus datos reales.
    - Si ninguna encaja, diseñá una nueva con las reglas de la sección 3.
-2. **Entregar cada opción como HTML autocontenido,** con los datos y fotos reales del jugador nuevo, para poder verla en el navegador:
-   - Imágenes en base64.
-   - Fuentes Bebas Neue, Barlow Condensed y Barlow.
-   - Las previews de `modelos/*/previews/` sirven de punto de partida.
+2. **Entregar las opciones en un comparador,** con los datos y fotos reales del jugador nuevo: pestañas por sección y por opción, y cada opción en desktop 1440 y mobile 390 lado a lado, con una ficha corta de qué tiene. `kits/neon/index.html` es el modelo; publicalo como Artifact para que el usuario pueda comentar sobre cada opción.
+   - Cada opción también tiene que poder abrirse sola: `node herramientas/previews/empaquetar.mjs <kit> <salida>` la arma autocontenida (fotos, fuentes, CSS y JS adentro).
+   - Las previews de `modelos/*/previews/` sirven de punto de partida para los diseños clásicos (Bebas Neue, Barlow Condensed y Barlow).
 3. **Esperar la elección.** El usuario suele pedir ajustes sobre la opción elegida: aplicarlos antes de implementar.
 4. **Implementar en React:**
    - Si es el modelo aplicado, ya está en el starter: solo adaptar los datos.
-   - Si es una alternativa, portarla con los mismos patrones del aplicado: Chakra, datos en `playerData.js` y `useScrubReveal`.
+   - Si ya tiene componente en `modelos/<sección>/react/` (las opciones ⚛ del kit neón), copiarlo y completar los campos de `playerData` que pide su README.
+   - Si es una alternativa sin React, portarla con los mismos patrones del aplicado: Chakra, datos en `playerData.js`, GSAP + ScrollTrigger o `useScrubReveal`, y colores del tema (`brand.amber` acento, `brand.dorado` segundo acento).
 5. **Verificar** según la sección 4 y recién ahí hacer commit.
 
 Para pedidos puntuales, como cambiar un texto, sumar fotos o mover un botón, se aplica el cambio directo, sin opciones.
@@ -96,7 +97,10 @@ Para pedidos puntuales, como cambiar un texto, sumar fotos o mover un botón, se
 ## 6. Mantener el catálogo
 
 Cuando se diseña un modelo nuevo para una sección, se guarda en `plantillas_skills`, aunque no se elija:
-- Su preview HTML (más un `.jpg` de miniatura) va en `modelos/<sección>/previews/`.
-- Se suma una fila al README de la sección y a `CATALOGO.md`.
+- **Genérico, no atado al jugador:** los textos y fotos salen de un archivo de datos (como `player.js` del kit neón, con `{{campo}}` en el HTML), nunca escritos a mano en el diseño.
+- **Si es de un estilo nuevo** (otra paleta o tipografía), armá un kit nuevo en `kits/<estilo>/` con la misma estructura que `kits/neon/` (datos, `base.css`, `kit.js`, `bind.js`, `index.html` comparador y un HTML por diseño con nombre `<sección>-<n>-<nombre>.html`).
+- **Previews:** `node herramientas/previews/empaquetar.mjs ../kits/<estilo>` las deja autocontenidas, con miniatura `.jpg`, en `modelos/<sección>/previews/<estilo>-<n>-<nombre>.html`.
+- **React:** el componente de la opción elegida va en `modelos/<sección>/react/`, con una nota en el README de qué campos de `playerData` y del tema usa.
+- Se suma una fila al README de la sección y a `CATALOGO.md` (tabla principal y "Cuándo conviene").
 
 Si el elegido reemplaza al aplicado, también se actualiza el componente en `starter/`, se prueba con `npm run build` y se sacan las capturas nuevas.

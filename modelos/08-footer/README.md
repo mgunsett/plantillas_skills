@@ -22,3 +22,22 @@
 ## Crédito en fondos claros
 
 El logo de Sportfolio (`starter/assets/logo_sport.png`) es crema y blanco: sobre un footer claro no se ve. Para paletas claras usar `starter/assets/logo_sport_dark.webp`, en verde `dev.green`, con el mismo link (`https://matiasgunsett.netlify.app/sportfolio`). Así quedó en Ivan Colman, junto al modelo Firma: la firma ajusta su tamaño al ancho con un `ResizeObserver`.
+
+## Kit neón (diseñado para Héctor Fertoli)
+
+Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía Nippo. Salen de [`kits/neon`](../../kits/neon/): los datos del jugador están en `player.js`, así que se pueden regenerar con otro jugador (ver el [README del kit](../../kits/neon/README.md)).
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| N1 | Pulido | Alternativa | [html](previews/neon-1-pulido.html) · ![](previews/neon-1-pulido.jpg) |
+| N2 | Con navegación | Alternativa | [html](previews/neon-2-navegacion.html) · ![](previews/neon-2-navegacion.jpg) |
+| N3 | **Firma** | ✅ Aplicado en Héctor Fertoli | [html](previews/neon-3-firma.html) · ![](previews/neon-3-firma.jpg) |
+| N4 | Escudos | Alternativa | [html](previews/neon-4-escudos.html) · ![](previews/neon-4-escudos.jpg) |
+
+- **N1. Pulido:** una sola línea: iniciales, redes, derechos y el crédito de desarrollo.
+- **N2. Con navegación:** columnas con logo y bajada, secciones de la página, contactos y redes.
+- **N3. Firma (aplicado en Fertoli):** escudo del club con la posición y el club al lado, links, "Volver arriba" y el apellido gigante a todo el ancho (las dos últimas letras en contorno). El tamaño de la palabra se ajusta a la cantidad de letras.
+  - **React:** [`react/FooterFirma.jsx`](react/FooterFirma.jsx). Lee `displayName`, `fullName`, `position`, `currentClub`, `logoCurrentClub`, `socialMedia` y `contact`.
+- **N4. Escudos:** una franja con los escudos de todos sus clubes en gris (el actual a color y subrayado) y debajo logo, derechos, crédito y "Volver arriba".
+
+En las cuatro el crédito es el logo de Sportfolio con el link a matiasgunsett.netlify.app/sportfolio, igual que en todas las landings.

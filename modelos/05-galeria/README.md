@@ -32,3 +32,22 @@ Las fotos se dividen por categoría (en Keki: Estudiantes, Entrenamiento y Clube
 - **3. Carriles:** una fila horizontal por categoría, con el título en contorno y flechas. Se ven todas las categorías a la vez sin pestañas. Funciona bien con pocas fotos por categoría.
   - Implementado en Ivan Colman (`GallerySection.jsx`). Cada foto lleva `shape` (`tall` | `square` | `wide`) en `playerData.galleries`: el ancho de la celda sale de esa forma y del alto del carril (240/280/340 px), así no hay saltos al cargar. En celular se ocultan las flechas y el carril se desliza.
   - Contorno de los títulos: usar `WebkitTextStrokeWidth` y `WebkitTextStrokeColor` por separado. El atajo `WebkitTextStroke` responsive pisa el color y el texto desaparece.
+
+## Kit neón (diseñado para Héctor Fertoli)
+
+Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía Nippo. Salen de [`kits/neon`](../../kits/neon/): los datos del jugador están en `player.js`, así que se pueden regenerar con otro jugador (ver el [README del kit](../../kits/neon/README.md)).
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| N1 | **Mosaico con pestañas** | ✅ Aplicado en Héctor Fertoli | [html](previews/neon-1-mosaico.html) · ![](previews/neon-1-mosaico.jpg) |
+| N2 | Carriles | Alternativa | [html](previews/neon-2-carriles.html) · ![](previews/neon-2-carriles.jpg) |
+| N3 | Álbum editorial | Alternativa | [html](previews/neon-3-album.html) · ![](previews/neon-3-album.jpg) |
+| N4 | Hoja de contactos | Alternativa | [html](previews/neon-4-hoja.html) · ![](previews/neon-4-hoja.jpg) |
+
+- **N1. Mosaico con pestañas (aplicado en Fertoli):** grilla de 4 columnas con una foto grande (2×2) cada cinco, pestañas Todas / club actual / Clubes anteriores, "Ver más fotos" que cierra sin huecos y visor a pantalla completa. Muestra 10 en desktop y 5 en mobile.
+  - **React:** [`react/GalleryMosaicoNeon.jsx`](react/GalleryMosaicoNeon.jsx). Usa `playerData.gallery` (una sola lista) con `{ src, cat: 'u' | 'c', alt }`; la pestaña del club actual toma el nombre de `currentClub`.
+- **N2. Carriles:** dos filas de fotos que corren solas en sentidos opuestos. Se frenan con el mouse y cualquier foto se abre grande. Versión neón de la opción 3.
+- **N3. Álbum editorial:** una foto destacada con su número y cuatro al costado; "Siguientes" pasa de a cinco y "Ver las N fotos" abre el visor.
+- **N4. Hoja de contactos:** visor grande con la foto completa (sin recortes, con la misma foto desenfocada de fondo) y una tira de película numerada en blanco y negro; la elegida se enciende a color. Sirve cuando hay fotos verticales y horizontales mezcladas.
+
+Las descripciones de las fotos van solo como texto alternativo: el usuario pidió que no se vean en pantalla.

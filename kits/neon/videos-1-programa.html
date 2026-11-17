@@ -1,0 +1,53 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Videos 1 · Programa</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.prog{display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:stretch}
+.player{position:relative;height:min(640px,72vh);aspect-ratio:9/16;overflow:hidden;background:#000;border:1px solid var(--line)}
+.player img{width:100%;height:100%;object-fit:cover;transition:opacity .4s var(--ease)}
+.player:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,#0C0E0Aee)}
+.play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;background:var(--lime);color:#0C0E0A;display:grid;place-items:center;z-index:2;border:0;cursor:pointer}
+.play svg{width:30px;height:30px}
+.player .cap{position:absolute;left:20px;right:20px;bottom:18px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;font-size:12px;letter-spacing:.14em;color:#d6dccd;text-transform:uppercase}
+.info{display:flex;flex-direction:column;min-width:0}
+.now{font-size:11px;font-weight:700;letter-spacing:.26em;color:var(--mag);text-transform:uppercase}
+.info h3{font-size:clamp(40px,4.6vw,72px);font-weight:700;line-height:.92;text-transform:uppercase;margin-top:10px}
+.meta{display:flex;align-items:center;gap:12px;margin-top:16px;font-size:14px;color:#d6dccd}
+.meta img{width:26px;height:26px;object-fit:contain}
+.ig{align-self:flex-start;margin-top:22px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);border:1.5px solid var(--lime);padding:12px 18px;border-radius:999px;text-decoration:none}
+.more{margin-top:auto;padding-top:34px}
+.more h4{font-size:11px;font-weight:700;letter-spacing:.26em;color:var(--gray);text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.it{display:grid;grid-template-columns:28px 64px 1fr auto;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);background:none;border-left:0;border-right:0;border-top:0;width:100%;color:inherit;text-align:left;cursor:pointer;font:inherit}
+.it i{font-style:normal;font-size:12px;color:var(--gray)}
+.it img{width:64px;height:84px;object-fit:cover}
+.it b{display:block;font-size:17px;font-weight:700;text-transform:uppercase}
+.it small{font-size:12px;color:var(--gray)}
+.it .st{font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--gray)}
+.it[aria-current="true"] i,.it[aria-current="true"] .st{color:var(--lime)}
+.it[aria-current="true"] b{color:var(--lime)}
+.it:focus-visible,.play:focus-visible,.ig:focus-visible{outline:2px solid var(--mag);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){.it:hover b{color:var(--lime)}}
+@media (max-width:900px){.prog{grid-template-columns:1fr;gap:26px}.player{height:auto;width:100%;max-width:420px;margin:0 auto}.info h3{font-size:40px}.it{grid-template-columns:22px 52px 1fr}.it img{width:52px;height:68px}.it .st{display:none}}
+</style></head><body>
+<section class="sec" id="videos">
+  <div class="sh"><div class="k">Highlights</div><h2>Videos</h2></div>
+  <div class="prog">
+    <div class="player"><img id="cover" src="" alt=""><button class="play" aria-label="Reproducir video"></button><div class="cap"><span>Reel</span><span id="lg"></span></div></div>
+    <div class="info">
+      <div class="now">Reproduciendo</div>
+      <h3 id="tt"></h3>
+      <div class="meta"><img id="cr" src="" alt=""><span id="ff"></span></div>
+      <a class="ig" id="ig" href="#">Ver en Instagram ↗</a>
+      <div class="more"><h4>Más videos</h4><div id="list"></div></div>
+    </div>
+  </div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+document.querySelector('.play').innerHTML=PLAY
+const list=document.getElementById('list')
+function sel(i){const v=VIDS[i];cover.src=v.img;tt.textContent=v.t;ff.textContent=v.f+' · '+v.club;cr.src=v.crest;lg.textContent=v.lg;ig.href='https://www.instagram.com/reel/'+v.ig+'/';ig.target='_blank';
+ [...list.children].forEach((b,j)=>b.setAttribute('aria-current',j===i))}
+list.innerHTML=VIDS.map((v,i)=>`<button class="it" type="button"><i>${String(i+1).padStart(2,'0')}</i><img src="${v.img}" alt=""><span><b>${v.t}</b><small>${v.club} · ${v.lg}</small></span><span class="st">${i?'VER':'EN PANTALLA'}</span></button>`).join('')
+;[...list.children].forEach((b,i)=>b.onclick=()=>sel(i));sel(0)
+</script>
+</body></html>

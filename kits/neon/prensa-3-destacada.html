@@ -1,0 +1,36 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prensa 3 · Destacada</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:44px}.hd .sh{margin:0}
+.ej{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mag);border:1px dashed var(--mag);padding:7px 10px;border-radius:4px}
+.g{display:grid;grid-template-columns:1.5fr 1fr;gap:12px}
+.g a{position:relative;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;color:#fff;text-decoration:none;background:var(--bg2);padding:28px;min-height:260px}
+.big{grid-row:span 2;min-height:clamp(520px,44vw,640px)!important;padding:40px!important}
+.big .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;transition:transform .9s var(--ease)}
+.big:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0C0E0A 8%,#0C0E0A99 45%,transparent 75%)}
+.big>*:not(.ph){position:relative;z-index:1}
+.src{display:flex;align-items:center;gap:12px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.src img{width:38px;height:38px;border-radius:8px;object-fit:cover}
+.src span{color:var(--gray);font-weight:400;white-space:nowrap}
+.big .lbl{position:absolute;top:28px;left:28px;background:var(--lime);color:#0C0E0A;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:8px 12px}
+.big h3{margin-top:18px;font-size:clamp(30px,3.4vw,52px);line-height:1;text-transform:uppercase;max-width:18ch}
+.big p{margin-top:14px;font-size:15px;color:#d6dccd;max-width:48ch;line-height:1.5}
+.sm{border:1px solid var(--line)}
+.sm h3{margin-top:14px;font-size:clamp(18px,1.6vw,24px);line-height:1.12;text-transform:uppercase}
+.go{margin-top:18px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lime)}
+.sm .n{position:absolute;top:18px;right:22px;font-size:64px;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1px var(--line)}
+.g a:focus-visible{outline:2px solid var(--mag);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){.big:hover .ph{transform:scale(1.04)}.sm{transition:background .3s var(--ease)}.sm:hover{background:#1b2014}}
+@media (max-width:820px){.g{grid-template-columns:1fr}.big{grid-row:auto;min-height:480px!important;padding:24px!important}.big .lbl{top:18px;left:18px}.g a{min-height:200px;padding:22px}}
+</style></head><body>
+<section class="sec" id="press">
+  <div class="hd"><div class="sh"><div class="k">En los medios</div><h2>Prensa</h2></div></div>
+  <div class="g" id="g"></div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const [a,...rest]=PRESS
+g.innerHTML=`<a class="big rv" href="${a.u}" target="_blank" rel="noopener" aria-label="Leer en ${a.medio}: ${a.t}"><img class="ph" src="${P.photos.press}" alt=""><span class="lbl">Nota destacada</span><div class="src"><img src="${a.logo}" alt="">${a.medio}<span>· ${a.d}</span></div><h3>${a.t}</h3><p>${a.x}</p><span class="go">Leer la nota ↗</span></a>`+
+rest.map((p,i)=>`<a class="sm rv" style="animation-delay:${(i+1)*.1}s" href="${p.u}" target="_blank" rel="noopener" aria-label="Leer en ${p.medio}: ${p.t}"><div class="src"><img src="${p.logo}" alt="">${p.medio}<span>· ${p.d}</span></div><h3>${p.t}</h3><span class="go">Leer ↗</span></a>`).join('')
+</script>
+</body></html>
