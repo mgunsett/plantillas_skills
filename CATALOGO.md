@@ -10,6 +10,7 @@ Hay dos estilos:
 | Sección | Clásico | Kit neón | Carpeta |
 |---|---|---|---|
 | **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox | N1 Dorsal gigante · N2 Split editorial · N3 Marquesina · ⚛ N4 Transmisión TV | [01-hero](modelos/01-hero/) |
+| **MatchBox** (dentro del hero) | ✅ Pestaña lateral "Partidos" | ⚛ M1 Marcador de TV · ⚛ M2 Tarjeta con pestañas · ⚛ M3 Dos tickets (Polaco Fydriszewski) | [01-hero](modelos/01-hero/#matchbox-último-resultado-y-próximo-partido-diseñado-para-polaco-fydriszewski) |
 | **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | — | [02-final](modelos/02-final/) |
 | **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés · 4 Anillos y tarjetas | N1 Marcador · N2 Ficha de scouting · ⚛ N3 Radar central · N4 Dossier | [03-estadisticas](modelos/03-estadisticas/) |
 | **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | N1 Programa · N2 Stories · ⚛ N3 Temporadas · N4 Paneles | [04-videos](modelos/04-videos/) |

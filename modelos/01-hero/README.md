@@ -43,3 +43,21 @@ Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía N
   - **React:** [`react/HeroBroadcast.jsx`](react/HeroBroadcast.jsx). Usa `useMatches` del starter (panel `/admin`) para los partidos, y si un equipo no tiene escudo muestra la sigla.
   - **Datos extra en `playerData`:** `heroPhoto` (foto horizontal o vertical de alta resolución) y `heroPhotoAlt`, además de `displayName`, `seasonShort` y `seasonStats`.
   - **Foto:** con una foto vertical, en escritorio a todo el ancho entra de la cabeza a los muslos; para ver el cuerpo entero hace falta una foto horizontal con el jugador más chico en el cuadro. Recortar desde arriba de la cabeza y exportar en alta (mínimo 1600 px de ancho).
+
+## MatchBox: último resultado y próximo partido (diseñado para Polaco Fydriszewski)
+
+Tres formas de mostrar los partidos dentro del hero. Las tres usan `useMatches` del starter (panel `/admin` con Firebase, o `matchData.js` si no está configurado) y, si un equipo no tiene escudo, muestran su sigla en un círculo.
+
+**React:** [`react/MatchBox.jsx`](react/MatchBox.jsx) exporta `MatchTicker`, `MatchCard` y `MatchTickets`. Todas reciben `last` y `next`. Los colores están en la constante `C` al principio del archivo: cambiá esos valores por los del club o por tokens del theme.
+
+| # | Modelo | Estado | Desktop | Mobile |
+|---|---|---|---|---|
+| M1 | **Marcador de TV** | ✅ Aplicado en Polaco Fydriszewski | ![](capturas/matchbox-1-desktop.jpg) | ![](capturas/matchbox-1-mobile.jpg) |
+| M2 | Tarjeta con pestañas | Alternativa | ![](capturas/matchbox-2-desktop.jpg) | ![](capturas/matchbox-2-mobile.jpg) |
+| M3 | Dos tickets | Alternativa | ![](capturas/matchbox-3-desktop.jpg) | ![](capturas/matchbox-3-mobile.jpg) |
+
+- **M1. Marcador de TV (`MatchTicker`):** en desktop es una barra pegada abajo del hero, como el zócalo de una transmisión. A la izquierda va el último resultado, con el marcador en un bloque del acento. A la derecha va el próximo partido, con "VS" en contorno. Desde 1280 px suma la fecha, la competencia y el estadio. En mobile va debajo de los botones, con los dos partidos apilados y la fecha arriba de cada uno.
+  - El hero tiene que dejarle lugar. En Polaco, la columna de texto lleva `pb: 120px` en desktop y la sección usa `minH: max(700px, 100svh)` con `h: auto`, así crece en pantallas bajas en vez de pisar los botones.
+  - Montaje: un `Box` con `position="absolute" left={0} right={0} bottom={0}` dentro de la sección para desktop (`display={{ base: 'none', lg: 'block' }}`), y otro dentro del flujo del texto para mobile.
+- **M2. Tarjeta con pestañas (`MatchCard`):** tarjeta de 330 px con dos pestañas, "Último resultado" (acento) y "Próximo partido" (segundo acento). Muestra un partido a la vez, con escudos grandes y marcador o "VS" al centro, y abajo la fecha y el estadio. En Polaco se probó flotando sobre el panel del recorte (`left: 2%`, `bottom: 48px`). Conviene cuando el texto del hero ya está cargado y no hay lugar abajo. En mobile va a todo el ancho.
+- **M3. Dos tickets (`MatchTickets`):** dos piezas lado a lado debajo de los botones. El resultado es un marcador con borde izquierdo del acento. El próximo partido es una "entrada" con borde punteado y perforaciones laterales, con el día grande y el mes y la hora debajo (toma el primer token de `date` como día). Se ve igual en desktop y mobile. Ocupa alto en la columna de texto, así que el hero tiene que tener lugar.
