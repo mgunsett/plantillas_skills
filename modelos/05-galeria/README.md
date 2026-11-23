@@ -51,3 +51,22 @@ Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía N
 - **N4. Hoja de contactos:** visor grande con la foto completa (sin recortes, con la misma foto desenfocada de fondo) y una tira de película numerada en blanco y negro; la elegida se enciende a color. Sirve cuando hay fotos verticales y horizontales mezcladas.
 
 Las descripciones de las fotos van solo como texto alternativo: el usuario pidió que no se vean en pantalla.
+
+## Kit claro (diseñado para Luis Ramos)
+
+Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía Nippo, desde [`kits/claro`](../../kits/claro/). Los datos salen de `kits/claro/player.js`.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| C1 | Mosaico con pestañas | Alternativa | [html](previews/claro-1-mosaico.html) · ![](previews/claro-1-mosaico.jpg) |
+| C2 | **Carriles** | ✅ Aplicado en Luis Ramos | [html](previews/claro-2-carriles.html) · ![](previews/claro-2-carriles.jpg) |
+| C3 | Álbum editorial | Alternativa | [html](previews/claro-3-album.html) · ![](previews/claro-3-album.jpg) |
+| C4 | Hoja de contactos | Alternativa | [html](previews/claro-4-hoja.html) · ![](previews/claro-4-hoja.jpg) |
+
+- **C1. Mosaico con pestañas:** Grilla con una foto grande cada cinco, filtros por Alianza, Selección y clubes anteriores, "Ver más fotos" sin huecos y visor a pantalla completa.
+- **C2. Carriles (aplicado en Luis Ramos):** Dos filas de fotos que corren solas en sentidos opuestos. Se frenan con el mouse y cualquier foto se abre grande.
+  - **React:** [`react/GalleryCarriles.jsx`](react/GalleryCarriles.jsx).
+- **C3. Álbum editorial:** Una foto destacada y cuatro al costado; "Siguientes" pasa de a cinco y "Ver todas" abre el visor.
+- **C4. Hoja de contactos:** Visor grande con la foto completa y una tira numerada en blanco y negro para elegir.
+
+En React, cada foto lleva `group` ('u' club actual, 's' selección, 'c' clubes anteriores) para el contador del pie.

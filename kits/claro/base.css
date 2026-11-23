@@ -1,0 +1,54 @@
+@font-face{font-family:Nippo;font-weight:300;src:url(fonts/Nippo-Light.woff2) format('woff2')}
+@font-face{font-family:Nippo;font-weight:400;src:url(fonts/Nippo-Regular.woff2) format('woff2')}
+@font-face{font-family:Nippo;font-weight:500;src:url(fonts/Nippo-Medium.woff2) format('woff2')}
+@font-face{font-family:Nippo;font-weight:700;src:url(fonts/Nippo-Bold.woff2) format('woff2')}
+/* Kit claro: fondo blanco azulado, acento del club (--acc) y segundo acento (--acc2).
+   Para otro club se cambian solo --acc, --acc2 y, si hace falta, --deep (superficie oscura). */
+:root{
+  --bg:#F4F6FB; --bg2:#FFFFFF; --ink:#0D1730; --gray:#5C6A88; --line:#17285a26;
+  --acc:#17285A; --acc-l:#17285a14; --acc2:#E23744; --deep:#0A1226; --on-acc:#FFFFFF;
+  --ease:cubic-bezier(0.23,1,0.32,1);
+  --sv:1vh;
+}
+@supports (height:1svh){:root{--sv:1svh}}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:Nippo,system-ui,sans-serif;overflow-x:hidden}
+img{display:block;max-width:none}
+a{color:inherit}
+button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--acc2);outline-offset:3px}
+/* Navbar neutro para las previews de hero (el navbar real se elige aparte) */
+.nav{position:absolute;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 60px}
+.nav a{color:var(--ink);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;opacity:.75}
+.nav .links{display:flex;gap:32px;align-items:center}
+.nav .logo{font-weight:700;font-size:22px;color:var(--acc);letter-spacing:.05em;opacity:1}
+.nav .logo span{color:var(--acc2)}
+.nav .cta{background:var(--acc);color:var(--on-acc);padding:9px 16px;border-radius:4px;opacity:1}
+.nav .burger{display:none;width:26px;height:14px;border-top:2px solid currentColor;border-bottom:2px solid currentColor}
+.nav.inv a,.nav.inv{color:#fff}.nav.inv .logo{color:#fff}.nav.inv .cta{background:#fff;color:var(--acc)}
+@media (max-width:820px){.nav{padding:18px 20px}.nav .links,.nav .cta{display:none}.nav .burger{display:block}}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
+.rv{opacity:0;transform:translateY(28px);animation:rv 1s var(--ease) forwards}
+@keyframes rv{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}}
+.tab{font-variant-numeric:tabular-nums}
+/* Página de relleno para probar los navbar con scroll */
+.demo-hero{position:relative;height:calc(100 * var(--sv));min-height:560px;overflow:hidden;background:var(--deep)}
+.demo-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:brightness(.62) saturate(.85)}
+.demo-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0A122699 0%,transparent 30%,transparent 60%,#0A1226cc 100%)}
+.demo-hero h1{position:absolute;left:60px;bottom:64px;z-index:2;color:#fff;font-weight:700;text-transform:uppercase;line-height:.85;font-size:clamp(64px,10vw,170px)}
+.demo-hero h1 small{display:block;font-size:.28em;letter-spacing:.14em;font-weight:500;opacity:.8}
+.demo-sec{min-height:80vh;padding:110px 60px;border-top:1px solid var(--line)}
+.demo-sec:nth-child(even){background:var(--bg2)}
+.demo-sec .k{font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--acc2)}
+.demo-sec h2{font-weight:700;font-size:clamp(44px,5.4vw,84px);line-height:.9;color:var(--acc);text-transform:uppercase;margin-top:8px}
+.demo-sec .ph{margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.demo-sec .ph i{display:block;height:180px;border-radius:6px;background:var(--acc-l)}
+@media (max-width:820px){.demo-hero h1{left:20px;bottom:40px}.demo-sec{padding:80px 20px}.demo-sec .ph{grid-template-columns:1fr}.demo-sec .ph i{height:120px}}
+/* Secciones (mismos nombres que el kit neón, así los diseños se pasan de un kit al otro) */
+.sec{position:relative;padding:96px 60px;background:var(--bg);overflow:hidden}
+.sec.alt{background:var(--bg2)}
+.sh{margin-bottom:44px}
+.sh .k{font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--acc2)}
+.sh h2{font-weight:700;font-size:clamp(44px,5.4vw,84px);line-height:.9;color:var(--acc);text-transform:uppercase;margin-top:8px}
+@media (max-width:820px){.sec{padding:64px 20px}.sh{margin-bottom:28px}}

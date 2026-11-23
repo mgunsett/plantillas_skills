@@ -1,0 +1,37 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Galería 2 · Carriles</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.sec{padding-left:0;padding-right:0}
+.sh{padding:0 60px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+.sh p{font-size:13px;color:var(--gray);max-width:32ch;line-height:1.5}
+.lane{display:flex;overflow:hidden;margin-bottom:10px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.track{display:flex;gap:10px;padding-right:10px;flex-shrink:0;animation:mq var(--d,60s) linear infinite}
+.lane.r .track{animation-direction:reverse}
+.lane:hover .track,.lane:focus-within .track{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-100%)}}
+.track button{flex-shrink:0;height:clamp(180px,22vw,300px);aspect-ratio:var(--ar,4/5);padding:0;border:0;background:#000;overflow:hidden;cursor:zoom-in;position:relative}
+.track img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;filter:grayscale(.6) brightness(.8);transition:filter .4s var(--ease),transform .7s var(--ease)}
+.track button:focus-visible{outline:2px solid var(--acc2);outline-offset:-2px}
+@media (hover:hover) and (pointer:fine){.track button:hover img{filter:none;transform:scale(1.04)}}
+@media (hover:none){.track img{filter:none}}
+.cap{display:flex;gap:24px;justify-content:center;margin-top:24px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.cap b{color:var(--acc)}
+@media (max-width:820px){.sh{padding:0 20px}.track button{height:46vw}}
+</style></head><body>
+<section class="sec" id="galeria">
+  <div class="sh"><div><div class="k">Fotos</div><h2>Galería</h2></div></div>
+  <div class="lane" id="l1" style="--d:70s"></div>
+  <div class="lane r" id="l2" style="--d:80s"></div>
+  <div class="cap"><span><b id="n1"></b> {{galleryCats.1.1}}</span><span><b id="n2"></b> {{galleryCats.2.1}}</span></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script src="lb.js"></script>
+<script>
+const U=GAL.filter(g=>g.c==='u'),C=GAL.filter(g=>g.c==='c')
+n1.textContent=U.length;n2.textContent=C.length
+const half=Math.ceil(GAL.length/2),rows=[GAL.slice(0,half),GAL.slice(half)]
+;[l1,l2].forEach((lane,k)=>{const list=rows[k],html=list.map((g,i)=>`<button style="--ar:${i%3===1?'16/11':'4/5'}" aria-label="Ampliar: ${g.a}" data-i="${GAL.indexOf(g)}"><img src="${g.s}" alt="${g.a}" loading="lazy"></button>`).join('')
+ lane.innerHTML=`<div class="track">${html}</div><div class="track" aria-hidden="true">${html}</div>`
+ lane.querySelectorAll('.track[aria-hidden] button').forEach(b=>b.tabIndex=-1)
+ lane.querySelectorAll('button').forEach(b=>b.onclick=()=>openLB(GAL,+b.dataset.i))})
+</script>
+</body></html>

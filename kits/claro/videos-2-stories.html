@@ -1,0 +1,69 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Videos 2 · Stories</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.lay{display:grid;grid-template-columns:1fr auto 1fr;gap:48px;align-items:center}
+.copy p{font-size:16px;line-height:1.6;color:#3D4A68;max-width:34ch;font-weight:300}
+.copy .h{font-size:13px;font-weight:700;color:var(--acc);margin-top:20px;letter-spacing:.06em}
+.stage{position:relative;width:min(360px,80vw);aspect-ratio:9/16}
+.ghost{display:none;position:absolute;top:8%;height:84%;aspect-ratio:9/16;overflow:hidden;opacity:.28;filter:grayscale(1)}
+.ghost img{width:100%;height:100%;object-fit:cover}
+.ghost.l{right:calc(100% + 18px)}.ghost.r{left:calc(100% + 18px)}
+.story{position:relative;width:100%;height:100%;overflow:hidden;border-radius:18px;background:#000;box-shadow:0 30px 80px #000c}
+.story img.c{width:100%;height:100%;object-fit:cover}
+.story:after{content:"";position:absolute;inset:0;background:linear-gradient(#000a,transparent 22%,transparent 60%,#000d)}
+.bars{position:absolute;top:12px;left:12px;right:12px;display:flex;gap:4px;z-index:2}
+.bars span{flex:1;height:3px;background:#17285a40;border-radius:2px;overflow:hidden}
+.bars span i{display:block;height:100%;background:#fff;transform-origin:left;transform:scaleX(0)}
+.bars span.done i{transform:none}
+.bars span.on i{animation:pr 6s linear forwards}
+@keyframes pr{to{transform:none}}
+.user{position:absolute;top:26px;left:14px;z-index:2;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}
+.user img{width:32px;height:32px;border-radius:50%;background:#fff;padding:3px;object-fit:contain;outline:2px solid var(--acc2);outline-offset:1px}
+.user small{font-weight:400;color:#ddd}
+.bot{position:absolute;left:16px;right:16px;bottom:16px;z-index:2}
+.bot b{display:block;font-size:26px;font-weight:700;text-transform:uppercase;line-height:1}
+.bot small{font-size:12px;color:#ddd;letter-spacing:.08em}
+.bot a{display:block;margin-top:14px;text-align:center;background:var(--acc);color:#fff;font-weight:700;font-size:12px;letter-spacing:.18em;padding:12px;border-radius:999px;text-decoration:none;text-transform:uppercase}
+.nav2{position:absolute;inset:0;display:flex;z-index:1}
+.nav2 button{flex:1;background:none;border:0;cursor:pointer}
+.nav2 button:focus-visible{outline:2px solid var(--acc2);outline-offset:-4px}
+.arrows{display:flex;gap:10px;margin-top:22px}
+.arrows button{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--acc);background:none;color:var(--acc);font-size:18px;cursor:pointer}
+.side{display:grid;gap:12px;justify-items:start}
+.side button{display:flex;align-items:center;gap:12px;background:none;border:0;color:var(--gray);font:inherit;font-size:14px;cursor:pointer;padding:0}
+.side button img{width:52px;height:52px;border-radius:50%;object-fit:cover;outline:2px solid var(--line);outline-offset:2px}
+.side button[aria-current="true"]{color:var(--ink)}
+.side button[aria-current="true"] img{outline-color:var(--acc2)}
+@media (max-width:1000px){.lay{grid-template-columns:1fr;justify-items:center;gap:28px}.ghost{display:none}.copy{text-align:center}.copy p{margin:0 auto}.side{grid-auto-flow:column;justify-items:center}.side button{flex-direction:column;font-size:11px;gap:6px}.arrows{justify-content:center}}
+</style></head><body>
+<section class="sec" id="videos">
+  <div class="sh"><div class="k">Highlights</div><h2>Videos</h2></div>
+  <div class="lay">
+    <div class="copy"><p>Los reels de {{first}} como historias: tocá a los costados para pasar, o elegí el club.</p><div class="h">{{instagram.h}}</div>
+      <div class="arrows"><button id="pv" aria-label="Anterior">←</button><button id="nx" aria-label="Siguiente">→</button></div></div>
+    <div class="stage">
+      <div class="ghost l"><img id="gl" src="" alt=""></div><div class="ghost r"><img id="gr" src="" alt=""></div>
+      <div class="story"><img class="c" id="sc" src="" alt="">
+        <div class="bars" id="bars"></div>
+        <div class="user"><img src="{{clubs.0.l}}" id="su" alt=""><span>{{instagram.user}} <small id="sl"></small></span></div>
+        <div class="nav2"><button aria-label="Anterior" id="tl"></button><button aria-label="Siguiente" id="tr"></button></div>
+        <div class="bot"><b id="st"></b><small id="sf"></small><a href="#" id="sa">Ver reel ↗</a></div>
+      </div>
+    </div>
+    <div class="side" id="side"></div>
+  </div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+let cur=0,timer;const N=VIDS.length
+bars.innerHTML=VIDS.map(()=>'<span><i></i></span>').join('')
+side.innerHTML=VIDS.map(v=>`<button type="button"><img src="${v.img}" alt="">${v.club}</button>`).join('')
+;[...side.children].forEach((b,i)=>b.onclick=()=>go(i))
+function go(i){cur=(i+N)%N;const v=VIDS[cur];sc.src=v.img;st.textContent=v.t;sf.textContent=v.f+' · '+v.lg;su.src=v.crest;sl.textContent=v.club;sa.href='https://www.instagram.com/reel/'+v.ig+'/'
+ gl.src=VIDS[(cur-1+N)%N].img;gr.src=VIDS[(cur+1)%N].img
+ ;[...bars.children].forEach((b,j)=>{b.className=j<cur?'done':'';if(j===cur){void b.offsetWidth;b.className='on'}})
+ ;[...side.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur))
+ clearTimeout(timer);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setTimeout(()=>go(cur+1),6000)}
+pv.onclick=tl.onclick=()=>go(cur-1);nx.onclick=tr.onclick=()=>go(cur+1);go(0)
+</script>
+</body></html>

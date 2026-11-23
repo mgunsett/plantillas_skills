@@ -18,7 +18,7 @@ if (!kitArg) { console.error('Uso: node previews/empaquetar.mjs <kit> [salida] [
 const KIT = path.resolve(kitArg)
 const KIT_NAME = path.basename(KIT)
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..')
-const SECCIONES = { hero: '01-hero', stats: '03-estadisticas', videos: '04-videos', galeria: '05-galeria', prensa: '06-prensa', contacto: '07-contacto', footer: '08-footer', clubes: '09-clubes' }
+const SECCIONES = { navbar: '00-navbar', hero: '01-hero', stats: '03-estadisticas', videos: '04-videos', galeria: '05-galeria', prensa: '06-prensa', contacto: '07-contacto', footer: '08-footer', clubes: '09-clubes' }
 const MIME = { webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', svg: 'image/svg+xml', woff2: 'font/woff2' }
 const ASSET_RX = /(?:img|fonts)\/[\w.-]+\.(?:webp|png|jpe?g|svg|woff2)/g
 
@@ -38,7 +38,7 @@ const dataUri = rel => {
 const read = f => fs.readFileSync(path.join(KIT, f), 'utf8')
 
 const files = fs.readdirSync(KIT).filter(f => /^[a-z]+-\d-[\w-]+\.html$/.test(f) && (!only.length || only.includes(f.replace('.html', ''))))
-const chrome = process.env.CHROME || (fs.existsSync('/usr/bin/google-chrome') ? '/usr/bin/google-chrome' : undefined)
+const chrome = process.env.CHROME || ['/usr/bin/google-chrome', '/opt/pw-browsers/chromium'].find(p => fs.existsSync(p))
 const browser = await chromium.launch({ ...(chrome ? { executablePath: chrome } : {}), args: ['--no-sandbox'] })
 
 for (const f of files) {
@@ -77,6 +77,7 @@ for (const f of files) {
     await pg.waitForTimeout(sec === 'hero' ? 2600 : 1400) // que terminen las entradas
     const shot = { path: out.replace(/\.html$/, '.jpg'), type: 'jpeg', quality: 72 }
     if (sec === 'footer') await pg.locator('footer').screenshot(shot) // sin el relleno de arriba
+    else if (sec === 'navbar') await pg.screenshot(shot) // solo la primera pantalla (abajo hay relleno)
     else await pg.screenshot({ ...shot, fullPage: true })
     await pg.close()
   }

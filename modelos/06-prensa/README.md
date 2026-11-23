@@ -40,3 +40,14 @@ Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía N
 - **N4. Lo publicaron:** una franja con los logos de los medios y, debajo, los titulares como citas con comillas del acento.
 
 En el kit los titulares son de ejemplo: hay que cargar medio, titular, fecha, bajada y link reales en `press` de `player.js`.
+
+## Kit claro (diseñado para Luis Ramos)
+
+Las cuatro opciones del kit neón pasadas a la paleta clara (blanco azulado, azul del club y rojo), desde [`kits/claro`](../../kits/claro/). Las notas son las reales de Luis (Win Sports, CONMEBOL Sudamericana y Cusco FC).
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| C1 | Titulares | Alternativa | [html](previews/claro-1-titulares.html) · ![](previews/claro-1-titulares.jpg) |
+| C2 | Recortes | Alternativa | [html](previews/claro-2-recortes.html) · ![](previews/claro-2-recortes.jpg) |
+| C3 | Nota destacada | Alternativa (React del kit neón en `react/PressDestacada.jsx`) | [html](previews/claro-3-destacada.html) · ![](previews/claro-3-destacada.jpg) |
+| C4 | Lo publicaron | Alternativa | [html](previews/claro-4-publicaron.html) · ![](previews/claro-4-publicaron.jpg) |

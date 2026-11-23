@@ -41,3 +41,22 @@ Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía N
 - **N4. Escudos:** una franja con los escudos de todos sus clubes en gris (el actual a color y subrayado) y debajo logo, derechos, crédito y "Volver arriba".
 
 En las cuatro el crédito es el logo de Sportfolio con el link a matiasgunsett.netlify.app/sportfolio, igual que en todas las landings.
+
+## Kit claro (diseñado para Luis Ramos)
+
+Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía Nippo, desde [`kits/claro`](../../kits/claro/). Los datos salen de `kits/claro/player.js`.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| C1 | Pulido | Alternativa | [html](previews/claro-1-pulido.html) · ![](previews/claro-1-pulido.jpg) |
+| C2 | Con navegación | Alternativa | [html](previews/claro-2-navegacion.html) · ![](previews/claro-2-navegacion.jpg) |
+| C3 | **Firma** | ✅ Aplicado en Luis Ramos | [html](previews/claro-3-firma.html) · ![](previews/claro-3-firma.jpg) |
+| C4 | Escudos | Alternativa | [html](previews/claro-4-escudos.html) · ![](previews/claro-4-escudos.jpg) |
+
+- **C1. Pulido:** Una sola línea: logo, redes, derechos y el crédito de desarrollo.
+- **C2. Con navegación:** Columnas con logo y bajada, secciones, contactos y redes.
+- **C3. Firma (aplicado en Luis Ramos):** Escudo, posición y club, links, Volver arriba y la firma RAM9S gigante a todo el ancho, con el dorsal en rojo en lugar de la O.
+  - **React:** [`react/FooterFirmaClaro.jsx`](react/FooterFirmaClaro.jsx).
+- **C4. Escudos:** Franja con los escudos de sus 8 clubes en gris (Alianza a color) y debajo logo, derechos, crédito y Volver arriba.
+
+La firma cambia la primera "O" del apellido por el dorsal en rojo (RAM9S). Si el apellido no tiene O, el dorsal va al final. El tamaño se ajusta midiendo el texto real.

@@ -38,3 +38,20 @@ Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía N
 - **N3. ¿Para qué escribís?:** el visitante elige si es de un club, una marca o prensa/fan, y la tarjeta le muestra a quién escribirle (representante, agencia de marketing o Instagram).
 - **N4. Tarjetas grandes (aplicado en Fertoli):** cuatro tarjetas 2×2: Instagram y Transfermarkt arriba, el representante en el acento y marketing abajo. Cada una tiene el logo en gris y tenue de fondo, y toda la tarjeta es el link.
   - **React:** [`react/ContactTarjetasNeon.jsx`](react/ContactTarjetasNeon.jsx). Lee `socialMedia` y `contact` como el starter.
+
+## Kit claro (diseñado para Luis Ramos)
+
+Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía Nippo, desde [`kits/claro`](../../kits/claro/). Los datos salen de `kits/claro/player.js`.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| C1 | Directorio | Alternativa | [html](previews/claro-1-directorio.html) · ![](previews/claro-1-directorio.jpg) |
+| C2 | Cierre con foto | Alternativa | [html](previews/claro-2-cierre.html) · ![](previews/claro-2-cierre.jpg) |
+| C3 | ¿Para qué escribís? | Alternativa | [html](previews/claro-3-motivo.html) · ![](previews/claro-3-motivo.jpg) |
+| C4 | **Tarjetas grandes** | ✅ Aplicado en Luis Ramos | [html](previews/claro-4-tarjetas.html) · ![](previews/claro-4-tarjetas.jpg) |
+
+- **C1. Directorio:** Título a la izquierda y un renglón por contacto: Moon Sports, LED Sports e Instagram, con para qué escribirle a cada uno.
+- **C2. Cierre con foto:** Media pantalla con la foto del título y del otro lado "¿Jugamos juntos?" con las agencias y un botón grande a Instagram.
+- **C3. ¿Para qué escribís?:** El visitante elige si es de un club, una marca o prensa/fan, y la tarjeta le muestra a quién escribirle.
+- **C4. Tarjetas grandes (aplicado en Luis Ramos):** Cuatro tarjetas 2x2 (Instagram, Transfermarkt, representante en azul y marketing) con el logo en gris de fondo.
+  - **React:** [`react/ContactTarjetasClaro.jsx`](react/ContactTarjetasClaro.jsx).

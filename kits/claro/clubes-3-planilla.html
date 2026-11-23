@@ -1,0 +1,45 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clubes 3 · Planilla</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.head,.r{display:grid;grid-template-columns:150px 1fr 160px 190px 1fr;align-items:center;gap:20px}
+.head{font-size:10px;font-weight:700;letter-spacing:.24em;color:var(--gray);text-transform:uppercase;padding:0 22px 12px;border-bottom:2px solid var(--acc)}
+.r{padding:18px 22px;border-bottom:1px solid var(--line);position:relative;animation:rv .8s var(--ease) both}
+.r .yr{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.r .club{display:flex;align-items:center;gap:16px;font-size:19px;font-weight:700;text-transform:uppercase}
+.r .club img{width:44px;height:44px;object-fit:contain}
+.r .ct{font-size:13px;color:#3D4A68}
+.r .tp span{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gray)}
+.r .tt{font-size:13px;color:var(--acc)}
+.r.cur{background:linear-gradient(90deg,#17285a1f,transparent 70%)}
+.r.cur:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--acc)}
+.r.cur .yr{color:var(--acc)}
+.r.cur .tp span{background:var(--acc);color:#fff;border-color:var(--acc)}
+.r.own .tp span{border-color:var(--acc2);color:var(--acc2)}
+@media (hover:hover) and (pointer:fine){.r:not(.cur):hover{background:#17285a06}}
+@media (max-width:900px){
+  .head{display:none}
+  .r{grid-template-columns:52px 1fr auto;grid-template-areas:"logo club tp" "logo meta meta";gap:4px 14px;padding:16px 4px}
+  .r .club{grid-area:club;font-size:15px}
+  .r .club img{position:absolute;left:4px;top:18px;width:44px;height:44px}
+  .r .yr{display:none}
+  .r .meta{grid-area:meta;font-size:12px;color:var(--gray)}
+  .r .ct,.r .tt{display:none}
+  .r .tp{grid-area:tp}
+  .r .tp span{font-size:9px;padding:4px 7px}
+  .r.cur:before{left:-20px}
+}
+@media (min-width:901px){.r .meta{display:none}}
+</style></head><body>
+<section class="sec" id="clubes">
+  <div class="sh"><div class="k">Trayectoria · {{clubCount}} clubes</div><h2>Clubes</h2></div>
+  <div class="head"><span>Temporada</span><span>Club</span><span>País</span><span>Vínculo</span><span>Títulos</span></div>
+  <div id="rows"></div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+document.getElementById('rows').innerHTML=CLUBS.map((c,k)=>`<div class="r${c.cur?' cur':''}${c.own?' own':''}" style="animation-delay:${k*.06}s">
+<span class="yr">${c.y}</span><span class="club"><img src="${c.l}" alt="Escudo de ${c.n}">${c.n}</span><span class="ct">${c.c}</span>
+<span class="tp"><span>${c.cur?(c.i?'Actual · '+c.i.toLowerCase():'Actual'):c.own?'Dueño del pase':c.i||'Pase'}</span></span><span class="tt">${c.t.length?'★ '+c.t.join(', '):''}</span>
+<span class="meta">${c.y} · ${c.c}${c.t.length?' · <b style="color:var(--acc)">★ '+c.t.join(', ')+'</b>':''}</span></div>`).join('')
+</script>
+</body></html>
