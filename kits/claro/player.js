@@ -30,12 +30,14 @@ window.P = {
     heroBall: 'img/recorte-pelota.webp',   // recorte con la pelota (Hero 1)
     heroWide: 'img/hero-ancho.webp',       // foto de cancha en alta (Hero 3, navbar)
     portrait: 'img/retrato.webp',          // retrato vertical de estudio (Hero 5)
+    heroCelebrate: 'img/recorte-festejo.webp', // recorte festejando, brazos abiertos (Hero 6)
   },
   alts: {
     heroFront: 'Luis Ramos con la camiseta 9 de Alianza Lima',
     heroBall: 'Luis Ramos con la pelota y la camiseta de la Selección Peruana',
     heroWide: 'Luis Ramos levanta el trofeo con Alianza Lima',
     portrait: 'Retrato de Luis Ramos haciendo silencio con el dedo',
+    heroCelebrate: 'Luis Ramos festeja con los brazos abiertos y la camiseta 9 de Alianza Lima',
   },
 
   // Partidos de EJEMPLO para la preview. En React salen de useMatches / el panel /admin.
