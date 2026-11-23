@@ -34,28 +34,7 @@ body{overflow-x:clip}
 .rail b{display:block;font-size:20px;letter-spacing:0;color:#fff;margin-bottom:2px}
 .hint{position:absolute;top:30px;right:60px;z-index:3;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#ffffff88}
 .top{padding-bottom:40px}
-/* Radar chico con los 6 atributos: acompaña al número, entre el texto y el recorte */
-/* Pie de la sección: radar con los 6 atributos y la lista al lado */
-.ft2{background:var(--acc);color:#fff;padding:20px 60px 80px;display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:60px;align-items:center;border-top:1px solid #ffffff1f}
-.rd{width:100%;color:#fff}
-.at .k{font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#ffffffaa}
-.at .k b{color:var(--acc2)}
-.at h3{font-size:clamp(30px,3vw,46px);font-weight:700;text-transform:uppercase;line-height:.95;margin-top:8px}
-.at ul{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:22px 30px;margin-top:28px}
-.at li{border-top:1px solid #ffffff33;padding-top:10px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#ffffffaa}
-.at li b{display:block;font-size:30px;letter-spacing:0;color:#fff;line-height:1;margin-bottom:4px}
-.at li.best{border-color:var(--acc2)}.at li.best b{color:var(--acc2)}
-.rd svg{width:100%;height:auto;overflow:visible}
-.rd .poly{transform-origin:center;transform-box:view-box;transform:scale(0);opacity:0}
-.rd.on .poly{animation:rdin 1.2s var(--ease) both}
-@keyframes rdin{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
-.rd text{font-family:Nippo,system-ui,sans-serif;font-size:7.2px;letter-spacing:.12em;text-transform:uppercase;fill:#ffffffb0}
-.rd text.v{font-size:8px;font-weight:700;fill:#fff;letter-spacing:0}
-.rd .md{font-size:22px;font-weight:700;fill:#fff;letter-spacing:0}
-.rd .ml{font-size:5.6px;fill:#ffffffaa}
-.rd .cap2{display:none;margin-top:4px;text-align:center;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#ffffff88}
 @media (max-width:820px){
-  .ft2{grid-template-columns:1fr;padding:16px 20px 64px;gap:26px}.rd{max-width:360px;margin:0 auto}.at ul{grid-template-columns:repeat(2,1fr);gap:18px 20px}
   .st{grid-template-columns:1fr;align-items:start;padding:96px 20px 0}
   .pic{right:-16%;bottom:150px;height:44%;opacity:.95}
   .ghost{display:none}
@@ -81,10 +60,6 @@ body{overflow-x:clip}
     <div class="hint">Scrolleá ↓</div>
     <div class="rail" id="rail"></div>
   </div>
-</div>
-<div class="ft2">
-  <figure class="rd" id="rd" aria-label="Atributos"></figure>
-  <div class="at"><div class="k">Atributos · media <b>{{media}}</b></div><h3>Perfil de juego</h3><ul id="al"></ul></div>
 </div>
 <script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
 // Orden de las cifras: goles primero, el resto como viene
@@ -117,19 +92,6 @@ function show(i){if(i===cur)return;cur=i;const s=S[i],v=String(s.v)
 function tick(){const r=od.getBoundingClientRect(),run=od.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-r.top/run))
  const f=p*n,i=Math.min(n-1,Math.floor(f));[...rail.children].forEach((b,j)=>b.style.setProperty('--f',Math.min(1,Math.max(0,f-j))))
  show(i)}
-// Radar: los atributos 0-100 en un polígono, el mejor en rojo y la media al centro
-;(function(){const A=ATTRS,N=A.length,R=60,c=100,min=50,pt=(i,v)=>{const a=-Math.PI/2+i*2*Math.PI/N,r=R*Math.max(0,v-min)/(100-min);return[(c+r*Math.cos(a)).toFixed(1),(c+r*Math.sin(a)).toFixed(1)]}
- const best=A.reduce((b,x,i)=>x[1]>A[b][1]?i:b,0);let g=''
- for(const v of [62.5,75,87.5,100])g+=`<polygon points="${A.map((_,i)=>pt(i,v).join(',')).join(' ')}" fill="none" stroke="#ffffff${v===100?'40':'18'}"/>`
- A.forEach((_,i)=>{const [x,y]=pt(i,100);g+=`<line x1="${c}" y1="${c}" x2="${x}" y2="${y}" stroke="#ffffff14"/>`})
- g+=`<polygon class="poly" points="${A.map(([,v],i)=>pt(i,v).join(',')).join(' ')}" fill="#ffffff" fill-opacity=".16" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>`
- A.forEach(([l,v],i)=>{const [x,y]=pt(i,v);g+=`<circle cx="${x}" cy="${y}" r="${i===best?3.2:2}" fill="${i===best?'var(--acc2)':'#fff'}"/>`
-  const a=-Math.PI/2+i*2*Math.PI/N,lx=c+(R+16)*Math.cos(a),ly=c+(R+16)*Math.sin(a),anc=Math.abs(Math.cos(a))<.2?'middle':Math.cos(a)>0?'start':'end'
-  g+=`<text x="${lx.toFixed(1)}" y="${(ly-1).toFixed(1)}" text-anchor="${anc}">${l}</text><text class="v" x="${lx.toFixed(1)}" y="${(ly+8).toFixed(1)}" text-anchor="${anc}"${i===best?' style="fill:var(--acc2)"':''}>${v}</text>`})
- g+=`<text class="md" x="${c}" y="${c+6}" text-anchor="middle">${P.media}</text><text class="ml" x="${c}" y="${c+15}" text-anchor="middle">MEDIA</text>`
- al.innerHTML=A.map(([l,v],i)=>`<li${i===best?' class="best"':''}><b>${v}</b>${l}</li>`).join('')
- new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){rd.classList.add('on');o.disconnect()}},{threshold:.3}).observe(rd)
- rd.innerHTML=`<svg viewBox="-42 0 284 200" role="img" aria-label="${A.map(([l,v])=>l+' '+v).join(', ')}">${g}</svg>`})()
 addEventListener('scroll',()=>requestAnimationFrame(tick),{passive:true});addEventListener('resize',tick);tick()
 ;[...rail.children].forEach((b,i)=>b.onclick=()=>{const run=od.offsetHeight-innerHeight;scrollTo({top:od.offsetTop+run*(i+.5)/n,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})})
 </script>

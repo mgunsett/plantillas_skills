@@ -17,7 +17,18 @@
 .prof div:first-child{border-left:0;padding-left:0}
 .prof small{display:block;font-size:10px;letter-spacing:.22em;color:var(--gray);text-transform:uppercase;margin-bottom:6px}
 .prof strong{font-size:16px;font-weight:500}
-.attrs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 48px;margin-top:38px}
+/* Pie: radar chico con los 6 atributos y las barras al lado */
+.foot{display:grid;grid-template-columns:clamp(300px,27vw,390px) 1fr;gap:48px;align-items:center;margin-top:38px}
+.rd{position:relative}
+.rd svg{width:100%;height:auto;overflow:visible}
+.rd .poly{transform-origin:center;transform-box:view-box;transform:scale(0);opacity:0}
+.rd.on .poly{animation:rdin 1.2s var(--ease) both}
+@keyframes rdin{to{transform:none;opacity:1}}
+.rd text{font-family:Nippo,system-ui,sans-serif;font-size:8.4px;letter-spacing:.12em;text-transform:uppercase;fill:var(--gray)}
+.rd text.v{font-size:9.5px;font-weight:700;fill:var(--acc);letter-spacing:0}
+.rd .md{font-size:22px;font-weight:700;fill:var(--acc);letter-spacing:0}
+.rd .ml{font-size:5.6px;fill:var(--gray)}
+.attrs{display:grid;grid-template-columns:repeat(2,1fr);gap:22px 48px}
 .a .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
 .a .top span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#3D4A68}
 .a .top b{font-size:22px;color:var(--acc)}
@@ -33,6 +44,7 @@
   .prof{grid-template-columns:repeat(2,1fr)}
   .prof div{border-left:0;border-top:1px solid var(--line);padding:12px 0}
   .prof div:nth-child(-n+2){border-top:0}
+  .foot{grid-template-columns:1fr;gap:28px}.rd{max-width:340px;margin:0 auto;width:100%}
   .attrs{grid-template-columns:1fr;gap:16px}
 }
 </style></head><body>
@@ -50,12 +62,24 @@
     <div><small>Peso</small><strong>{{weight}} kg</strong></div>
     <div><small>Origen</small><strong>{{birthPlaceShort}}</strong></div>
   </div>
-  <div class="attrs" id="attrs"></div>
+  <div class="foot"><figure class="rd" id="rd"></figure><div class="attrs" id="attrs"></div></div>
 </section>
 <script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
 const A=ATTRS,[M,...R]=SEASON_ORDER(['goles','pj','tiros','ocas','min','val'])
 mainL.textContent=M.ll||M.l;mainV.textContent=M.v
 tiles.innerHTML=R.map(s=>`<div class="t${s.hl?' hl':''}"><small>${s.ll||s.l}</small><b class="tab">${s.v}</b></div>`).join('')
 document.getElementById('attrs').innerHTML=A.map(([l,v],k)=>`<div class="a"><div class="top"><span>${l}</span><b class="tab">${v}</b></div><div class="seg" role="img" aria-label="${l}: ${v} de 100">${Array.from({length:10},(_,i)=>`<i class="${i<Math.round(v/10)?'on':''}" style="animation-delay:${k*.08+i*.03}s"></i>`).join('')}</div></div>`).join('')
+// Radar: atributos 0-100 (escala desde 50), el mejor en rojo y la media al centro
+;(function(){const N=A.length,R=60,c=100,min=50,pt=(i,v)=>{const a=-Math.PI/2+i*2*Math.PI/N,r=R*Math.max(0,v-min)/(100-min);return[(c+r*Math.cos(a)).toFixed(1),(c+r*Math.sin(a)).toFixed(1)]}
+ const best=A.reduce((b,x,i)=>x[1]>A[b][1]?i:b,0);let g=''
+ for(const v of [62.5,75,87.5,100])g+=`<polygon points="${A.map((_,i)=>pt(i,v).join(',')).join(' ')}" fill="none" stroke="#17285a${v===100?'55':'1f'}"/>`
+ A.forEach((_,i)=>{const [x,y]=pt(i,100);g+=`<line x1="${c}" y1="${c}" x2="${x}" y2="${y}" stroke="#17285a1a"/>`})
+ g+=`<polygon class="poly" points="${A.map(([,v],i)=>pt(i,v).join(',')).join(' ')}" fill="var(--acc)" fill-opacity=".14" stroke="var(--acc)" stroke-width="1.6" stroke-linejoin="round"/>`
+ A.forEach(([l,v],i)=>{const [x,y]=pt(i,v);g+=`<circle cx="${x}" cy="${y}" r="${i===best?3.2:2}" fill="${i===best?'var(--acc2)':'var(--acc)'}"/>`
+  const a=-Math.PI/2+i*2*Math.PI/N,lx=c+(R+16)*Math.cos(a),ly=c+(R+16)*Math.sin(a),anc=Math.abs(Math.cos(a))<.2?'middle':Math.cos(a)>0?'start':'end'
+  g+=`<text x="${lx.toFixed(1)}" y="${(ly-1).toFixed(1)}" text-anchor="${anc}">${l}</text><text class="v" x="${lx.toFixed(1)}" y="${(ly+8).toFixed(1)}" text-anchor="${anc}"${i===best?' style="fill:var(--acc2)"':''}>${v}</text>`})
+ g+=`<text class="md" x="${c}" y="${c+6}" text-anchor="middle">${P.media}</text><text class="ml" x="${c}" y="${c+15}" text-anchor="middle">MEDIA</text>`
+ rd.innerHTML=`<svg viewBox="-42 0 284 200" role="img" aria-label="Atributos: ${A.map(([l,v])=>l+' '+v).join(', ')}">${g}</svg>`
+ new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){rd.classList.add('on');o.disconnect()}},{threshold:.3}).observe(rd)})()
 </script>
 </body></html>
