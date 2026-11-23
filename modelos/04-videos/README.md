@@ -46,3 +46,24 @@ Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía N
 - **N3. Temporadas (aplicado en Fertoli):** cada video bajo su año gigante en contorno (`'26`, `'25`…) con el escudo del club. El reel se abre en un modal de Instagram.
   - **React:** [`react/VideosTemporadas.jsx`](react/VideosTemporadas.jsx) (en el proyecto se llama `VideosSection.jsx`) y [`react/VideoCardNeon.jsx`](react/VideoCardNeon.jsx). Cada video necesita `year`, `club`, `clubLogo`, `league` y `cover` (o `thumbnail`), además del código del reel.
 - **N4. Paneles:** paneles a todo el ancho; el activo se abre grande y a color y los otros quedan finos, en blanco y negro, con el club en vertical. Hover en desktop, toque en mobile (acordeón vertical).
+
+## Kit claro (diseñado para Luis Ramos)
+
+Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía Nippo, desde [`kits/claro`](../../kits/claro/). Los datos salen de `kits/claro/player.js`.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| C1 | Programa | Alternativa | [html](previews/claro-1-programa.html) · ![](previews/claro-1-programa.jpg) |
+| C2 | Stories | Alternativa | [html](previews/claro-2-stories.html) · ![](previews/claro-2-stories.jpg) |
+| C3 | **Temporadas** | ✅ Aplicado en Luis Ramos | [html](previews/claro-3-temporadas.html) · ![](previews/claro-3-temporadas.jpg) |
+| C4 | Paneles | Alternativa | [html](previews/claro-4-paneles.html) · ![](previews/claro-4-paneles.jpg) |
+| C5 | Mazo de reels | Alternativa | [html](previews/claro-5-mazo.html) · ![](previews/claro-5-mazo.jpg) |
+
+- **C1. Programa:** Un reel grande y, al lado, título, club y la lista "Más videos" para cambiarlo. Ideal para 3 videos.
+- **C2. Stories:** Los reels como historias de Instagram, con barras de progreso, avance automático y círculos por club.
+- **C3. Temporadas (aplicado en Luis Ramos):** Cada video bajo su año gigante en contorno con el escudo del club: Alianza 26, América 25 y Selección 24.
+  - **React:** [`react/VideosTemporadasClaro.jsx`](react/VideosTemporadasClaro.jsx).
+- **C4. Paneles:** Paneles a todo el ancho: el activo se abre grande a color y los otros quedan finos en blanco y negro.
+- **C5. Mazo de reels:** Los reels apilados como cartas verticales 9:16. Se arrastran con el mouse o se deslizan con el dedo para pasar al siguiente; al costado, el año gigante en contorno y el título cambian con la carta.
+
+En React, cada video necesita `year`, `club` y `clubLogo` en `playerData.videos`.

@@ -59,3 +59,24 @@ Cuatro opciones más, en paleta oscura con acento lima y magenta y tipografía N
 - **N4. Dossier:** estilo revista: la temporada en una grilla tipográfica, los atributos en un ranking de mayor a menor con una línea proporcional y una frase de presentación al pie.
 
 Los clubes, que en Keki van dentro de esta sección, en el kit neón tienen sus propios modelos en [`09-clubes`](../09-clubes/).
+
+## Kit claro (diseñado para Luis Ramos)
+
+Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía Nippo, desde [`kits/claro`](../../kits/claro/). Los datos salen de `kits/claro/player.js`.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| C1 | **Marcador** | ✅ Aplicado en Luis Ramos | [html](previews/claro-1-marcador.html) · ![](previews/claro-1-marcador.jpg) |
+| C2 | Ficha de scouting | Alternativa | [html](previews/claro-2-ficha.html) · ![](previews/claro-2-ficha.jpg) |
+| C3 | Radar central | Alternativa | [html](previews/claro-3-radar.html) · ![](previews/claro-3-radar.jpg) |
+| C4 | Dossier | Alternativa | [html](previews/claro-4-dossier.html) · ![](previews/claro-4-dossier.jpg) |
+| C5 | Odómetro | Alternativa | [html](previews/claro-5-odometro.html) · ![](previews/claro-5-odometro.jpg) |
+
+- **C1. Marcador (aplicado en Luis Ramos):** Los goles de la temporada en un bloque azul gigante y el resto de los números en un tablero. Debajo, la ficha en una fila y, al pie, un radar chico con la media al centro junto a los atributos en barras segmentadas.
+  - **React:** [`react/StatsMarcador.jsx`](react/StatsMarcador.jsx).
+- **C2. Ficha de scouting:** Informe en tres paneles: perfil, cancha con la zona de influencia y atributos en barras (el mejor en rojo). Abajo, la temporada en 6 números.
+- **C3. Radar central:** Los 6 atributos en un radar con la media en el centro, rodeado por los números de la temporada. Al pie, la ficha en una franja.
+- **C4. Dossier:** Estilo revista: la temporada en una grilla tipográfica, los atributos en un ranking de mayor a menor y una frase de presentación al pie.
+- **C5. Odómetro:** La sección se queda fija mientras scrolleás y cada tramo cambia de número: los dígitos giran como un odómetro, con el recorte de fondo y una lectura que sale de cruzar los datos (un gol cada 191 minutos, 41% de efectividad)
+
+En React, `StatsMarcador.jsx` se monta dentro de `StatsSection.jsx` con `STATS_DESIGN = 'marcador'`: toma goles, partidos, tiros, minutos y valoración de `useSeasonStats` (API-Football) y completa con `seasonStats` lo que falte. El radar dibuja `stats` de 50 a 100 con la media al centro.

@@ -12,6 +12,7 @@ footer{background:#E9EDF5;padding:56px 60px 0;overflow:hidden;position:relative}
 .lk a{color:var(--ink);font-size:12px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:4px}
 .word{font-weight:700;font-size:23.5vw;line-height:.74;letter-spacing:-.02em;color:var(--acc);text-transform:uppercase;margin:44px -.04em 0;white-space:nowrap;user-select:none;transform:translateY(8%)}
 .word span{color:transparent;-webkit-text-stroke:2px var(--acc)}
+.word em{font-style:normal;color:var(--acc2)}
 .bar{position:relative;z-index:1;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px 0 22px;margin:0 -60px;padding-left:60px;padding-right:60px;background:#E9EDF5;color:var(--gray);border-top:2px solid var(--acc)}
 .bar .cp{font-size:12px;letter-spacing:.12em;text-transform:uppercase}
 
@@ -29,7 +30,9 @@ a:focus-visible,.up:focus-visible{outline:2px solid var(--acc2);outline-offset:3
 
 <script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
 lk.innerHTML=CONTACT.social.map(s=>`<a href="${s.u}" target="_blank" rel="noopener">${s.l} ↗</a>`).join('')+CONTACT.reps.map(r=>`<a href="${r.u}" target="_blank" rel="noopener">${r.n} ↗</a>`).join('')
-const L=P.last;word.innerHTML=L.slice(0,-2)+'<span>'+L.slice(-2)+'</span>';word.style.fontSize=(164.5/L.length)+'vw'
+// Firma: la primera "O" del apellido pasa a ser el dorsal (RAM9S); si no tiene O, el dorsal va al final
+const L=P.last,io=L.toUpperCase().indexOf('O'),[w0,w1]=io<0?[L,'']:[L.slice(0,io),L.slice(io+1)]
+word.innerHTML=w0+'<em>'+P.number+'</em><span>'+w1+'</span>';word.style.fontSize=(164.5/L.length)+'vw'
 // Ajusta el apellido al ancho disponible (cada tipografía tiene otro ancho por letra)
 const fitW=()=>{word.style.fontSize='100px';const rg=document.createRange();rg.selectNodeContents(word);const r=word.clientWidth/rg.getBoundingClientRect().width;word.style.fontSize=(100*r*.98)+'px'};document.fonts.ready.then(fitW);addEventListener('resize',fitW)
 up.onclick=()=>scrollTo({top:0,behavior:'smooth'});dev.outerHTML=DEV
