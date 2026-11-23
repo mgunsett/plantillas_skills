@@ -1,0 +1,80 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comparador kit claro</title>
+<!-- Comparador del kit claro: elegís sección y opción, y se ve en desktop 1440 y mobile 390 (en Navbar, también con el menú abierto).
+     Se abre directo (doble clic) o publicando la salida de empaquetar.mjs junto con este archivo. -->
+<style>
+@font-face{font-family:Nippo;font-weight:700;src:url(fonts/Nippo-Bold.woff2) format('woff2')}
+:root{--bg:#F4F6FB;--panel:#FFFFFF;--line:#D5DCEA;--fg:#0D1730;--muted:#5C6A88;--acc:#17285A;--acc2:#E23744;--display:Nippo,'Arial Narrow',system-ui,sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1226;--panel:#111B36;--line:#24335C;--fg:#EEF2FA;--muted:#93A3C4;--acc:#BFCFEC;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1226;--panel:#111B36;--line:#24335C;--fg:#EEF2FA;--muted:#93A3C4;--acc:#BFCFEC;color-scheme:dark}
+*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.wrap{max-width:1560px;margin:0 auto;padding:28px 16px 48px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.k{font:700 11px/1.2 var(--display);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(30px,4vw,48px)/1 var(--display);text-transform:uppercase;margin-top:8px;color:var(--acc)}h1 span{color:var(--acc2)}
+.tabs,.secs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs button,.secs button{font:700 12px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--panel);border:1px solid var(--line);padding:12px 16px;border-radius:999px;cursor:pointer}
+.tabs button b{color:var(--acc2);margin-right:8px}
+.tabs button[aria-selected="true"]{background:var(--acc);color:var(--bg);border-color:var(--acc)}.tabs button[aria-selected="true"] b{color:var(--bg)}
+.secs button[aria-selected="true"]{background:var(--acc2);color:#fff;border-color:var(--acc2)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
+#tabs{margin-bottom:20px}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:20px;align-items:start}
+.stage.three{grid-template-columns:minmax(0,1fr) 240px 240px}
+.dev{min-width:0}.dev .lbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px}
+.frame{position:relative;width:100%;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#000}
+.frame.d{aspect-ratio:1440/900}.frame.m{aspect-ratio:390/844;border-radius:26px;border-width:6px;border-color:#1E2E55}
+.frame iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0}
+#mo{display:none}.three #mo{display:block}
+.info{margin-top:22px;border-top:1px solid var(--line);padding-top:22px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px}
+.info h2{font:700 28px/1 var(--display);text-transform:uppercase;color:var(--acc);margin-top:8px}
+.info p{color:var(--muted);line-height:1.6;margin-top:10px;max-width:72ch}
+.info ul{margin-top:10px;padding-left:18px;color:var(--muted);line-height:1.6}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;font-size:14px;line-height:1.55;color:var(--muted)}
+.note b{color:var(--fg)}
+a.open{color:var(--acc2);font:700 11px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+@media (max-width:1000px){.stage,.stage.three{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.dev.d{grid-column:1/-1}.stage:not(.three) .dev.m{grid-column:1/-1;max-width:300px;margin:0 auto;width:100%}.info{grid-template-columns:1fr}}
+</style></head><body>
+<div class="wrap">
+  <header class="top"><div><div class="k">{{full}} · rediseño · kit claro</div><h1><span id="h1s">Navbar</span> · <span id="cnt" style="color:inherit"></span> opciones</h1></div><div class="secs" role="tablist" id="secs" aria-label="Sección"></div></header>
+  <div class="tabs" role="tablist" id="tabs" aria-label="Opción"></div>
+  <div class="stage" id="stage">
+    <div class="dev d"><div class="lbl"><span class="k">Desktop 1440</span><a class="open" id="openD" target="_blank">Abrir completo ↗</a></div><div class="frame d"><iframe id="fd" title="Vista desktop" width="1440" height="900"></iframe></div></div>
+    <div class="dev m"><div class="lbl"><span class="k">Mobile 390</span></div><div class="frame m"><iframe id="fm" title="Vista mobile" width="390" height="844"></iframe></div></div>
+    <div class="dev m" id="mo"><div class="lbl"><span class="k">Menú abierto</span></div><div class="frame m"><iframe id="fo" title="Vista mobile con el menú abierto" width="390" height="844"></iframe></div></div>
+  </div>
+  <section class="info" aria-live="polite"><div><div class="k" id="iNum"></div><h2 id="iTitle"></h2><p id="iDesc"></p><ul id="iList"></ul></div>
+    <div class="note" id="note"></div></section>
+</div>
+<script>
+const NOTE={navbar:'<b>Probalo con scroll.</b> Abrí cada opción completa: abajo del hero hay secciones de relleno para ver el estado al bajar y cómo marca la sección activa.',
+ hero:'<b>Partidos de ejemplo.</b> El último resultado y el próximo partido son datos de prueba: en la landing salen del panel <b>/admin</b>, como hoy. Los números de temporada son los de <i>playerData</i>.'}
+const SECS={
+ navbar:['Navbar',[
+  ['navbar-1-capsula','Cápsula con dorsal','Cápsula flotante y translúcida, centrada arriba. A la izquierda el dorsal en un círculo con el apellido; al centro los links, con una píldora que se desliza hasta la sección activa; a la derecha Contacto en rojo.',['Se esconde al bajar y vuelve al subir.','Mobile: la cápsula ocupa el ancho y el menú es una hoja que sube desde abajo, con links grandes numerados, Contacto e Instagram.']],
+  ['navbar-2-escudo','Escudo al centro','Barra a todo el ancho con el escudo del club y el nombre al centro, y los links repartidos a los lados. Transparente sobre el hero; al pasar el hero se vuelve blanca y aparece una línea azul y roja abajo.',['La sección activa se subraya en rojo.','Mobile: dorsal a la izquierda, escudo al centro y un cajón lateral azul con los links grandes y el dorsal gigante de fondo.']],
+  ['navbar-3-riel','Riel lateral','Riel vertical fijo a la izquierda con las iniciales, el dorsal, un índice numerado 01 a 06 (el activo se estira en rojo y muestra el nombre al pasar el mouse), Instagram y bandera.',['Deja libre todo el ancho de arriba para el hero.','Mobile: cabecera mínima arriba (se va al bajar) y una barra de secciones abajo, tipo app, que sigue a la sección activa.']],
+  ['navbar-4-zocalo','Zócalo de partido','Una franja azul arriba con el último resultado, el próximo partido y la temporada corriendo, y debajo la barra blanca con el dorsal en rojo, nombre, posición y club.',['Al bajar, la franja se esconde y queda solo la barra.','Mobile: la franja sigue corriendo y el menú se despliega con los links en grilla y una tarjeta con los dos partidos.']],
+  ['navbar-5-indice','Índice a pantalla completa','Barra mínima (iniciales + dorsal, Contacto y MENÚ) que se invierte sola sobre fondos claros u oscuros. El menú abre a pantalla completa con los links gigantes numerados y el retrato.',['Abajo de los links, los contactos del representante, marketing e Instagram.','Mobile: el retrato queda arriba como portada y los links debajo.']]]],
+ hero:['Hero',[
+  ['hero-1-split','Split editorial','Texto a la izquierda (posición, club y Selección, nombre, bio, 4 datos y dos botones) y a la derecha un panel azul en diagonal con el dorsal en contorno, el escudo y el recorte con la pelota.',['El más comercial: deja claro quién es y a quién escribirle.','Usa el recorte con la camiseta de la Selección.']],
+  ['hero-2-marquesina','Marquesina','Bandas inclinadas con RAMOS, LUIS RAMOS y DELANTERO que corren en sentidos opuestos detrás del recorte. Nombre abajo a la izquierda, 09 en rojo a la derecha y un zócalo azul con partidos y temporada en loop.',['Reemplaza a la MatchBox con el zócalo.','Mucho movimiento: ideal si se quiere un arranque con energía.']],
+  ['hero-3-transmision','Transmisión TV','La foto del festejo del título a todo el ancho con gráficos de transmisión: marcador de dos filas arriba (último y próximo), zócalo con el 9 en rojo y el nombre, y el cuadro de la temporada abajo a la derecha.',['Ya existe en React (se adapta a los colores del club).','Necesita una foto de cancha en alta; acá se usa la del trofeo con Alianza.']],
+  ['hero-4-franjas','Franjas del club','Nuevo: las franjas verticales de la camiseta entran desde arriba una por una, con el 9 gigante en contorno rojo y el recorte con la camiseta de Alianza adelante. A la izquierda nombre, club y Selección, 4 números y botones; abajo una tarjeta con los partidos.',['El más identificado con Alianza Lima: las franjas salen del color del club.','Mobile: franjas y recorte arriba, datos abajo.']],
+  ['hero-5-portada','Portada de revista','Nuevo: como la tapa de una revista. A la izquierda cabecera "Edición 2026 · N.º 09", una frase en rojo, el nombre enorme y tres titulares con números; a la derecha el retrato de estudio (el del silencio) con un lomo rojo en la unión y un código de barras con las iniciales.',['Distinto a todo lo que se usó antes: más de marca personal que de ficha técnica.','La frase de tapa ("El 9 que define") se puede cambiar.']]]],
+}
+const ORDER=Object.keys(SECS),tabs=document.getElementById('tabs'),secs=document.getElementById('secs'),stage=document.getElementById('stage')
+let sec='navbar',cur={};try{const v=JSON.parse(localStorage.getItem('kitClaro')||'{}');if(SECS[v.sec])sec=v.sec;cur=v.cur||{}}catch(e){}
+ORDER.forEach(k=>{const b=document.createElement('button');b.setAttribute('role','tab');b.textContent=SECS[k][0];b.onclick=()=>pickSec(k);secs.appendChild(b)})
+function pickSec(k){sec=k;[...secs.children].forEach((b,j)=>b.setAttribute('aria-selected',ORDER[j]===k));h1s.textContent=SECS[k][0];cnt.textContent=SECS[k][1].length
+ stage.classList.toggle('three',k==='navbar');note.innerHTML=NOTE[k]
+ tabs.innerHTML='';SECS[k][1].forEach((o,i)=>{const b=document.createElement('button');b.setAttribute('role','tab');b.innerHTML='<b>'+(i+1)+'</b>'+o[1];b.onclick=()=>sel(i);tabs.appendChild(b)});sel(cur[k]||0)}
+function sel(i){cur[sec]=i;try{localStorage.setItem('kitClaro',JSON.stringify({sec,cur}))}catch(e){}const [f,t,d,l]=SECS[sec][1][i]
+ ;[...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));fd.src=fm.src=openD.href=f+'.html';fo.src=sec==='navbar'?f+'.html#open':'about:blank'
+ iNum.textContent=SECS[sec][0]+' · opción '+(i+1);iTitle.textContent=t;iDesc.textContent=d;iList.innerHTML=(l||[]).map(x=>'<li>'+x+'</li>').join('');fit()}
+function fit(){[[fd,1440],[fm,390],[fo,390]].forEach(([f,w])=>{const c=f.parentElement.clientWidth;if(c)f.style.transform='scale('+(c/w)+')'})}
+new ResizeObserver(fit).observe(stage);pickSec(sec)
+</script>
+<script src="player.js"></script><script src="bind.js"></script>
+</body></html>
