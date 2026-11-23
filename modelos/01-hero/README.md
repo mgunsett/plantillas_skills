@@ -61,3 +61,24 @@ Tres formas de mostrar los partidos dentro del hero. Las tres usan `useMatches` 
   - Montaje: un `Box` con `position="absolute" left={0} right={0} bottom={0}` dentro de la sección para desktop (`display={{ base: 'none', lg: 'block' }}`), y otro dentro del flujo del texto para mobile.
 - **M2. Tarjeta con pestañas (`MatchCard`):** tarjeta de 330 px con dos pestañas, "Último resultado" (acento) y "Próximo partido" (segundo acento). Muestra un partido a la vez, con escudos grandes y marcador o "VS" al centro, y abajo la fecha y el estadio. En Polaco se probó flotando sobre el panel del recorte (`left: 2%`, `bottom: 48px`). Conviene cuando el texto del hero ya está cargado y no hay lugar abajo. En mobile va a todo el ancho.
 - **M3. Dos tickets (`MatchTickets`):** dos piezas lado a lado debajo de los botones. El resultado es un marcador con borde izquierdo del acento. El próximo partido es una "entrada" con borde punteado y perforaciones laterales, con el día grande y el mes y la hora debajo (toma el primer token de `date` como día). Se ve igual en desktop y mobile. Ocupa alto en la columna de texto, así que el hero tiene que tener lugar.
+
+## Kit claro (diseñado para Luis Ramos)
+
+Seis opciones en paleta clara (blanco, azul del club y rojo) con tipografía Nippo, desde [`kits/claro`](../../kits/claro/). Las 1 a 3 son las del kit neón adaptadas; la 4, la 5 y la 6 son nuevas.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| C1 | Split editorial | Alternativa | [html](previews/claro-1-split.html) · ![](previews/claro-1-split.jpg) |
+| C2 | Marquesina | Alternativa | [html](previews/claro-2-marquesina.html) · ![](previews/claro-2-marquesina.jpg) |
+| C3 | Transmisión TV | Alternativa (React en `react/HeroBroadcast.jsx`) | [html](previews/claro-3-transmision.html) · ![](previews/claro-3-transmision.jpg) |
+| C4 | Franjas del club | Alternativa | [html](previews/claro-4-franjas.html) · ![](previews/claro-4-franjas.jpg) |
+| C5 | Portada de revista | Alternativa | [html](previews/claro-5-portada.html) · ![](previews/claro-5-portada.jpg) |
+| C6 | **Split con ficha** | ✅ Aplicado en Luis Ramos | [html](previews/claro-6-split-ficha.html) · ![](previews/claro-6-split-ficha.jpg) |
+
+- **C4. Franjas del club:** las franjas verticales de la camiseta entran desde arriba, una por una, con el dorsal gigante en contorno del segundo acento y el recorte adelante. A la izquierda, píldora con dorsal y posición, nombre, club y selección, 4 números y botones; abajo a la derecha, una tarjeta con los dos partidos. Ideal para clubes con camiseta a bastones.
+- **C5. Portada de revista:** cabecera "Edición <año> · N.º <dorsal>", una frase de tapa (`claim`), el nombre enorme y tres titulares con números. A la derecha, el retrato de estudio con un lomo del segundo acento y un código de barras con las iniciales. Más de marca personal que de ficha técnica.
+- **C6. Split con ficha (aplicado en Luis Ramos):** el Split editorial con la columna de texto y la tarjeta de partidos de C4. Panel del acento en diagonal con el dorsal en contorno y el recorte festejando. En mobile, el recorte es más grande y apoya los pies justo sobre la tarjeta de partidos; la parte que queda detrás del texto se funde con una máscara para que se lea.
+  - **React:** [`react/HeroSplit.jsx`](react/HeroSplit.jsx). Los números salen de `useSeasonStats` (API-Football) o de `playerData.seasonStats` (rótulos Partidos, Goles, Tiros al arco y Valoración), y los partidos de `useMatches`. La entrada es una sola timeline de GSAP, que se omite con reduced motion.
+  - **Datos extra en `playerData`:** `heroCutout`, `heroCutoutAlt` y `country` (por ejemplo, 'Perú'; `nationality` queda para el gentilicio).
+  - **Montaje:** el hero mide `100svh` (mínimo 640 px en desktop y 780 en mobile) y no es sticky. Si venías del hero del starter, sacá el `mt="-100vh"` de `App.jsx`.
+  - **Pendiente:** con el celular en horizontal usa el diseño mobile y ocupa casi dos pantallas.

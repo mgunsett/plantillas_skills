@@ -19,9 +19,11 @@ plantillas_skills/
 ├── CATALOGO.md            ← índice de todos los modelos, sección por sección
 ├── starter/               ← proyecto Vite + React listo para clonar (todas las secciones aplicadas)
 ├── kits/
-│   └── neon/              ← 32 diseños (4 por sección) + player.js con los datos del jugador + comparador
+│   ├── neon/              ← 32 diseños (4 por sección) + player.js con los datos del jugador + comparador
+│   └── claro/             ← 5 navbar + 6 hero (Luis Ramos), paleta clara + comparador
 ├── modelos/
-│   ├── 01-hero/           ← README + capturas + previews/ (4 neón) + react/
+│   ├── 00-navbar/         ← README + previews/ (5 claro) + react/
+│   ├── 01-hero/           ← README + capturas + previews/ (4 neón + 6 claro) + react/
 │   ├── 02-final/          ← sección "camino a la final" de una copa (Libertadores en Keki)
 │   ├── 03-estadisticas/   ← README + capturas + previews/ (4 clásicas + 4 neón) + react/
 │   ├── 04-videos/         ← 5 clásicas + 4 neón
