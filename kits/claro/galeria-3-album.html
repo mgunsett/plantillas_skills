@@ -1,0 +1,49 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Galería 3 · Álbum</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.top .sh{margin:0}
+.tabs{display:flex;gap:28px;border-bottom:1px solid var(--line)}
+.tabs button{font:700 11px/1 Nippo,sans-serif;letter-spacing:.2em;text-transform:uppercase;padding:0 0 14px;border:0;background:none;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--acc);border-color:var(--acc)}
+.al{display:grid;grid-template-columns:1.25fr 1fr;gap:10px;height:clamp(460px,46vw,680px)}
+.al button{position:relative;padding:0;border:0;background:#000;overflow:hidden;cursor:zoom-in}
+.al img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;transition:transform .8s var(--ease)}
+.al>*{min-height:0}.al .sm{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr) minmax(0,1fr);gap:10px}.al .sm button{min-height:0}
+.al .big:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0A1226e6,transparent 45%);z-index:1}
+.al .cap{position:absolute;left:28px;right:28px;bottom:24px;z-index:2;text-align:left}
+.al .cap .n{font-weight:700;font-size:clamp(54px,6vw,96px);line-height:.8;color:var(--acc)}
+.al .cap p{margin-top:10px;font-size:14px;color:#3D4A68;max-width:36ch;line-height:1.45}
+.al .sm span{position:absolute;left:12px;top:12px;font-size:11px;font-weight:700;letter-spacing:.14em;background:#0A1226cc;color:var(--acc);padding:6px 9px}
+@media (hover:hover) and (pointer:fine){.al button:hover img{transform:scale(1.05)}}
+.al button:focus-visible,.tabs button:focus-visible,.all:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:16px;flex-wrap:wrap}.foot>div:last-child{display:flex;gap:8px;flex-wrap:wrap}
+.dots{display:flex;gap:6px}.dots i{width:22px;height:3px;background:var(--line)}.dots i.on{background:var(--acc)}
+.all{font:700 12px/1 Nippo,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#fff;background:var(--acc);border:0;padding:15px 24px;border-radius:999px;cursor:pointer}
+.nx{font:700 12px/1 Nippo,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);background:none;border:1.5px solid var(--acc);padding:13px 20px;border-radius:999px;cursor:pointer;}
+.al.sw{animation:rv .7s var(--ease) both}
+@media (max-width:820px){.al{grid-template-columns:1fr;height:auto}.al .big{aspect-ratio:4/5}.al .sm{aspect-ratio:1}.al .cap{left:18px;bottom:18px}.tabs{gap:18px;width:100%;overflow-x:auto}}
+</style></head><body>
+<section class="sec" id="galeria">
+  <div class="top"><div class="sh"><div class="k">Fotos</div><h2>Galería</h2></div><div class="tabs" role="tablist" id="tabs"></div></div>
+  <div class="al" id="al"></div>
+  <div class="foot"><div class="dots" id="dots" aria-hidden="true"></div><div><button class="nx" id="nx">Siguientes →</button><button class="all" id="all"></button></div></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script src="lb.js"></script>
+<script>
+let cat='all',pg=0
+const list=()=>GAL.filter(g=>cat==='all'||g.c===cat)
+function render(){const L=list(),pages=Math.ceil(L.length/5);pg=pg%pages;const s=pg*5,P=L.slice(s,s+5)
+ while(P.length<5)P.push(L[(s+P.length)%L.length])
+ const b=(g,i,cls)=>`<button class="${cls}" data-i="${L.indexOf(g)}" aria-label="Ampliar: ${g.a}"><img src="${g.s}" alt="${g.a}" loading="lazy">${cls==='big'?`<div class="cap"><div class="n">${String(s+1).padStart(2,'0')}</div></div>`:`<span>${String(L.indexOf(g)+1).padStart(2,'0')}</span>`}</button>`
+ al.innerHTML=b(P[0],0,'big')+`<div class="sm">${P.slice(1).map((g,i)=>b(g,i+1,'')).join('')}</div>`
+ al.classList.remove('sw');void al.offsetWidth;al.classList.add('sw')
+ al.querySelectorAll('button').forEach(x=>x.onclick=()=>openLB(L,+x.dataset.i))
+ dots.innerHTML=Array.from({length:pages},(_,k)=>`<i class="${k===pg?'on':''}"></i>`).join('')
+ all.textContent=`Ver las ${L.length} fotos`;nx.hidden=pages<2}
+tabs.innerHTML=CATS.map(([k,l])=>`<button role="tab" data-k="${k}">${l}</button>`).join('')
+;[...tabs.children].forEach(b=>b.onclick=()=>{cat=b.dataset.k;pg=0;[...tabs.children].forEach(x=>x.setAttribute('aria-selected',x===b));render()})
+tabs.children[0].setAttribute('aria-selected',true)
+nx.onclick=()=>{pg++;render()};all.onclick=()=>openLB(list(),0);render()
+</script>
+</body></html>

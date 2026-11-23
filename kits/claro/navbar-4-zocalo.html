@@ -69,7 +69,7 @@
 <script src="player.js"></script><script src="kit.js"></script><script src="demo.js"></script><script src="navkit.js"></script>
 <script>
 const P_=window.P,hd=document.getElementById('hd'),bg=document.getElementById('bg')
-const items=`<span><em>Último</em><b>${P_.lastMatch.homeName} ${P_.lastMatch.hs}–${P_.lastMatch.as} ${P_.lastMatch.awayName}</b></span><span><em>Próximo</em><b>${P_.nextMatch.homeName} vs ${P_.nextMatch.awayName}</b> · ${P_.nextMatch.date} · ${P_.nextMatch.venue}</span><span><em>${P_.seasonLabel}</em><b>${P_.s.pj} PJ · ${P_.s.goles} goles</b></span>`
+const items=`<span><em>Último</em><b>${P_.lastMatch.homeName} ${P_.lastMatch.hs}–${P_.lastMatch.as} ${P_.lastMatch.awayName}</b></span><span><em>Próximo</em><b>${P_.nextMatch.homeName} vs ${P_.nextMatch.awayName}</b> · ${P_.nextMatch.date} · ${P_.nextMatch.venue}</span><span><em>Temporada ${P_.seasonLabel}</em><b>${P_.s.pj} PJ · ${P_.s.goles} goles</b></span>`
 document.getElementById('run').innerHTML=items+items
 document.getElementById('ig').insertAdjacentHTML('afterbegin',IG)
 document.getElementById('lk').innerHTML=NAVL.filter(([,h])=>h!=='#hero'&&h!=='#contact').map(([l,h])=>`<a href="${h}">${l}</a>`).join('')

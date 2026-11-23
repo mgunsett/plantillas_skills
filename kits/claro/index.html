@@ -48,7 +48,7 @@ a.open{color:var(--acc2);font:700 11px/1 var(--display);letter-spacing:.14em;tex
     <div class="note" id="note"></div></section>
 </div>
 <script>
-const NOTE={navbar:'<b>Probalo con scroll.</b> Abrí cada opción completa: abajo del hero hay secciones de relleno para ver el estado al bajar y cómo marca la sección activa.',
+const NOTE={_:'<b>Datos reales de Luis.</b> Clubes, videos, fotos, contactos y números salen de su landing actual. En React, la temporada sigue llegando de API-Football.',navbar:'<b>Probalo con scroll.</b> Abrí cada opción completa: abajo del hero hay secciones de relleno para ver el estado al bajar y cómo marca la sección activa.',
  hero:'<b>Partidos de ejemplo.</b> El último resultado y el próximo partido son datos de prueba: en la landing salen del panel <b>/admin</b>, como hoy. Los números de temporada son los de <i>playerData</i>.'}
 const SECS={
  navbar:['Navbar',[
@@ -64,12 +64,36 @@ const SECS={
   ['hero-4-franjas','Franjas del club','Nuevo: las franjas verticales de la camiseta entran desde arriba una por una, con el 9 gigante en contorno rojo y el recorte con la camiseta de Alianza adelante. A la izquierda nombre, club y Selección, 4 números y botones; abajo una tarjeta con los partidos.',['El más identificado con Alianza Lima: las franjas salen del color del club.','Mobile: franjas y recorte arriba, datos abajo.']],
   ['hero-5-portada','Portada de revista','Nuevo: como la tapa de una revista. A la izquierda cabecera "Edición 2026 · N.º 09", una frase en rojo, el nombre enorme y tres titulares con números; a la derecha el retrato de estudio (el del silencio) con un lomo rojo en la unión y un código de barras con las iniciales.',['Distinto a todo lo que se usó antes: más de marca personal que de ficha técnica.','La frase de tapa ("El 9 que define") se puede cambiar.']],
   ['hero-6-split-ficha','Split con ficha (tu ajuste)','La opción 1 rediseñada con la columna de la opción 4: píldora con el dorsal y la posición, nombre en gris y apellido gigante, club y Selección con escudo y bandera, 4 números grandes (goles en rojo) y botones. Abajo a la derecha, la tarjeta de partidos de la opción 4. A la derecha, el panel azul en diagonal con el 9 en contorno y el recorte nuevo festejando.',['Sin el sello de DORSAL ni el escudo del panel: el número y el escudo ya están en la columna de texto.','Mobile: panel y recorte arriba, datos abajo y la tarjeta de partidos al pie.']]]],
+ stats:['Estadísticas',[['stats-1-marcador','Marcador','Los goles de la temporada en un bloque azul gigante y el resto de los números en un tablero. Debajo, la ficha en una fila y los atributos en barras segmentadas.'],
+  ['stats-2-ficha','Ficha de scouting','Informe en tres paneles: perfil, cancha con la zona de influencia y atributos en barras (el mejor en rojo). Abajo, la temporada en 6 números.'],
+  ['stats-3-radar','Radar central','Los 6 atributos en un radar con la media en el centro, rodeado por los números de la temporada. Al pie, la ficha en una franja.'],
+  ['stats-4-dossier','Dossier','Estilo revista: la temporada en una grilla tipográfica, los atributos en un ranking de mayor a menor y una frase de presentación al pie.']]],
+ clubes:['Clubes',[['clubes-1-linea','Línea de tiempo','Los 8 clubes del debut en Mannucci a Alianza Lima sobre una línea. Cada parada con escudo, años, país y vínculo; el actual destacado con su título.'],
+  ['clubes-2-grilla','Grilla de escudos','Una baldosa por club con el escudo grande en gris de fondo. Alianza en azul y una baldosa final con clubes, países y títulos.'],
+  ['clubes-3-planilla','Planilla','Tabla tipo ficha de transferencias: temporada, club, país, vínculo (préstamo, selección, debut) y títulos. El club actual marcado con una barra.'],
+  ['clubes-4-escalera','Escalera','Nuevo: cada club es un escalón que sube del debut al club actual, con el año en contorno. Alianza arriba de todo, en azul, con el título. En mobile, una escalera de tarjetas.']]],
+ videos:['Videos',[['videos-1-programa','Programa','Un reel grande y, al lado, título, club y la lista "Más videos" para cambiarlo. Ideal para 3 videos.'],
+  ['videos-2-stories','Stories','Los reels como historias de Instagram, con barras de progreso, avance automático y círculos por club.'],
+  ['videos-3-temporadas','Temporadas','Cada video bajo su año gigante en contorno con el escudo del club: Alianza 26, América 25 y Selección 24.'],
+  ['videos-4-paneles','Paneles','Paneles a todo el ancho: el activo se abre grande a color y los otros quedan finos en blanco y negro.']]],
+ galeria:['Galería',[['galeria-1-mosaico','Mosaico con pestañas','Grilla con una foto grande cada cinco, filtros por Alianza, Selección y clubes anteriores, "Ver más fotos" sin huecos y visor a pantalla completa.'],
+  ['galeria-2-carriles','Carriles','Dos filas de fotos que corren solas en sentidos opuestos. Se frenan con el mouse y cualquier foto se abre grande.'],
+  ['galeria-3-album','Álbum editorial','Una foto destacada y cuatro al costado; "Siguientes" pasa de a cinco y "Ver todas" abre el visor.'],
+  ['galeria-4-hoja','Hoja de contactos','Visor grande con la foto completa y una tira numerada en blanco y negro para elegir.']]],
+ contacto:['Contacto',[['contacto-1-directorio','Directorio','Título a la izquierda y un renglón por contacto: Moon Sports, LED Sports e Instagram, con para qué escribirle a cada uno.'],
+  ['contacto-2-cierre','Cierre con foto','Media pantalla con la foto del título y del otro lado "¿Jugamos juntos?" con las agencias y un botón grande a Instagram.'],
+  ['contacto-3-motivo','¿Para qué escribís?','El visitante elige si es de un club, una marca o prensa/fan, y la tarjeta le muestra a quién escribirle.'],
+  ['contacto-4-tarjetas','Tarjetas grandes','Cuatro tarjetas 2x2 (Instagram, Transfermarkt, representante en azul y marketing) con el logo en gris de fondo.']]],
+ footer:['Footer',[['footer-1-pulido','Pulido','Una sola línea: logo, redes, derechos y el crédito de desarrollo.'],
+  ['footer-2-navegacion','Con navegación','Columnas con logo y bajada, secciones, contactos y redes.'],
+  ['footer-3-firma','Firma','Escudo, posición y club, links, Volver arriba y RAMOS gigante a todo el ancho.'],
+  ['footer-4-escudos','Escudos','Franja con los escudos de sus 8 clubes en gris (Alianza a color) y debajo logo, derechos, crédito y Volver arriba.']]],
 }
 const ORDER=Object.keys(SECS),tabs=document.getElementById('tabs'),secs=document.getElementById('secs'),stage=document.getElementById('stage')
 let sec='navbar',cur={};try{const v=JSON.parse(localStorage.getItem('kitClaro')||'{}');if(SECS[v.sec])sec=v.sec;cur=v.cur||{}}catch(e){}
 ORDER.forEach(k=>{const b=document.createElement('button');b.setAttribute('role','tab');b.textContent=SECS[k][0];b.onclick=()=>pickSec(k);secs.appendChild(b)})
 function pickSec(k){sec=k;[...secs.children].forEach((b,j)=>b.setAttribute('aria-selected',ORDER[j]===k));h1s.textContent=SECS[k][0];cnt.textContent=SECS[k][1].length
- stage.classList.toggle('three',k==='navbar');note.innerHTML=NOTE[k]
+ stage.classList.toggle('three',k==='navbar');note.innerHTML=NOTE[k]||NOTE._
  tabs.innerHTML='';SECS[k][1].forEach((o,i)=>{const b=document.createElement('button');b.setAttribute('role','tab');b.innerHTML='<b>'+(i+1)+'</b>'+o[1];b.onclick=()=>sel(i);tabs.appendChild(b)});sel(cur[k]||0)}
 function sel(i){cur[sec]=i;try{localStorage.setItem('kitClaro',JSON.stringify({sec,cur}))}catch(e){}const [f,t,d,l]=SECS[sec][1][i]
  ;[...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));fd.src=fm.src=openD.href=f+'.html';fo.src=sec==='navbar'?f+'.html#open':'about:blank'

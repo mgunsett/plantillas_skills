@@ -1,0 +1,37 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clubes 2 · Grilla de escudos</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.g{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);border:1px solid var(--line)}
+.tile{position:relative;background:var(--bg);padding:26px 24px;min-height:250px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.tile .wm{position:absolute;right:-34px;bottom:-34px;width:190px;height:190px;object-fit:contain;filter:grayscale(1) contrast(1.1);opacity:.16;pointer-events:none}
+.tile img:not(.wm){width:76px;height:76px;object-fit:contain;position:relative}
+.tile .yr{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--gray)}
+.tile h3{font-size:20px;font-weight:700;text-transform:uppercase;line-height:1.05;margin-top:16px;position:relative}
+.tile .ct{font-size:11px;letter-spacing:.2em;color:var(--gray);text-transform:uppercase;margin-top:6px}
+.tile .tag{position:absolute;top:24px;right:22px;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+.tile .tt{margin-top:10px;font-size:12px;color:var(--acc)}
+.tile.cur{background:var(--acc);color:#fff}
+.tile.cur .yr,.tile.cur .ct,.tile.cur .tag{color:#fff}
+.tile.cur .wm{filter:grayscale(1);mix-blend-mode:multiply;opacity:.3}
+.tile.own .tag{color:var(--acc2)}
+@media (hover:hover) and (pointer:fine){.tile:not(.cur){transition:background .3s var(--ease)}.tile:not(.cur):hover{background:var(--bg2)}.tile img{transition:transform .4s var(--ease)}.tile:hover img:not(.wm){transform:scale(1.08)}}
+.sum{background:var(--bg2);padding:26px 24px;display:grid;align-content:center;gap:14px}
+.sum div{display:flex;align-items:baseline;gap:12px}
+.sum b{font-size:52px;font-weight:700;color:var(--acc);line-height:.9;min-width:60px}
+.sum small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#3D4A68}
+@media (max-width:1000px){.g{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.tile{min-height:190px;padding:18px 16px}.tile img:not(.wm){width:54px;height:54px}.tile h3{font-size:15px}.tile .wm{width:130px;height:130px;right:-24px;bottom:-24px}.tile .tag{top:16px;right:14px;font-size:9px}.sum{padding:18px 16px}.sum b{font-size:38px;min-width:44px}}
+</style></head><body>
+<section class="sec" id="clubes">
+  <div class="sh"><div class="k">Trayectoria</div><h2>Clubes</h2></div>
+  <div class="g" id="g"></div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const titles=CLUBS.reduce((a,c)=>a+c.t.length,0),countries=new Set(CLUBS.map(c=>c.c)).size
+document.getElementById('g').innerHTML=CLUBS.map(c=>`<article class="tile${c.cur?' cur':''}${c.own?' own':''}"><img class="wm" src="${c.l}" alt="" aria-hidden="true">
+<span class="tag">${c.cur?'Actual':c.own?'Dueño del pase':c.i}</span><img src="${c.l}" alt="Escudo de ${c.n}" loading="lazy">
+<div><div class="yr">${c.y}</div><h3>${c.n}</h3><div class="ct">${c.c}</div>${c.t.map(t=>`<div class="tt">★ ${t}</div>`).join('')}</div></article>`).join('')+
+`<div class="sum"><div><b class="tab">${CLUBS.length}</b><small>Clubes</small></div><div><b class="tab">${countries}</b><small>Países</small></div><div><b class="tab">${titles}</b><small>${titles===1?"Título":"Títulos"}</small></div></div>`
+</script>
+</body></html>
