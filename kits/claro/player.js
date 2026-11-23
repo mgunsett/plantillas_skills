@@ -36,6 +36,7 @@ window.P = {
     contact: 'img/g11.webp',               // Contacto 2: foto de cierre
     portrait: 'img/retrato.webp',          // retrato vertical de estudio (Hero 5)
     heroCelebrate: 'img/recorte-festejo.webp', // recorte festejando, brazos abiertos (Hero 6)
+    press: 'img/g16.webp',                 // Prensa 3: fondo de la nota destacada
   },
   alts: {
     heroFront: 'Luis Ramos con la camiseta 9 de Alianza Lima',
@@ -106,9 +107,9 @@ window.P = {
 
   // Prensa
   press: [
-    { logo: 'img/press_logo1.webp', medio: 'Win Sports', t: 'Con doblete de Luis Ramos, América venció 2-0 al DIM y quedó primero', d: 'Mayo 2025', x: '', u: 'https://www.instagram.com/reels/DKGMWJmJsNK/' },
-    { logo: 'img/press_logo3.webp', medio: 'CONMEBOL Sudamericana', t: '¿Gol? ¡Golazo de Luis Ramos para América de Cali!', d: 'Abril 2025', x: '', u: 'https://www.instagram.com/reels/DINZEdxx7Ci/' },
-    { logo: 'img/press_logo2.webp', medio: 'Cusco FC', t: 'Su gol con Cusco, nominado al Mejor Gol del Año 2024', d: 'Enero 2025', x: '', u: 'https://www.instagram.com/reels/DETBg0ehPo3/' },
+    { logo: 'img/press_logo1.webp', medio: 'Win Sports', t: 'Con doblete de Luis Ramos, América venció 2-0 al DIM y quedó primero', d: 'Mayo 2025', x: 'Dos goles del peruano para el triunfo de América de Cali y la punta de la Liga BetPlay.', u: 'https://www.instagram.com/reels/DKGMWJmJsNK/' },
+    { logo: 'img/press_logo3.webp', medio: 'CONMEBOL Sudamericana', t: '¿Gol? ¡Golazo de Luis Ramos para América de Cali!', d: 'Abril 2025', x: 'La CONMEBOL destacó su gol con América en la Copa Sudamericana.', u: 'https://www.instagram.com/reels/DINZEdxx7Ci/' },
+    { logo: 'img/press_logo2.webp', medio: 'Cusco FC', t: 'Su gol con Cusco, nominado al Mejor Gol del Año 2024', d: 'Enero 2025', x: 'El club lo celebró: un gol que hizo historia y quedó entre los mejores del año.', u: 'https://www.instagram.com/reels/DETBg0ehPo3/' },
   ],
 
   // Contacto

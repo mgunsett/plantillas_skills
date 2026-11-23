@@ -5,7 +5,7 @@
 Hay dos estilos:
 
 - **Clásico (Keki / Ivan Colman):** opciones numeradas 1, 2, 3… Paleta del club sobre fondo oscuro cálido, Bebas Neue y Barlow.
-- **Kit claro (Luis Ramos):** opciones C1, C2… Fondo blanco azulado, acento azul del club y rojo, tipografía Nippo. Datos en [`kits/claro/player.js`](kits/claro/). Cubre todas las secciones menos Prensa; ⚛ marca lo aplicado en Luis Ramos, con el componente React en `modelos/<sección>/react/`.
+- **Kit claro (Luis Ramos):** opciones C1, C2… Fondo blanco azulado, acento azul del club y rojo, tipografía Nippo. Datos en [`kits/claro/player.js`](kits/claro/). Cubre todas las secciones; ⚛ marca lo aplicado en Luis Ramos, con el componente React en `modelos/<sección>/react/`.
 - **Kit neón (Héctor Fertoli):** opciones N1 a N4 en cada sección. Fondo casi negro, acento lima y magenta, tipografía Nippo. Los datos del jugador están en un solo archivo ([`kits/neon/player.js`](kits/neon/)), así que se regeneran para otro jugador con `herramientas/previews/empaquetar.mjs`. Las opciones con ⚛ tienen el componente React en `modelos/<sección>/react/`.
 
 | Sección | Clásico | Kit neón | Kit claro | Carpeta |
@@ -17,7 +17,7 @@ Hay dos estilos:
 | **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés · 4 Anillos y tarjetas | N1 Marcador · N2 Ficha de scouting · ⚛ N3 Radar central · N4 Dossier | ⚛ C1 Marcador · C2 Ficha de scouting · C3 Radar central · C4 Dossier · C5 Odómetro | [03-estadisticas](modelos/03-estadisticas/) |
 | **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | N1 Programa · N2 Stories · ⚛ N3 Temporadas · N4 Paneles | C1 Programa · C2 Stories · ⚛ C3 Temporadas · C4 Paneles · C5 Mazo de reels | [04-videos](modelos/04-videos/) |
 | **Galería** | ✅ 1 Pestañas y mosaico · 2 Álbumes · 3 Carriles | ⚛ N1 Mosaico con pestañas · N2 Carriles · N3 Álbum editorial · N4 Hoja de contactos | C1 Mosaico con pestañas · ⚛ C2 Carriles · C3 Álbum editorial · C4 Hoja de contactos | [05-galeria](modelos/05-galeria/) |
-| **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada · 4 Zócalo · 5 Pase a pase | N1 Titulares · N2 Recortes · ⚛ N3 Nota destacada · N4 Lo publicaron | — | [06-prensa](modelos/06-prensa/) |
+| **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada · 4 Zócalo · 5 Pase a pase | N1 Titulares · N2 Recortes · ⚛ N3 Nota destacada · N4 Lo publicaron | C1 Titulares · C2 Recortes · C3 Nota destacada · C4 Lo publicaron | [06-prensa](modelos/06-prensa/) |
 | **Contacto** | 1 Directorio · 2 Cierre con foto · 3 ¿Para qué escribís? · ✅ 4 Tarjetas mejoradas | N1 Directorio · N2 Cierre con foto · N3 ¿Para qué escribís? · ⚛ N4 Tarjetas grandes | C1 Directorio · C2 Cierre con foto · C3 ¿Para qué escribís? · ⚛ C4 Tarjetas grandes | [07-contacto](modelos/07-contacto/) |
 | **Footer** | ✅ 1 Pulido · 2 Con navegación · 3 Firma | N1 Pulido · N2 Con navegación · ⚛ N3 Firma · N4 Escudos | C1 Pulido · C2 Con navegación · ⚛ C3 Firma · C4 Escudos | [08-footer](modelos/08-footer/) |
 | **Clubes** | (dentro de Estadísticas) | N1 Línea de tiempo · ⚛ N2 Grilla de escudos · N3 Planilla · N4 Árbol de pases | C1 Línea de tiempo · ⚛ C2 Grilla de escudos · C3 Planilla · C4 Escalera · C5 Pasaporte | [09-clubes](modelos/09-clubes/) |
