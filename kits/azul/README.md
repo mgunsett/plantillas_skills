@@ -17,8 +17,8 @@ Previews de diseño armadas para el rediseño de **Ronaldo Martínez** (Vélez S
 | Videos | `videos-5-destacado.html` | Highlight grande + 3 reels de Instagram | ✅ elegido |
 | Galería | `galeria-5-revelado.html` | Revelado: mosaico con apertura FLIP (`flip-lb.js`) | |
 | Galería | `galeria-6-capitulos.html` | Capítulos: índice fijo y un carril por etapa | |
-| Prensa | `prensa-5-cronologia.html` | Cronología: notas sobre una línea que se dibuja | ✅ elegido |
-| Prensa | `prensa-6-portada.html` | En portada: una nota por vez con avance automático | |
+| Prensa | `prensa-5-cronologia.html` | Cronología: notas sobre una línea que se dibuja | |
+| Prensa | `prensa-6-portada.html` | En portada: una nota por vez con avance automático | ✅ elegido |
 
 También se eligieron `clubes-2-grilla`, `contacto-1-directorio` y `footer-3-firma` (con la firma `ronaldo77`). Los componentes React de todo lo elegido están en `modelos/<sección>/react/*Azul.jsx`, con su nota en el README de cada sección.
 
