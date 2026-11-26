@@ -21,3 +21,9 @@ Cada preview trae debajo un hero y secciones de relleno para probar el estado al
   - **Datos de `playerData`:** `initials`, `number`, `displayName`, `name`, `fullName`, `position`, `logoCurrentClub`, `currentClub`, `contact` (title, label, url), `socialMedia` (Instagram) y los nuevos `menuPortrait` y `menuPortraitAlt`. El retrato conviene en vertical, de unos 1200 px.
   - **Tema:** `brand.amber` (acento: cortina y links), `brand.dorado` (números y hover) y `brand.gray`.
   - Revisá que los `href` de `navLinks` coincidan con los `id` de las secciones.
+
+## Kit azul (Ronaldo Martínez)
+
+El C5 pasado al oscuro azul de Ronaldo: misma barra mínima y el índice a pantalla completa con la selfie sobre un degradé azul Vélez.
+
+- **React:** [`react/NavbarIndexAzul.jsx`](react/NavbarIndexAzul.jsx). Mismos datos que `NavbarIndex.jsx` (`initials`, `number`, `displayName`, `menuPortrait`, `menuPortraitAlt`, `contact`, `socialMedia`…) y espera el `LoadingContext` del starter para entrar después del preloader.

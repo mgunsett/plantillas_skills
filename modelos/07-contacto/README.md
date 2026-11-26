@@ -55,3 +55,14 @@ Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía 
 - **C3. ¿Para qué escribís?:** El visitante elige si es de un club, una marca o prensa/fan, y la tarjeta le muestra a quién escribirle.
 - **C4. Tarjetas grandes (aplicado en Luis Ramos):** Cuatro tarjetas 2x2 (Instagram, Transfermarkt, representante en azul y marketing) con el logo en gris de fondo.
   - **React:** [`react/ContactTarjetasClaro.jsx`](react/ContactTarjetasClaro.jsx).
+
+## Kit azul (diseñado para Ronaldo Martínez)
+
+Opciones en paleta oscura azul (fondo `#050B14`, azul Vélez `#4D93D6` y dorado `#D4A84B`) con tipografía Nippo, desde [`kits/azul`](../../kits/azul/). Los datos salen de `kits/azul/player.js`. En React se portaron con Bebas Neue, Barlow Condensed y Barlow, como el resto del starter.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| A1 | **Directorio** | ✅ Aplicado en Ronaldo Martínez | [html](previews/azul-1-directorio.html) · ![](previews/azul-1-directorio.jpg) |
+
+- **A1. Directorio (aplicado en Ronaldo Martínez):** a la izquierda el título, una línea de texto y el botón de Transfermarkt; a la derecha una fila por contacto (representante, marketing e Instagram personal) con logo, rol en dorado, nombre grande, handle y para qué escribir. Con mouse, la fila se corre a la derecha y la flecha se llena.
+  - **React:** [`react/ContactDirectorioAzul.jsx`](react/ContactDirectorioAzul.jsx). Lee `contact` (`title`, `label`, `handle`, `url`, `for`, `image`) y `socialMedia` (Instagram y Transfermarkt).

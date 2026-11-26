@@ -37,6 +37,7 @@ Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía 
 | C3 | Planilla | Alternativa | [html](previews/claro-3-planilla.html) · ![](previews/claro-3-planilla.jpg) |
 | C4 | Escalera | Alternativa | [html](previews/claro-4-escalera.html) · ![](previews/claro-4-escalera.jpg) |
 | C5 | Pasaporte | Alternativa | [html](previews/claro-5-pasaporte.html) · ![](previews/claro-5-pasaporte.jpg) |
+| C6 | Carrera en el tiempo | Alternativa | [html](previews/claro-6-carrera.html) · ![](previews/claro-6-carrera.jpg) |
 
 - **C1. Línea de tiempo:** Los 8 clubes del debut en Mannucci a Alianza Lima sobre una línea. Cada parada con escudo, años, país y vínculo; el actual destacado con su título.
 - **C2. Grilla de escudos (aplicado en Luis Ramos):** Una baldosa por club con el escudo grande en gris de fondo. Alianza en azul y una baldosa final con clubes, países y títulos.
@@ -45,4 +46,20 @@ Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía 
 - **C4. Escalera:** Nuevo: cada club es un escalón que sube del debut al club actual, con el año en contorno. Alianza arriba de todo, en azul, con el título. En mobile, una escalera de tarjetas.
 - **C5. Pasaporte:** La carrera como un pasaporte abierto: a la izquierda la hoja de datos (foto, nacionalidad, nacimiento, posición, clubes, países y títulos, con el renglón de máquina al pie) y a la derecha un sello por club, del debut a Alianza Lima.
 
+- **C6. Carrera en el tiempo:** la versión clara del A5 del kit azul: barras por club sobre el eje de años, color por país, préstamos rayados y ficha al tocar.
 En React va dentro de `StatsSection.jsx` con `CLUBS_DESIGN = 'grilla'`. La etiqueta de cada baldosa sale de `club.info` (Préstamo, Debut) o del nombre (Selección).
+
+## Kit azul (diseñado para Ronaldo Martínez)
+
+Opciones en paleta oscura azul (fondo `#050B14`, azul Vélez `#4D93D6` y dorado `#D4A84B`) con tipografía Nippo, desde [`kits/azul`](../../kits/azul/). Los datos salen de `kits/azul/player.js`. En React se portaron con Bebas Neue, Barlow Condensed y Barlow, como el resto del starter.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| A2 | **Grilla de escudos** | ✅ Aplicado en Ronaldo Martínez | [html](previews/azul-2-grilla.html) · ![](previews/azul-2-grilla.jpg) |
+| A5 | Carrera en el tiempo | Alternativa | [html](previews/azul-5-carrera.html) · ![](previews/azul-5-carrera.jpg) |
+| A6 | Vitrina | Alternativa | [html](previews/azul-6-vitrina.html) · ![](previews/azul-6-vitrina.jpg) |
+
+- **A2. Grilla de escudos (aplicado en Ronaldo Martínez):** la N2 en azul: el club actual en el acento, escudo de fondo en gris, etiquetas Actual, Selección, Préstamo y Debut, y notas como "Goleador del Torneo" en dorado.
+  - **React:** [`react/ClubsGridAzul.jsx`](react/ClubsGridAzul.jsx). Lee `clubs` (`name`, `country`, `years`, `logo`, `titles`, `info`, `note`). Va como sección propia con `id="clubes"`.
+- **A5. Carrera en el tiempo:** cada club es una barra sobre un eje de años, con color por país, préstamos rayados y ★ en cada título. Al tocar una barra se abre la ficha del club al costado (desktop) o debajo de la fila (mobile). Muestra bien préstamos que se superponen.
+- **A6. Vitrina:** lista de clubes y una ficha que cambia al elegir: escudo grande, vínculo, años sobre un eje y títulos. Indicador que se desliza, cambio de ficha con un blur corto, teclado sin animación y swipe en mobile.

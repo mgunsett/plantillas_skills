@@ -1,0 +1,113 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Galería 5 · Revelado</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Revelado: mosaico en columnas que respeta la forma de cada foto.
+   Las fotos se revelan con clip-path al entrar en pantalla, los filtros usan
+   una pestaña que se recorta (no salta) y cada foto se abre creciendo desde su lugar. */
+.rvl{--out:cubic-bezier(.23,1,.32,1);--io:cubic-bezier(.77,0,.175,1);--line2:rgba(255,255,255,.08)}
+.rvl .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:32px}
+.rvl .head .sh{margin-bottom:0}
+.rvl .cnt{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.rvl .cnt b{color:var(--bone);font-size:28px;letter-spacing:0;margin-right:8px;font-variant-numeric:tabular-nums}
+
+/* Filtros: la lista activa es una copia recortada que se desliza hasta la pestaña elegida */
+.tabs{position:relative;display:inline-flex;margin-bottom:28px;border:1px solid var(--line2);border-radius:999px;padding:4px;max-width:100%}
+.tabs .row{display:flex}
+.tabs button{border:0;background:none;color:var(--gray);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:11px 18px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:transform 140ms var(--out)}
+.tabs button:active{transform:scale(.97)}
+.tabs button:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.tabs button i{font-style:normal;opacity:.6;margin-left:6px}
+.tabs .on{position:absolute;inset:4px auto auto 4px;pointer-events:none;clip-path:inset(0 100% 0 0 round 999px);transition:clip-path 240ms var(--io)}
+.tabs .on{background:var(--lime);border-radius:999px}
+.tabs .on button{color:#050b14}
+.tabs .on button i{opacity:.75}
+.tabs .on.now{transition:none}
+@media (hover:hover) and (pointer:fine){.tabs .row button:hover{color:var(--bone)}}
+
+/* Mosaico */
+.ms{columns:3;column-gap:14px}
+.ms figure{break-inside:avoid;margin:0 0 14px;position:relative;border-radius:12px;overflow:hidden;background:#0b1626;cursor:zoom-in}
+.ms figure[hidden]{display:none}
+.ms button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;border-radius:12px}
+.ms button:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.ms img{display:block;width:100%;height:auto;transition:transform 400ms var(--out)}
+.ms figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 14px;background:linear-gradient(transparent,rgba(5,11,20,.88));font-size:13px;color:#d6e0ec;transform:translateY(100%);opacity:0;transition:transform 220ms var(--out),opacity 200ms ease;pointer-events:none}
+.ms figcaption b{display:block;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mag);margin-bottom:4px}
+@media (hover:hover) and (pointer:fine){
+ .ms figure:hover img{transform:scale(1.03)}
+ .ms figure:hover figcaption{transform:none;opacity:1}
+}
+/* Revelado al entrar en pantalla (una vez): la foto se descubre de abajo hacia arriba */
+.ms figure.pre{clip-path:inset(100% 0 0 0 round 12px)}
+.ms figure.pre img{transform:scale(1.08)}
+.ms figure.go{clip-path:inset(0 0 0 0 round 12px);transition:clip-path 560ms var(--io);transition-delay:var(--d,0ms)}
+.ms figure.go img{transform:none;transition:transform 700ms var(--out);transition-delay:var(--d,0ms)}
+/* Al filtrar: entran con un fundido corto y escalonado */
+.ms figure.in{animation:fin 240ms var(--out) both;animation-delay:var(--d,0ms)}
+@keyframes fin{from{opacity:0;transform:translateY(8px)}}
+
+@media (max-width:900px){.ms{columns:2;column-gap:10px}.ms figure{margin-bottom:10px}}
+@media (max-width:640px){
+ .tabs{display:flex;overflow-x:auto;scrollbar-width:none}
+ .tabs::-webkit-scrollbar{display:none}
+ .tabs button{padding:10px 14px;font-size:11px}
+ .ms figcaption{transform:none;opacity:1;padding:26px 10px 9px;font-size:11px}
+ .ms figcaption b{font-size:9px}
+}
+@media (prefers-reduced-motion:reduce){
+ .tabs .on,.ms img,.ms figcaption{transition:none}
+ .ms figure.pre{clip-path:none;opacity:0}.ms figure.pre img{transform:none}
+ .ms figure.go{opacity:1;transition:opacity 200ms ease}.ms figure.go img{transition:none}
+ .ms figure.in{animation:fade 200ms ease both}@keyframes fade{from{opacity:0}}
+}
+</style></head><body>
+<section class="sec rvl" id="galeria">
+  <div class="head">
+    <div class="sh"><div class="k">Archivo</div><h2>Galería</h2></div>
+    <div class="cnt" aria-live="polite"><b id="n"></b>fotos</div>
+  </div>
+  <div class="tabs" id="tabs" role="tablist" aria-label="Filtrar fotos"></div>
+  <div class="ms" id="ms"></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script src="flip-lb.js"></script><script>
+(()=>{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches
+const lab=Object.fromEntries(CATS),count=k=>k==='all'?GAL.length:GAL.filter(g=>g.c===k).length
+const btns=CATS.map(([k,l])=>`<button type="button" data-k="${k}">${l}<i>${count(k)}</i></button>`).join('')
+tabs.innerHTML=`<div class="row">${btns.replace(/<button /g,'<button role="tab" ')}</div><div class="row on" aria-hidden="true">${btns.replace(/<button /g,'<button tabindex="-1" ')}</div>`
+const base=[...tabs.querySelector('.row').children],over=tabs.querySelector('.on')
+ms.innerHTML=GAL.map((g,i)=>`<figure class="pre" data-c="${g.c}"><button type="button" aria-label="Abrir foto: ${g.a}"><img src="${g.s}" alt="${g.a}" loading="${i<6?'eager':'lazy'}"></button><figcaption><b>${lab[g.c]||''}</b>${g.a}</figcaption></figure>`).join('')
+const figs=[...ms.children]
+let cur='all'
+function clip(instant){
+  const b=base.find(x=>x.dataset.k===cur),W=over.offsetWidth
+  const l=b.offsetLeft-4,r=W-(l+b.offsetWidth)
+  over.classList.toggle('now',!!instant)
+  over.style.clipPath=`inset(0 ${r}px 0 ${l}px round 999px)`
+}
+function setTab(k,instant,init){
+  if(k===cur&&!instant)return;cur=k
+  base.forEach(b=>{const on=b.dataset.k===k;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1})
+  clip(instant||reduce)
+  n.textContent=count(k);if(init)return
+  let j=0
+  figs.forEach(f=>{const show=k==='all'||f.dataset.c===k;f.hidden=!show;f.classList.remove('in','pre');f.classList.add('go')
+    if(show&&!instant){f.style.setProperty('--d',Math.min(j++,10)*30+'ms');void f.offsetWidth;f.classList.add('in')}})
+  n.textContent=count(k)
+}
+base.forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.k)))
+tabs.addEventListener('keydown',e=>{const d={ArrowRight:1,ArrowLeft:-1}[e.key];if(!d)return;e.preventDefault()
+  const i=base.findIndex(b=>b.dataset.k===cur),nx=base[(i+d+base.length)%base.length];setTab(nx.dataset.k,true);nx.focus()})
+// Revelado escalonado por columna al entrar en pantalla
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const f=e.target;io.unobserve(f)
+  const col=Math.round(f.offsetLeft/(f.offsetWidth||1));f.style.setProperty('--d',col*70+'ms');f.classList.remove('pre');f.classList.add('go')}),{rootMargin:'0px 0px -8% 0px'})
+figs.forEach(f=>io.observe(f))
+ms.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return
+  const vis=figs.filter(f=>!f.hidden),i=vis.indexOf(b.parentElement)
+  FLB.open(vis.map(f=>{const g=GAL[figs.indexOf(f)];return{s:g.s,a:g.a}}),i,vis.map(f=>f.querySelector('img')))})
+addEventListener('resize',()=>clip(true))
+document.fonts&&document.fonts.ready.then(()=>clip(true))
+setTab('all',true,true)
+})()
+</script>
+</body></html>

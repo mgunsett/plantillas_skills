@@ -1,0 +1,82 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hero 4 · Transmisión</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.hero{position:relative;height:calc(100 * var(--sv));min-height:560px;overflow:hidden;background:#000}
+.bgb{display:none;position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;opacity:.35;filter:blur(2px) saturate(.6)}
+.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 55%;filter:saturate(.8) contrast(1.05) brightness(.8);animation:ph 2.4s var(--ease) both}
+@keyframes ph{from{transform:scale(1.08);opacity:0}}
+.veil{position:absolute;inset:0;background:linear-gradient(90deg,#050b14ee 0%,#050b1499 30%,transparent 50%),linear-gradient(0deg,#050b14 0%,transparent 40%),linear-gradient(180deg,#050b14d9 0%,transparent 20%)}
+.sb{position:absolute;top:96px;left:60px;z-index:5;display:grid;gap:2px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.sb .row{display:grid;grid-template-columns:100px 52px 74px 52px auto;align-items:stretch;background:#050b14cc;backdrop-filter:blur(6px)}
+.sb .lb{display:flex;align-items:center;gap:8px;padding:0 12px;font-size:11px}
+.sb .last .lb{background:var(--lime);color:#050b14}
+.sb .next .lb{background:var(--mag);color:#fff}
+.sb .next .lb:before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;animation:bl 1.4s infinite}
+.sb .tm{display:grid;place-items:center;font-size:14px;color:#fff;padding:10px 0}
+.sb .mid{display:flex;align-items:center;justify-content:center;gap:6px;font-size:20px;color:#fff;font-variant-numeric:tabular-nums}
+.sb .mid i{font-style:normal;color:var(--gray);font-size:14px}
+.sb .mid em{font-style:normal;font-size:12px;color:var(--lime);letter-spacing:.14em}
+.sb .last .mid b.w{color:var(--lime)}
+.sb .meta{display:flex;align-items:center;padding:0 14px;font-size:10px;color:var(--gray);letter-spacing:.16em;border-left:1px solid #ffffff14;white-space:nowrap}
+@keyframes bl{50%{opacity:.2}}
+.lower{position:absolute;left:60px;bottom:70px;z-index:5;max-width:min(760px,60vw)}
+.l1{display:flex;align-items:stretch;animation:lw .9s var(--ease) .5s both}
+@keyframes lw{from{opacity:0;transform:translateX(-40px)}}
+.l1 .dor{background:var(--lime);color:#050b14;font-weight:700;font-size:clamp(60px,6vw,96px);line-height:1;padding:10px 18px 4px;display:flex;align-items:center}
+.l1 h1{background:#050b14ee;padding:14px 26px 8px;font-weight:700;text-transform:uppercase;line-height:.88;display:flex;flex-direction:column;justify-content:center}
+.l1 h1 .n1{font-size:clamp(20px,2vw,32px);color:var(--gray);font-weight:500;letter-spacing:.12em}
+.l1 h1 .n2{font-size:clamp(54px,6.4vw,112px);color:#fff}
+.l2{display:inline-flex;align-items:center;gap:14px;background:var(--bone);color:#050b14;padding:10px 20px;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;animation:lw .9s var(--ease) .7s both}
+.l2 img{width:22px;height:22px;object-fit:contain}
+.l2 i{width:1px;height:16px;background:#050b1455}
+.box{position:absolute;right:60px;bottom:70px;z-index:5;width:280px;background:#050b14cc;backdrop-filter:blur(8px);border-top:3px solid var(--lime);animation:bx 1s var(--ease) .9s both}
+@keyframes bx{from{opacity:0;transform:translateY(30px)}}
+.box header{display:flex;justify-content:space-between;padding:12px 16px;font-size:10px;font-weight:700;letter-spacing:.24em;color:var(--gray)}
+.box header b{color:var(--lime)}
+.box .r{display:flex;justify-content:space-between;align-items:baseline;padding:10px 16px;border-top:1px solid #ffffff14}
+.box .r small{font-size:12px;color:#d6e0ec;letter-spacing:.06em}
+.box .r b{font-size:24px;font-weight:700}
+.box .r:last-child b{color:var(--lime)}
+@media (max-width:820px){
+  .photo{object-position:50% 30%}
+  .bgb{display:none}
+  .veil{background:linear-gradient(0deg,#050b14 0%,#050b14cc 38%,transparent 70%)}
+  .sb{top:72px;left:20px;right:20px}
+  .sb .row{grid-template-columns:78px 40px 56px 40px 1fr}
+  .sb .lb{font-size:9px;padding:0 8px}.sb .tm{font-size:12px;padding:8px 0}.sb .mid{font-size:16px}
+  .sb .meta{padding:0 8px;font-size:8px;letter-spacing:.08em}
+  .lower{left:20px;right:20px;bottom:150px;max-width:none}
+  .l1 .dor{font-size:17vw;padding:8px 12px 2px}
+  .l1 h1{flex:1;padding:10px 14px 6px}
+  .l1 h1 .n1{font-size:4.6vw}.l1 h1 .n2{font-size:10.5vw}
+  .l2{font-size:10px;padding:8px 12px;gap:8px}
+  .box{left:20px;right:20px;top:auto;bottom:24px;width:auto;display:grid;grid-template-columns:repeat(4,1fr)}
+  .box header{display:none}
+  .box .r{flex-direction:column-reverse;align-items:center;border-top:0;border-left:1px solid #ffffff14;padding:12px 4px}
+  .box .r:first-of-type{border-left:0}
+  .box .r b{font-size:20px}.box .r small{font-size:9px}
+}
+</style></head><body>
+<header class="nav"><div class="links"><a>Home</a><a>Estadísticas</a></div><div class="logo">{{initials}}<span>_</span></div><div class="links"><a>Videos</a><a>Galería</a><a class="cta">Contacto</a></div><div class="burger"></div></header>
+<section class="hero" id="hero">
+  <img class="bgb" src="{{photos.heroWideBlur}}" alt="" aria-hidden="true">
+  <img class="photo" src="{{photos.heroWide}}" alt="{{alts.heroWide}}" fetchpriority="high">
+  <div class="veil"></div>
+  <div class="sb rv" style="animation-delay:.3s" role="group" aria-label="Partidos">
+    <div class="row last"><span class="lb">Último</span><span class="tm">{{lastMatch.home}}</span><span class="mid"><b class="w">{{lastMatch.hs}}</b><i>–</i><b>{{lastMatch.as}}</b></span><span class="tm">{{lastMatch.away}}</span><span class="meta">{{lastMatch.date}} · {{lastMatch.note}}</span></div>
+    <div class="row next"><span class="lb">Próximo</span><span class="tm">{{nextMatch.home}}</span><span class="mid"><em>vs</em></span><span class="tm">{{nextMatch.away}}</span><span class="meta">{{nextMatch.date}} · {{nextMatch.venue}}</span></div>
+  </div>
+  <div class="lower">
+    <div class="l1"><div class="dor">{{number}}</div><h1><span class="n1">{{first}}</span><span class="n2">{{last}}</span></h1></div>
+    <div class="l2"><img src="{{crest}}" alt="">{{club}}<i></i>{{position}}<i></i><img src="{{flag}}" alt="">{{natCode}}</div>
+  </div>
+  <div class="box">
+    <header><span>TEMPORADA</span><b>{{year}}</b></header>
+    <div class="r"><small>Partidos</small><b>{{s.pj}}</b></div>
+    <div class="r"><small>Goles</small><b>{{s.goles}}</b></div>
+    <div class="r"><small>Asist.</small><b>{{s.asis}}</b></div>
+    <div class="r"><small>Valoración</small><b>{{s.val}}</b></div>
+  </div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script>
+</body></html>

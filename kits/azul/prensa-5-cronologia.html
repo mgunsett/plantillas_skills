@@ -1,0 +1,85 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prensa 5 · Cronología</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Cronología: las notas ordenadas en el tiempo sobre una línea que se dibuja al bajar.
+   Cada nota muestra el mes, el medio y el club en el que estaba cuando salió. */
+.cr{--out:cubic-bezier(.23,1,.32,1);--io:cubic-bezier(.77,0,.175,1);--card:#0b1626;--line2:rgba(255,255,255,.08)}
+.cr .lay{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:64px;align-items:start}
+.cr .intro{position:sticky;top:40px}
+.cr .intro p{margin-top:22px;max-width:32ch;font-size:17px;line-height:1.5;color:#c3cfdd}
+.cr .intro .meta{display:flex;gap:28px;margin-top:30px}
+.cr .intro .meta b{display:block;font-size:40px;font-weight:700;line-height:1;color:var(--lime)}
+.cr .intro .meta small{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gray)}
+.tl{position:relative;list-style:none;padding-left:150px}
+.tl .ax{position:absolute;left:118px;top:8px;bottom:8px;width:1px;background:var(--line2)}
+.tl .ax i{position:absolute;inset:0;background:linear-gradient(var(--mag),var(--lime));transform-origin:top;transform:scaleY(0);transition:transform 900ms var(--io)}
+.cr.in .tl .ax i{transform:scaleY(1)}
+.it{position:relative;margin-bottom:22px}
+.it:last-child{margin-bottom:0}
+.it .when{position:absolute;left:-150px;top:22px;width:96px;text-align:right}
+.it .when b{display:block;font-size:30px;font-weight:700;line-height:.9;text-transform:uppercase;color:var(--bone)}
+.it .when span{display:block;margin-top:4px;font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--gray)}
+.it .dot{position:absolute;left:-38px;top:30px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--mag)}
+.card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 24px;padding:24px 26px;border:1px solid var(--line2);border-radius:18px;background:var(--card);color:inherit;text-decoration:none;transition:transform 160ms var(--out),border-color 200ms ease,background 200ms ease}
+.card:active{transform:scale(.985)}
+.card:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.card .src{display:flex;align-items:center;gap:12px}
+.card .src img{width:40px;height:40px;border-radius:10px;object-fit:cover;background:#fff}
+.card .src b{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.card .club{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);border:1px solid var(--line2);border-radius:999px;padding:6px 12px 6px 6px;align-self:start}
+.card .club img{width:22px;height:22px;object-fit:contain}
+.card h3{grid-column:1/-1;font-size:clamp(20px,1.9vw,28px);font-weight:700;line-height:1.12;text-transform:uppercase}
+.card p{grid-column:1/-1;margin-top:-6px;font-size:15px;line-height:1.5;color:#c3cfdd}
+.card .go{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--lime)}
+.card .go svg{transition:transform 200ms var(--out)}
+@media (hover:hover) and (pointer:fine){
+ .card:hover{border-color:var(--lime);background:#0e1d33}
+ .card:hover .go svg{transform:translateX(4px)}
+}
+/* Entrada: la línea se dibuja y las notas aparecen una tras otra */
+.cr .rv{opacity:0;transform:translateY(12px)}
+.cr.in .rv{opacity:1;transform:none;transition:opacity 420ms var(--out),transform 420ms var(--out);transition-delay:calc(var(--i,0)*110ms + 120ms)}
+@media (max-width:900px){
+ .cr .lay{grid-template-columns:1fr;gap:30px}
+ .cr .intro{position:static}
+ .cr .intro p{font-size:15px}
+ .tl{padding-left:26px}
+ .tl .ax{left:5px}
+ .it .dot{left:-26px;top:6px}
+ .it .when{position:static;width:auto;text-align:left;display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+ .it .when b{font-size:22px}
+ .card{padding:18px;gap:14px}
+ .card .club span{display:none}.card .club{padding:6px}
+ .card h3{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){.tl .ax i{transition:none}.cr .rv{transform:none}.cr.in .rv{transition:opacity 200ms ease}.card .go svg{transition:none}}
+</style></head><body>
+<section class="sec cr" id="press">
+  <div class="lay">
+    <div class="intro">
+      <div class="sh" style="margin-bottom:0"><div class="k">En los medios</div><h2>Prensa</h2></div>
+      <p>Lo que se publicó de {{full}}, en orden: del gol que lo hizo goleador del torneo a la vuelta a la Selección.</p>
+      <div class="meta" id="meta"></div>
+    </div>
+    <ol class="tl" id="tl"><div class="ax" aria-hidden="true"><i></i></div></ol>
+  </div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+(()=>{
+const sec=document.querySelector('.cr')
+const MES={enero:'Ene',febrero:'Feb',marzo:'Mar',abril:'Abr',mayo:'May',junio:'Jun',julio:'Jul',agosto:'Ago',septiembre:'Sep',octubre:'Oct',noviembre:'Nov',diciembre:'Dic'}
+// Club en el que estaba cuando salió cada nota (se deduce del texto de la nota)
+const clubOf=n=>{const t=(n.t+' '+n.x+' '+n.u).toLowerCase();return CLUBS.find(c=>/selecci|albirroja|fecha fifa/.test(t)?/selecci/i.test(c.n):t.includes(c.n.toLowerCase().split(' ')[0]))}
+const AR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+const N=PRESS.map(n=>{const[m,y]=n.d.split(' ');return{...n,m:MES[m.toLowerCase()]||m,y,club:clubOf(n)}})
+const medios=new Set(N.map(n=>n.medio)).size
+meta.innerHTML=`<div><b>${N.length}</b><small>Notas</small></div><div><b>${medios}</b><small>Medios</small></div><div><b>${N[0].y.slice(2)}–${N[N.length-1].y.slice(2)}</b><small>Período</small></div>`
+// Más vieja arriba: se lee como una historia
+const ord=N
+tl.insertAdjacentHTML('beforeend',ord.map((n,i)=>`<li class="it rv" style="--i:${i}"><div class="when"><b>${n.m}</b><span>${n.y}</span></div><span class="dot" aria-hidden="true"></span>
+<a class="card" href="${n.u}" target="_blank" rel="noopener"><span class="src"><img src="${n.logo}" alt=""><b>${n.medio}</b></span>
+${n.club?`<span class="club"><img src="${n.club.l}" alt=""><span>${n.club.n}</span></span>`:''}<h3>${n.t}</h3><p>${n.x}</p><span class="go">Leer en ${n.medio} ${AR}</span></a></li>`).join(''))
+const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){sec.classList.add('in');io.disconnect()}},{rootMargin:'0px 0px -15% 0px'});io.observe(sec)
+})()
+</script>
+</body></html>

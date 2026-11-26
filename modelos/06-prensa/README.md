@@ -51,3 +51,17 @@ Las cuatro opciones del kit neón pasadas a la paleta clara (blanco azulado, azu
 | C2 | Recortes | Alternativa | [html](previews/claro-2-recortes.html) · ![](previews/claro-2-recortes.jpg) |
 | C3 | Nota destacada | Alternativa (React del kit neón en `react/PressDestacada.jsx`) | [html](previews/claro-3-destacada.html) · ![](previews/claro-3-destacada.jpg) |
 | C4 | Lo publicaron | Alternativa | [html](previews/claro-4-publicaron.html) · ![](previews/claro-4-publicaron.jpg) |
+
+## Kit azul (diseñado para Ronaldo Martínez)
+
+Opciones en paleta oscura azul (fondo `#050B14`, azul Vélez `#4D93D6` y dorado `#D4A84B`) con tipografía Nippo, desde [`kits/azul`](../../kits/azul/). Los datos salen de `kits/azul/player.js`. En React se portaron con Bebas Neue, Barlow Condensed y Barlow, como el resto del starter.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| A5 | Cronología | Alternativa | [html](previews/azul-5-cronologia.html) · ![](previews/azul-5-cronologia.jpg) |
+| A6 | **En portada** | ✅ Aplicado en Ronaldo Martínez | [html](previews/azul-6-portada.html) · ![](previews/azul-6-portada.jpg) |
+
+- **A5. Cronología:** las notas en orden sobre una línea vertical que se dibuja al bajar. Cada nota con mes y año, el medio, el club en el que estaba el jugador, titular, bajada y "Leer en…". A la izquierda, intro fija con notas, medios y período.
+  - **React (portado, no quedó aplicado):** [`react/PressCronologiaAzul.jsx`](react/PressCronologiaAzul.jsx). Lee `press` (`date` tipo "Diciembre 2025", `media`, `logo`, `title`, `excerpt`, `url`, `club`) y `clubs` (para el escudo del club de cada nota). Ordena por fecha solo.
+- **A6. En portada (aplicado en Ronaldo Martínez):** una nota por vez en grande, con la foto de esa etapa y el escudo del club, y abajo pestañas por medio con una barra que avanza. Pasa sola y se frena con el mouse encima, con el teclado, si la sección no se ve o si el lector eligió una nota.
+  - **React:** [`react/PressPortadaAzul.jsx`](react/PressPortadaAzul.jsx). Lee `press` (`date` tipo "Marzo 2026", `media`, `logo`, `title`, `excerpt`, `url`, `club`, `photo`, `photoAlt`) y `clubs` (escudo del club de cada nota). La más nueva va primero. La barra usa Web Animations para pausar de verdad; el cambio de nota sale en 120 ms con blur y entra en 260 ms. Con flechas del teclado el cambio es instantáneo. En mobile, la foto arriba y las pestañas con el mes abreviado.

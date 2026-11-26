@@ -1,0 +1,153 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Galería 6 · Capítulos</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Capítulos: la galería contada en tres etapas (Vélez, Selección, clubes anteriores).
+   Índice fijo a la izquierda que sigue el scroll, una foto de apertura por capítulo
+   y un carril deslizable con el resto. Cada foto se abre creciendo desde su lugar. */
+.cap6{--out:cubic-bezier(.23,1,.32,1);--io:cubic-bezier(.77,0,.175,1);--line2:rgba(255,255,255,.08);overflow:visible}
+html,body{overflow-x:clip}
+.idx .sh h2{font-size:46px}
+.cap6 .lay{display:grid;grid-template-columns:270px minmax(0,1fr);gap:56px;align-items:start}
+
+/* Índice */
+.idx{position:sticky;top:40px}
+.idx .sh{margin-bottom:34px}
+.idx ol{position:relative;list-style:none;border-left:1px solid var(--line2)}
+.idx .mk{position:absolute;left:-1px;top:0;width:2px;height:0;background:var(--mag);transition:transform 260ms var(--io)}
+.idx .mk.now{transition:none}
+.idx a{display:block;padding:12px 0 12px 20px;color:var(--gray);text-decoration:none;transition:color 200ms ease}
+.idx a small{display:block;font-size:10px;font-weight:700;letter-spacing:.22em;color:inherit;opacity:.8}
+.idx a span{display:block;margin-top:4px;font-size:18px;font-weight:700;text-transform:uppercase;line-height:1.05}
+.idx a em{font-style:normal;font-size:12px;color:var(--gray);margin-left:6px;font-weight:400}
+.idx a[aria-current=true]{color:var(--bone)}
+.idx a:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.idx .tot{margin-top:28px;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.idx .tot b{display:block;font-size:44px;line-height:1;color:var(--lime);letter-spacing:0}
+@media (hover:hover) and (pointer:fine){.idx a:hover{color:#c9d5e3}}
+
+/* Capítulo */
+#chs{min-width:0}
+.ch{padding-bottom:64px;margin-bottom:64px;border-bottom:1px solid var(--line2);scroll-margin-top:30px}
+.ch:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.ch .ttl{display:flex;align-items:flex-end;gap:22px;margin-bottom:22px}
+.ch .no{font-size:clamp(72px,8vw,124px);font-weight:700;line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--lime)}
+.ch h3{font-size:clamp(28px,3vw,44px);font-weight:700;text-transform:uppercase;line-height:.95}
+.ch .ttl p{margin-top:8px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.ph{position:relative;display:block;width:100%;padding:0;border:0;background:#0b1626;border-radius:14px;overflow:hidden;cursor:zoom-in}
+.ph img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 400ms var(--out),opacity 200ms ease}
+.ph:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.ph:active img{transform:scale(.99)}
+.lead{aspect-ratio:16/8}
+.lead .cap{position:absolute;left:22px;bottom:18px;right:22px;font-size:14px;color:#d6e0ec;text-align:left}
+.lead:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(5,11,20,.8));pointer-events:none}
+.lead .cap{z-index:2}
+
+/* Carril */
+.rail{position:relative;margin-top:14px}
+.rail ul{display:flex;gap:12px;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding-bottom:4px}
+.rail ul::-webkit-scrollbar{display:none}
+.rail li{flex:none;scroll-snap-align:start}
+.rail .ph{height:190px;width:auto;aspect-ratio:var(--ar,1.5)}
+.rail .ctl{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.rail .ctl span{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.rail .ctl div{display:flex;gap:8px}
+.rail .ctl button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line2);background:none;color:var(--bone);font-size:16px;cursor:pointer;transition:transform 140ms var(--out),opacity 200ms ease,border-color 200ms ease}
+.rail .ctl button:active{transform:scale(.94)}
+.rail .ctl button:disabled{opacity:.3;cursor:default}
+.rail .ctl button:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+/* Foco: al pasar el mouse por el carril, las demás fotos bajan un poco */
+@media (hover:hover) and (pointer:fine){
+ .rail ul:hover .ph img{opacity:.45}
+ .rail ul .ph:hover img{opacity:1;transform:scale(1.03)}
+ .lead:hover img{transform:scale(1.02)}
+ .rail .ctl button:not(:disabled):hover{border-color:var(--lime)}
+}
+
+/* Entrada por capítulo */
+.ch .rv{opacity:0;transform:translateY(12px)}
+.ch.in .rv{opacity:1;transform:none;transition:opacity 420ms var(--out),transform 420ms var(--out);transition-delay:calc(var(--i,0)*70ms)}
+
+/* Mobile: el índice pasa a ser una barra fija arriba con una píldora que se desliza */
+@media (max-width:900px){
+ .cap6 .lay{grid-template-columns:minmax(0,1fr);gap:0}
+ .idx{position:sticky;top:0;z-index:5;margin:0 -20px 26px;padding:12px 20px;background:rgba(5,11,20,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+ .idx .sh,.idx .tot{display:none}
+ .idx ol{display:flex;gap:6px;border:0;overflow-x:auto;scrollbar-width:none}
+ .idx .mk{top:0;left:0;height:100%;border-radius:999px;background:var(--lime);transition:transform 240ms var(--io)}
+ .idx li{position:relative;flex:none}
+ .idx a{padding:9px 14px;border-radius:999px;position:relative}
+ .idx a small{display:none}
+ .idx a span{margin:0;font-size:13px;letter-spacing:.06em}
+ .idx a em{display:none}
+ .idx a[aria-current=true]{color:#050b14}
+ .ch{padding-bottom:44px;margin-bottom:44px;scroll-margin-top:70px}
+ .ch .no{font-size:64px}
+ .lead{aspect-ratio:4/3}
+ .rail ul{margin:0 -20px;padding:0 20px 4px;scroll-padding-left:20px}
+ .rail .ph{height:150px}
+ .rail .ctl div{display:none}
+}
+.mobile-h{display:none}
+@media (max-width:900px){.mobile-h{display:block}}
+@media (prefers-reduced-motion:reduce){
+ .idx .mk,.ph img{transition:none}.rail ul{scroll-behavior:auto}
+ .ch .rv{transform:none}.ch.in .rv{transition:opacity 200ms ease}
+}
+</style></head><body>
+<section class="sec cap6" id="galeria">
+  <div class="sh mobile-h"><div class="k">Archivo</div><h2>Galería</h2></div>
+  <div class="lay">
+    <nav class="idx" aria-label="Capítulos de la galería">
+      <div class="sh"><div class="k">Archivo</div><h2>Galería</h2></div>
+      <ol id="ol"><div class="mk" id="mk"></div></ol>
+      <div class="tot"><b id="tot"></b>fotos en total</div>
+    </nav>
+    <div id="chs"></div>
+  </div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script src="flip-lb.js"></script><script>
+(()=>{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,mob=()=>matchMedia('(max-width:900px)').matches
+const SUB={u:'Su presente en Liniers',s:'Con la Albirroja',c:'Talleres, Platense y más'}
+const C=CATS.filter(([k])=>k!=='all').map(([k,l])=>({k,l,items:GAL.filter(g=>g.c===k)})).filter(c=>c.items.length)
+tot.textContent=GAL.length
+ol.insertAdjacentHTML('beforeend',C.map((c,i)=>`<li><a href="#ch-${c.k}" data-i="${i}"><small>${String(i+1).padStart(2,'0')}</small><span>${c.l}<em>${c.items.length}</em></span></a></li>`).join(''))
+chs.innerHTML=C.map((c,i)=>{const [lead,...rest]=c.items;return `<article class="ch" id="ch-${c.k}" data-i="${i}">
+<div class="ttl rv"><span class="no" aria-hidden="true">${String(i+1).padStart(2,'0')}</span><div><h3>${c.l}</h3><p>${SUB[c.k]||''} · ${c.items.length} fotos</p></div></div>
+<button type="button" class="ph lead rv" style="--i:1" data-c="${i}" data-j="0" aria-label="Abrir foto: ${lead.a}"><img src="${lead.s}" alt="${lead.a}" loading="lazy"><span class="cap">${lead.a}</span></button>
+${rest.length?`<div class="rail rv" style="--i:2"><ul>${rest.map((g,j)=>`<li><button type="button" class="ph" data-c="${i}" data-j="${j+1}" aria-label="Abrir foto: ${g.a}"><img src="${g.s}" alt="${g.a}" loading="lazy"></button></li>`).join('')}</ul>
+<div class="ctl"><span>Deslizá para ver más</span><div><button type="button" data-d="-1" aria-label="Fotos anteriores">←</button><button type="button" data-d="1" aria-label="Fotos siguientes">→</button></div></div></div>`:''}</article>`}).join('')
+// Ancho de cada miniatura según la forma real de la foto
+chs.querySelectorAll('.rail img').forEach(im=>{const set=()=>im.parentElement.style.setProperty('--ar',(im.naturalWidth/im.naturalHeight)||1.5);im.complete?set():im.addEventListener('load',set)})
+const links=[...ol.querySelectorAll('a')],chEls=[...chs.children]
+let cur=-1
+function mark(i,instant){
+  if(i===cur)return;cur=i
+  links.forEach((a,k)=>a.setAttribute('aria-current',k===i))
+  const a=links[i],li=a.parentElement
+  mk.classList.toggle('now',!!instant||reduce)
+  if(mob()){mk.style.width=li.offsetWidth+'px';mk.style.height=li.offsetHeight+'px';mk.style.transform=`translateX(${li.offsetLeft}px)`;ol.scrollTo({left:li.offsetLeft-20,behavior:instant||reduce?'auto':'smooth'})}
+  else{mk.style.width='';mk.style.height=li.offsetHeight+'px';mk.style.transform=`translateY(${li.offsetTop}px)`}
+}
+// El índice sigue al capítulo que está en pantalla
+const spy=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)mark(+e.target.dataset.i)})},{rootMargin:'-45% 0px -50% 0px'})
+chEls.forEach(c=>spy.observe(c))
+links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));const y=t.getBoundingClientRect().top+scrollY-(mob()?70:30)
+  window.__lenis?window.__lenis.scrollTo(y,{immediate:reduce}):scrollTo({top:y,behavior:reduce?'auto':'smooth'});mark(+a.dataset.i)}))
+// Entrada de cada capítulo, una vez
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -12% 0px'})
+chEls.forEach(c=>io.observe(c))
+// Flechas del carril: avanzan una pantalla del carril
+function upd(ul){const ctl=ul.parentElement.querySelector('.ctl');if(!ctl)return;const[p,n]=ctl.querySelectorAll('button');p.disabled=ul.scrollLeft<4;n.disabled=ul.scrollLeft+ul.clientWidth>=ul.scrollWidth-4}
+chs.querySelectorAll('.rail ul').forEach(ul=>{ul.addEventListener('scroll',()=>upd(ul),{passive:true});upd(ul);addEventListener('load',()=>upd(ul))})
+chs.addEventListener('click',e=>{
+  const d=e.target.closest('.ctl button');if(d){const ul=d.closest('.rail').querySelector('ul');ul.scrollBy({left:+d.dataset.d*ul.clientWidth*.85});return}
+  const b=e.target.closest('.ph');if(!b)return
+  const c=+b.dataset.c,btns=[...chEls[c].querySelectorAll('.ph')]
+  FLB.open(C[c].items.map(g=>({s:g.s,a:g.a})),+b.dataset.j,btns.map(x=>x.querySelector('img')))
+})
+addEventListener('resize',()=>{const i=cur;cur=-1;mark(Math.max(i,0),true)})
+mark(0,true)
+})()
+</script>
+</body></html>

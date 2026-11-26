@@ -1,0 +1,201 @@
+<title>Kit azul · Comparador</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+@font-face{font-family:Nippo;font-weight:700;src:url(fonts/Nippo-Bold.woff2) format('woff2')}
+:root{--bg:#050B14;--panel:#0B1626;--line:#1C2B44;--fg:#EEF3F9;--muted:#8A9BB2;--acc:#4D93D6;--acc2:#D4A84B;--display:Nippo,'Arial Narrow',system-ui,sans-serif;color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F4F6FB;--panel:#FFFFFF;--line:#D5DCEA;--fg:#0D1730;--muted:#5C6A88;--acc:#123E7A;--acc2:#A8771C;color-scheme:light}}
+:root[data-theme="light"]{--bg:#F4F6FB;--panel:#FFFFFF;--line:#D5DCEA;--fg:#0D1730;--muted:#5C6A88;--acc:#123E7A;--acc2:#A8771C;color-scheme:light}
+*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.wrap{max-width:1560px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#copyTxt{display:block;width:100%;margin-top:10px;min-height:150px;font:12px/1.5 ui-monospace,monospace;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
+.k{font:700 11px/1.2 var(--display);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(28px,4vw,46px)/1 var(--display);text-transform:uppercase;margin-top:8px;color:var(--acc)}h1 span{color:var(--acc2)}
+.tabs,.secs,.styles{display:flex;flex-wrap:wrap;gap:8px}
+button{font-family:inherit}
+.tabs button,.secs button,.styles button{font:700 12px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--panel);border:1px solid var(--line);padding:11px 15px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.tabs button b{color:var(--acc2)}
+.tabs button i{font-style:normal;font-size:10px;letter-spacing:.1em;padding:3px 6px;border-radius:4px;border:1px solid currentColor;opacity:.75}
+.tabs button.pick{border-color:var(--acc2)}
+.tabs button.pick:after{content:"★";color:var(--acc2)}
+.tabs button[aria-selected="true"]{background:var(--acc);color:#fff;border-color:var(--acc)}.tabs button[aria-selected="true"] b{color:#fff}
+.secs button[aria-selected="true"]{background:var(--acc2);color:#050B14;border-color:var(--acc2)}
+.secs button.done:after{content:"★";color:var(--acc2)}.secs button.done[aria-selected="true"]:after{color:#050B14}
+.styles{margin-bottom:12px}.styles button[aria-pressed="true"]{color:var(--fg);border-color:var(--fg)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
+#tabs{margin-bottom:20px}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:20px;align-items:start}
+.stage.three{grid-template-columns:minmax(0,1fr) 240px 240px}
+.dev{min-width:0}.dev .lbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px}
+.frame{position:relative;width:100%;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#000}
+.frame.d{aspect-ratio:1440/900}.frame.m{aspect-ratio:390/844;border-radius:26px;border-width:6px;border-color:#1C2B44}
+.frame iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0}
+#mo{display:none}.three #mo{display:block}
+.info{margin-top:22px;border-top:1px solid var(--line);padding-top:22px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:28px}
+.info h2{font:700 28px/1 var(--display);text-transform:uppercase;color:var(--acc);margin-top:8px}
+.info p{color:var(--muted);line-height:1.6;margin-top:10px;max-width:72ch}
+.info ul{margin-top:10px;padding-left:18px;color:var(--muted);line-height:1.6}
+.choose{margin-top:16px;font:700 12px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;background:transparent;color:var(--acc2);border:1.5px solid var(--acc2);padding:12px 18px;border-radius:999px;cursor:pointer}
+.choose[aria-pressed="true"]{background:var(--acc2);color:#050B14}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;font-size:14px;line-height:1.55;color:var(--muted)}
+.note b{color:var(--fg)}
+.sum{margin-top:14px}.sum ol{padding-left:18px;margin-top:8px}.sum li{margin:2px 0}.sum li span{color:var(--fg)}
+.sum .copy{margin-top:10px;font:700 11px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;background:var(--acc);color:#fff;border:0;padding:10px 14px;border-radius:999px;cursor:pointer}
+a.open{color:var(--acc2);font:700 11px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+@media (max-width:1000px){.stage,.stage.three{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.dev.d{grid-column:1/-1}.stage:not(.three) .dev.m{grid-column:1/-1;max-width:300px;margin:0 auto;width:100%}.info{grid-template-columns:1fr}}
+</style>
+<div class="wrap">
+  <header class="top"><div><div class="k">Ronaldo Martínez · rediseño de la landing</div><h1><span id="h1s">Hero</span> · <span id="cnt" style="color:inherit"></span> opciones</h1></div><div class="secs" role="tablist" id="secs" aria-label="Sección"></div></header>
+  <div class="styles" role="group" aria-label="Filtrar por estilo" id="styles"></div>
+  <div class="tabs" role="tablist" id="tabs" aria-label="Opción"></div>
+  <div class="stage" id="stage">
+    <div class="dev d"><div class="lbl"><span class="k">Desktop 1440</span><a class="open" id="openD" target="_blank" rel="noopener">Abrir completo ↗</a></div><div class="frame d"><iframe id="fd" title="Vista desktop" width="1440" height="900"></iframe></div></div>
+    <div class="dev m"><div class="lbl"><span class="k">Mobile 390</span></div><div class="frame m"><iframe id="fm" title="Vista mobile" width="390" height="844"></iframe></div></div>
+    <div class="dev m" id="mo"><div class="lbl"><span class="k">Menú abierto</span></div><div class="frame m"><iframe id="fo" title="Vista mobile con el menú abierto" width="390" height="844"></iframe></div></div>
+  </div>
+  <section class="info" aria-live="polite"><div><div class="k" id="iNum"></div><h2 id="iTitle"></h2><p id="iDesc"></p><ul id="iList"></ul>
+    <button class="choose" id="choose" aria-pressed="false">★ Elegir esta opción</button></div>
+    <div><div class="note" id="note"></div>
+      <div class="note sum"><b>Tus elecciones</b><ol id="sum"></ol><button class="copy" id="copy">Copiar para pegar en el chat</button><textarea id="copyTxt" hidden readonly aria-label="Texto para copiar"></textarea></div></div></section>
+</div>
+<script>
+// Dos estilos, los dos con los colores de Ronaldo: OSCURO (azul casi negro, azul Vélez y dorado, como la landing actual)
+// y CLARO (blanco azulado, azul Vélez y dorado). Se pueden mezclar secciones, pero conviene quedarse con un estilo.
+const ST={o:['Oscuro','.']}
+const NOTE={_:'<b>Datos reales de Ronaldo.</b> Clubes, fotos, prensa, contactos y números salen de su landing actual. En React, la temporada sigue llegando de API-Football.',
+ navbar:'<b>Probalo con scroll.</b> Abrí cada opción completa: abajo del hero hay secciones de relleno para ver cómo cambia al bajar y cómo marca la sección activa. Los navbar están en el estilo claro; el que elijas se pasa al oscuro si va con el resto.',
+ hero:'<b>Una sola foto recortada.</b> Hoy Ronaldo tiene un único recorte (de frente, con la de Vélez), así que se repite en todos los hero. Los que piden otro (de espaldas con el 77, con la pelota, festejando) se ven mejor con ese recorte. Los partidos son de ejemplo: en la landing salen del panel <b>/admin</b>, como hoy.',
+ videos:'<b>Un solo video real.</b> Hoy la landing tiene un video (Platense 2025, YouTube). Los otros dos son de ejemplo para ver cómo queda el diseño con 3; si tenés reels de Instagram, los cargo.',
+ clubes:'<b>Sección nueva.</b> Hoy la trayectoria está dentro de Estadísticas. Estos diseños la separan en su propia sección con los 9 clubes, incluida la Selección.'}
+const D=(f,t,d,l)=>[f,t,d,l]
+const SECS={
+ navbar:['Navbar',{c:[
+  D('navbar-1-capsula','Cápsula con dorsal','Cápsula flotante y translúcida arriba al centro: el 77 en un círculo con el apellido, los links con una píldora que se desliza a la sección activa y Contacto en dorado.',['Se esconde al bajar y vuelve al subir.','Mobile: hoja que sube desde abajo con links grandes numerados.']),
+  D('navbar-2-escudo','Escudo al centro','Barra a todo el ancho con el escudo de Vélez y el nombre al centro, links repartidos a los lados. Transparente sobre el hero y blanca al bajar.',['Mobile: cajón lateral azul con los links y el 77 gigante de fondo.']),
+  D('navbar-3-riel','Riel lateral','Riel vertical fijo a la izquierda con iniciales, dorsal, índice 01 a 06, Instagram y bandera. Libera todo el ancho para el hero.',['Mobile: barra de secciones abajo, tipo app.']),
+  D('navbar-4-zocalo','Zócalo de partido','Franja azul con el último resultado, el próximo partido y la temporada corriendo, y debajo la barra con dorsal, nombre, posición y club.',['Reemplaza a la pestaña "Partidos" de hoy con algo siempre visible.']),
+  D('navbar-5-indice','Índice a pantalla completa','Barra mínima (iniciales + 77, Contacto y MENÚ) que abre un índice a pantalla completa con links gigantes y la selfie con la pelota sobre un degradé azul.',['Transiciones nuevas: al abrir, el fondo baja como persiana, la foto sube desde abajo con un zoom suave, los links entran en cascada y al final los contactos y el nombre. Al cerrar es más rápido y en orden inverso: links, foto y fondo suben y se van.','Abrí la opción completa y probá abrir y cerrar con el botón MENÚ (o Esc).'])]}],
+ hero:['Hero',{o:[
+  D('hero-1-dorsal','Dorsal gigante','El 77 en contorno ocupa toda la altura y el jugador aparece delante. Nombre abajo a la izquierda y ficha a la derecha (club, nacionalidad, temporada).',['Pensado para un recorte de espaldas con el 77 (hay una foto así en la galería: con el recorte queda muy fuerte).']),
+  D('hero-2-split','Split editorial','Texto, bio corta, 4 datos y dos botones a la izquierda; a la derecha un panel azul en diagonal con el recorte saliendo de él.',['El más comercial: deja claro quién es y a quién escribirle.']),
+  D('hero-3-marquesina','Marquesina','Bandas inclinadas con MARTÍNEZ y DELANTERO que corren en sentidos opuestos detrás del recorte, y un zócalo de partidos abajo.'),
+  D('hero-4-transmision','Transmisión TV','La foto del festejo en Vélez a todo el ancho con gráficos de transmisión: marcador con último y próximo partido, zócalo con el 77 y el nombre, y la temporada abajo a la derecha.',['Ya existe en React.']),
+  D('hero-5-split-ficha','Split con ficha (oscuro, foto nueva)','El C6 pasado a modo oscuro con tu foto nueva del festejo. A la izquierda, píldora con el 77 y la posición, RONALDO en gris y MARTÍNEZ gigante, Vélez y Paraguay, 4 números (goles en dorado) y botones. A la derecha, el panel en diagonal con degradé azul Vélez, el 77 en contorno, un brillo detrás del recorte y la tarjeta de partidos translúcida.',['Mobile: el festejo entero arriba en el panel azul y los datos abajo, sin taparse.','El C6 claro también usa ahora la foto nueva.'])],
+  c:[
+  D('hero-1-split','Split editorial','Versión clara: texto, bio, 4 datos y botones a la izquierda; panel azul en diagonal con el 77 en contorno, el escudo y el recorte.'),
+  D('hero-2-marquesina','Marquesina','Versión clara de las bandas que corren detrás del recorte, con el 77 en dorado y un zócalo azul con partidos y temporada.'),
+  D('hero-3-transmision','Transmisión TV','Versión clara de la transmisión: foto de cancha a todo el ancho con marcador y zócalo.'),
+  D('hero-4-franjas','Franjas del club','Franjas verticales que entran una por una, el 77 gigante en contorno y el recorte adelante. A la izquierda nombre, club, 4 números y botones; abajo los partidos.',['Las franjas salen del azul y blanco de Vélez.']),
+  D('hero-5-portada','Portada de revista','Como la tapa de una revista: cabecera "Edición 2026", una frase de tapa, el nombre enorme y tres titulares con números, con el retrato del túnel a la derecha.',['Más marca personal que ficha técnica. La frase se puede cambiar.']),
+  D('hero-6-split-ficha','Split con ficha','Píldora con dorsal y posición, apellido gigante, club y Selección con escudo y bandera, 4 números grandes y la tarjeta de partidos; a la derecha el panel azul con el recorte.',['Ya existe en React.'])]}],
+ stats:['Estadísticas',{o:[
+  D('stats-1-marcador','Marcador','Los 20 goles en un bloque gigante y el resto en un tablero. Debajo, la ficha en una fila y los atributos en barras segmentadas.'),
+  D('stats-2-ficha','Ficha de scouting','Informe en tres paneles: perfil, cancha con la zona de influencia y atributos en barras (Definición resaltada). Abajo, la temporada en 6 números.'),
+  D('stats-3-radar','Radar central','Los 6 atributos en un radar con la media en el centro, rodeado por los números de la temporada.',['Ya existe en React.']),
+  D('stats-4-dossier','Dossier (mejorado)','Informe de revista en tres columnas: la cifra que lo define (20 goles) gigante con lecturas cruzadas debajo (un gol cada 221 minutos, 0,57 por partido, 36% de efectividad), un tablero con el resto de la temporada y el ranking de atributos con su mejor arma destacada. Arriba, folio "Dossier N.º 77" y la presentación; al pie, la ficha personal.',['Las lecturas se calculan solas desde la temporada que llega de la API; si falta un dato, esa línea no aparece.','Mobile: todo en una columna, de la cifra grande al ranking.'])],
+  c:[
+  D('stats-1-marcador','Marcador','Versión clara: los goles en un bloque azul gigante, el tablero, la ficha y un radar chico con la media.',['Ya existe en React.']),
+  D('stats-2-ficha','Ficha de scouting','Versión clara del informe en tres paneles.'),
+  D('stats-3-radar','Radar central','Versión clara del radar con la temporada alrededor.'),
+  D('stats-4-dossier','Dossier (mejorado)','Versión clara del dossier nuevo: cifra que lo define con lecturas cruzadas, tablero, ranking de atributos y ficha al pie.'),
+  D('stats-5-odometro','Odómetro','La sección queda fija mientras scrolleás y cada tramo cambia de número: los dígitos giran como un odómetro, con una lectura que cruza los datos (un gol cada 221 minutos, 36% de efectividad).',['Probalo con scroll: abrí la opción completa y bajá.'])]}],
+ clubes:['Clubes',{o:[
+  D('clubes-1-linea','Línea de tiempo','Los 9 clubes, de Cerro Porteño a Vélez, sobre una línea que se ilumina hacia el presente. Cada parada con escudo, años, país y vínculo.'),
+  D('clubes-2-grilla','Grilla de escudos','Una baldosa por club con el escudo en gris de fondo. Vélez en azul y una baldosa final con clubes, países y títulos.',['Ya existe en React.']),
+  D('clubes-3-planilla','Planilla','Tabla tipo ficha de transferencias: temporada, club, país, vínculo (préstamo, selección, debut) y títulos.'),
+  D('clubes-4-arbol','Árbol de pases','El club dueño del pase al centro y los préstamos alrededor. Pensado para jugadores a préstamo: con Ronaldo sirve para mostrar Cerro y sus tres préstamos.'),
+  D('clubes-6-vitrina','Vitrina (nuevo)','Lista de los 9 clubes y una ficha que cambia al elegir: escudo grande, vínculo, años sobre el eje 2015-2026 y títulos. Movimiento al estilo Emil Kowalski: indicador que se desliza, cambio de ficha con blur corto, teclado sin animación y swipe en mobile.',['Probalo: tocá los clubes o usá las flechas del teclado.'])],
+  c:[
+  D('clubes-1-linea','Línea de tiempo','Versión clara de la línea de tiempo.'),
+  D('clubes-2-grilla','Grilla de escudos','Versión clara de la grilla.',['Ya existe en React.']),
+  D('clubes-3-planilla','Planilla','Versión clara de la planilla.'),
+  D('clubes-4-escalera','Escalera','Cada club es un escalón que sube del debut a Vélez, con el año en contorno.'),
+  D('clubes-5-pasaporte','Pasaporte','La carrera como un pasaporte abierto: hoja de datos a la izquierda y un sello por club que se estampa al entrar en pantalla. Ideal para una carrera en 3 países como la suya.'),
+  D('clubes-6-carrera','Carrera en el tiempo (nuevo)','Versión clara del modelo nuevo: barras por club sobre el eje de años, color por país, préstamos rayados, ★ en cada título y ficha interactiva al tocar.')]}],
+ videos:['Videos',{o:[
+  D('videos-1-programa','Programa','Un video grande y, al lado, título, club y la lista "Más videos". Para pocos videos.'),
+  D('videos-2-stories','Stories','Los videos como historias de Instagram, con barras de progreso y círculos por club.'),
+  D('videos-3-temporadas','Temporadas','Cada video bajo su año gigante en contorno con el escudo del club.',['Ya existe en React.']),
+  D('videos-4-paneles','Paneles','Paneles a todo el ancho: el activo se abre grande a color y los otros quedan finos en blanco y negro.'),
+  D('videos-5-destacado','Destacado + 3 reels (nuevo)','El highlight de YouTube grande arriba, que se reproduce en el lugar, con título, club, goles y valoración. Abajo, 3 reels 9:16 de Instagram con link a cada uno; en el celular son un carrusel deslizable con puntos.',['Los 3 reels son de ejemplo: pasame los links y los cargo.'])],
+  c:[
+  D('videos-1-programa','Programa','Versión clara del programa.'),
+  D('videos-2-stories','Stories','Versión clara de las stories.'),
+  D('videos-3-temporadas','Temporadas','Versión clara de las temporadas.',['Ya existe en React.']),
+  D('videos-4-paneles','Paneles','Versión clara de los paneles.'),
+  D('videos-5-mazo','Mazo de reels','Los videos apilados como cartas 9:16 que se arrastran o deslizan con el dedo. Pensado para el celular.')]}],
+ galeria:['Galería',{o:[
+  D('galeria-1-mosaico','Mosaico con pestañas','Grilla con una foto grande cada cinco, filtros por Vélez, Selección y clubes anteriores, "Ver más fotos" sin huecos y visor a pantalla completa.',['Ya existe en React.']),
+  D('galeria-2-carriles','Carriles','Dos filas de fotos que corren solas en sentidos opuestos. Se frenan con el mouse y cualquier foto se abre grande.'),
+  D('galeria-3-album','Álbum editorial','Una foto destacada y cuatro al costado; "Siguientes" pasa de a cinco.'),
+  D('galeria-4-hoja','Hoja de contactos','Visor grande con la foto completa y una tira de película numerada en blanco y negro. Bueno para fotos verticales y horizontales mezcladas.'),
+  D('galeria-5-revelado','Revelado (nuevo)','Mosaico en columnas que respeta la forma de cada foto: se revelan de abajo hacia arriba al entrar en pantalla, los filtros tienen una pestaña que se desliza y cada foto se abre creciendo desde su lugar en la grilla.',['Probalo: cambiá de filtro y abrí una foto. En el celular, la foto abierta se cierra arrastrándola hacia abajo.']),
+  D('galeria-6-capitulos','Capítulos (nuevo)','La galería contada en tres etapas (Vélez, Selección y clubes anteriores): índice fijo que sigue el scroll, una foto de apertura por capítulo y un carril deslizable con el resto. Al pasar el mouse por el carril, las demás fotos bajan un poco.',['Probalo con scroll: abrí la opción completa y bajá.'])],
+  c:[
+  D('galeria-1-mosaico','Mosaico con pestañas','Versión clara del mosaico.'),
+  D('galeria-2-carriles','Carriles','Versión clara de los carriles.',['Ya existe en React.']),
+  D('galeria-3-album','Álbum editorial','Versión clara del álbum.'),
+  D('galeria-4-hoja','Hoja de contactos','Versión clara de la hoja de contactos.')]}],
+ prensa:['Prensa',{o:[
+  D('prensa-1-titulares','Titulares','Un renglón por nota: logo, fecha y titular grande. El renglón se pinta al pasar el mouse.'),
+  D('prensa-2-recortes','Recortes','Cada nota como un recorte de diario pegado con cinta, levemente girado. Con 3 notas queda muy bien.'),
+  D('prensa-3-destacada','Nota destacada','La de El Gráfico (goleador del Clausura) grande con foto, y las otras dos al costado.',['Ya existe en React.']),
+  D('prensa-4-publicaron','Lo publicaron','Franja con los logos de los medios y debajo los titulares como citas.'),
+  D('prensa-5-cronologia','Cronología (nuevo)','Las notas en orden sobre una línea que se dibuja al bajar: mes, medio, el club en el que estaba cuando salió, titular y bajada. A la izquierda, cuántas notas y medios.'),
+  D('prensa-6-portada','En portada (nuevo)','Una nota por vez en grande, con una foto de esa etapa y el escudo del club. Pasa sola con una barra de avance por medio; se frena al pasar el mouse y al elegir una nota.',['Esperá unos segundos para verla avanzar, o tocá un medio.'])],
+  c:[
+  D('prensa-1-titulares','Titulares','Versión clara de los titulares.'),
+  D('prensa-2-recortes','Recortes','Versión clara de los recortes.'),
+  D('prensa-3-destacada','Nota destacada','Versión clara de la nota destacada.'),
+  D('prensa-4-publicaron','Lo publicaron','Versión clara de "Lo publicaron".')]}],
+ contacto:['Contacto',{o:[
+  D('contacto-1-directorio','Directorio','Título a la izquierda y un renglón por contacto: Universal Twenty Two, LED Sports e Instagram, con para qué escribirle a cada uno.'),
+  D('contacto-2-cierre','Cierre con foto','Media pantalla con la foto del festejo en Vélez y del otro lado "¿Jugamos juntos?" con las agencias y un botón a Instagram.'),
+  D('contacto-3-motivo','¿Para qué escribís?','El visitante elige si es de un club, una marca o prensa/fan, y la tarjeta le muestra a quién escribirle.'),
+  D('contacto-4-tarjetas','Tarjetas grandes','Cuatro tarjetas 2x2 (Instagram, Transfermarkt, representante y marketing) con el logo en gris de fondo. Es lo más parecido a lo de hoy.',['Ya existe en React.'])],
+  c:[
+  D('contacto-1-directorio','Directorio','Versión clara del directorio.'),
+  D('contacto-2-cierre','Cierre con foto','Versión clara del cierre con foto.'),
+  D('contacto-3-motivo','¿Para qué escribís?','Versión clara del selector por motivo.'),
+  D('contacto-4-tarjetas','Tarjetas grandes','Versión clara de las tarjetas.',['Ya existe en React.'])]}],
+ footer:['Footer',{o:[
+  D('footer-1-pulido','Pulido','Una sola línea: logo, redes, derechos y el crédito de desarrollo.'),
+  D('footer-2-navegacion','Con navegación','Columnas con logo y bajada, secciones, contactos y redes.'),
+  D('footer-3-firma','Firma','Escudo, posición y club, links, Volver arriba y MARTÍNEZ gigante a todo el ancho.',['Ya existe en React.']),
+  D('footer-4-escudos','Escudos','Franja con los escudos de sus 9 clubes en gris (Vélez a color) y debajo logo, derechos, crédito y Volver arriba.')],
+  c:[
+  D('footer-1-pulido','Pulido','Versión clara del footer en una línea.'),
+  D('footer-2-navegacion','Con navegación','Versión clara del footer con columnas.'),
+  D('footer-3-firma','Firma','Versión clara de la firma gigante.',['Ya existe en React.']),
+  D('footer-4-escudos','Escudos','Versión clara de la franja de escudos.')]}],
+}
+// Lista plana por sección: [estilo, archivo, título, desc, notas, código]
+const LIST={};for(const k in SECS){LIST[k]=[];for(const s of ['o'])(SECS[k][1][s]||[]).forEach((o,i)=>LIST[k].push({s,f:o[0],t:o[1],d:o[2],l:o[3]||[],code:(s==='o'?'O':'C')+(i+1)}))}
+for(const k in SECS)if(!LIST[k].length){delete SECS[k];delete LIST[k]}
+const ORDER=Object.keys(SECS),$=id=>document.getElementById(id)
+let sec='hero',cur={},picks={},filt='all'
+try{const v=JSON.parse(localStorage.getItem('cmpRonaldo')||'{}');if(SECS[v.sec])sec=v.sec;cur=v.cur||{};picks=v.picks||{}}catch(e){}
+const save=()=>{try{localStorage.setItem('cmpRonaldo',JSON.stringify({sec,cur,picks}))}catch(e){}}
+ORDER.forEach(k=>{const b=document.createElement('button');b.setAttribute('role','tab');b.textContent=SECS[k][0];b.onclick=()=>pickSec(k);$('secs').appendChild(b)})
+;[['all','Todas'],['o','Oscuro'],['c','Claro']].forEach(([v,t])=>{const b=document.createElement('button');b.textContent=t;b.setAttribute('aria-pressed',v===filt);b.onclick=()=>{filt=v;[...$('styles').children].forEach(x=>x.setAttribute('aria-pressed',x===b));renderTabs()};$('styles').appendChild(b)})
+function renderTabs(){const L=LIST[sec];$('tabs').innerHTML='';L.forEach((o,i)=>{if(filt!=='all'&&o.s!==filt)return;const b=document.createElement('button');b.setAttribute('role','tab');b.dataset.i=i
+ b.innerHTML='<b>'+o.code+'</b>'+o.t+' <i>'+ST[o.s][0]+'</i>';b.onclick=()=>sel(i);$('tabs').appendChild(b)});mark()}
+function pickSec(k){sec=k;[...$('secs').children].forEach((b,j)=>b.setAttribute('aria-selected',ORDER[j]===k));$('h1s').textContent=SECS[k][0];$('cnt').textContent=LIST[k].length
+ $('stage').classList.toggle('three',k==='navbar');$('note').innerHTML=NOTE[k]||NOTE._;renderTabs();sel(cur[k]||0)}
+function sel(i){cur[sec]=i;save();const o=LIST[sec][i],src=ST[o.s][1]+'/'+o.f+'.html'
+ $('fd').src=$('fm').src=$('openD').href=src;$('fo').src=sec==='navbar'?src+'#open':'about:blank'
+ $('iNum').textContent=SECS[sec][0]+' · '+o.code+' · estilo '+ST[o.s][0].toLowerCase();$('iTitle').textContent=o.t;$('iDesc').textContent=o.d;$('iList').innerHTML=o.l.map(x=>'<li>'+x+'</li>').join('');mark();fit()}
+function mark(){const i=cur[sec]||0;[...$('tabs').children].forEach(b=>{b.setAttribute('aria-selected',+b.dataset.i===i);b.classList.toggle('pick',picks[sec]===LIST[sec][+b.dataset.i].code)})
+ const o=LIST[sec][i],on=picks[sec]===o.code;$('choose').setAttribute('aria-pressed',on);$('choose').textContent=on?'★ Elegida para '+SECS[sec][0]:'★ Elegir esta opción'
+ ;[...$('secs').children].forEach((b,j)=>b.classList.toggle('done',!!picks[ORDER[j]]))
+ $('sum').innerHTML=ORDER.map(k=>{const c=picks[k],o=c&&LIST[k].find(x=>x.code===c);return '<li>'+SECS[k][0]+': <span>'+(o?o.code+' '+o.t+' ('+ST[o.s][0].toLowerCase()+')':'—')+'</span></li>'}).join('')}
+$('choose').onclick=()=>{const o=LIST[sec][cur[sec]||0];picks[sec]=picks[sec]===o.code?undefined:o.code;save();mark()}
+$('copy').onclick=()=>{const t='Mis elecciones:\n'+ORDER.map(k=>{const c=picks[k],o=c&&LIST[k].find(x=>x.code===c);return '- '+SECS[k][0]+': '+(o?o.code+' '+o.t+' ('+ST[o.s][0].toLowerCase()+')':'sin elegir')}).join('\n')
+ const done=()=>{$('copy').textContent='¡Copiado!';setTimeout(()=>$('copy').textContent='Copiar para pegar en el chat',1600)}
+ const fb=()=>{const a=$('copyTxt');a.value=t;a.hidden=false;a.focus();a.select()}
+ try{navigator.clipboard.writeText(t).then(done,fb)}catch(e){fb()}}
+function fit(){[[$('fd'),1440],[$('fm'),390],[$('fo'),390]].forEach(([f,w])=>{const c=f.parentElement.clientWidth;if(c)f.style.transform='scale('+(c/w)+')'})}
+new ResizeObserver(fit).observe($('stage'));pickSec(sec)
+</script>
+

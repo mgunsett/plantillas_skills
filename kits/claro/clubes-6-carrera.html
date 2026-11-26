@@ -1,0 +1,118 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clubes · Carrera en el tiempo</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Carrera en el tiempo: cada club es una barra sobre el eje de años (cuánto estuvo, qué se superpone, dónde salió campeón).
+   Tocás una barra y la ficha del club se abre al costado (desktop) o debajo de la fila (mobile). */
+.car{--A:var(--acc);--B:var(--acc2);--T:var(--ink);--S:#9AA6BE;--on:#fff;--hov:#123e7a0a}
+.car .top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:34px}
+.car .sh{margin-bottom:0}
+.sum{display:flex;gap:28px;flex-wrap:wrap}
+.sum div b{display:block;font-size:clamp(34px,3.2vw,52px);font-weight:700;line-height:.9;color:var(--T);font-variant-numeric:tabular-nums}
+.sum div small{display:block;margin-top:6px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gray)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:18px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:22px;height:8px;border-radius:4px;background:var(--c)}
+.legend i.loan{background:repeating-linear-gradient(-45deg,var(--gray) 0 3px,transparent 3px 6px);border:1px solid var(--gray)}
+.legend i.star{width:auto;height:auto;background:none;color:var(--B);font-style:normal;font-size:13px}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:32px;align-items:start}
+.chart{min-width:0}
+.axis,.row{display:grid;grid-template-columns:210px minmax(0,1fr);gap:16px;align-items:center}
+.axis{position:sticky;top:0;z-index:2;background:var(--bg);padding-bottom:8px;border-bottom:1px solid var(--line)}
+.ticks{position:relative;height:18px}
+.ticks span{position:absolute;top:0;transform:translateX(-50%);font-size:11px;font-weight:700;color:var(--gray);font-variant-numeric:tabular-nums}
+.rows{position:relative}
+.grid{position:absolute;inset:0 0 0 226px;pointer-events:none}
+.grid i{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.grid .now{width:2px;background:var(--B);opacity:.8}
+.grid .now:before{content:"HOY";position:absolute;top:-2px;left:6px;font-size:9px;font-weight:700;letter-spacing:.2em;color:var(--B)}
+.row{width:100%;text-align:left;background:none;border:0;color:inherit;font:inherit;cursor:pointer;padding:9px 0;border-bottom:1px solid var(--line);position:relative}
+.row .who{display:flex;align-items:center;gap:12px;min-width:0}
+.row .who img{width:30px;height:30px;object-fit:contain;flex:none}
+.row .who span{font-size:14px;font-weight:700;text-transform:uppercase;line-height:1.1;color:var(--T);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .who small{display:block;font-size:10px;font-weight:500;letter-spacing:.16em;color:var(--gray);margin-top:3px}
+.track{position:relative;height:30px}
+.bar{position:absolute;top:5px;height:20px;border-radius:10px;background:var(--c);transform-origin:left center;animation:grow 1s var(--ease) both;animation-delay:var(--d);display:flex;align-items:center;justify-content:flex-end;padding:0 8px;min-width:20px}
+.bar.loan{background:repeating-linear-gradient(-45deg,var(--c) 0 5px,color-mix(in srgb,var(--c) 45%,transparent) 5px 10px)}
+.bar .st{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:13px;color:var(--B);text-shadow:0 0 6px var(--bg)}
+.bar .tag{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--on);white-space:nowrap}
+.row.cur .bar{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--c)}
+@keyframes grow{from{transform:scaleX(0)}}
+.row:focus-visible{outline:2px solid var(--B);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){.row:hover{background:var(--hov)}}
+.row[aria-expanded="true"]{background:var(--hov)}
+.row[aria-expanded="true"] .who span{color:var(--A)}
+.more{display:none}
+/* Ficha lateral */
+.card{position:sticky;top:20px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:24px;overflow:hidden}
+.card .crest{position:absolute;right:-30px;top:-20px;width:170px;height:170px;object-fit:contain;opacity:.09}
+.card .k{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--B)}
+.card .hd{display:flex;align-items:center;gap:14px;margin-top:14px;position:relative}
+.card .hd img{width:58px;height:58px;object-fit:contain}
+.card h3{font-size:24px;font-weight:700;text-transform:uppercase;line-height:1;color:var(--T)}
+.card dl{display:grid;grid-template-columns:1fr 1fr;margin-top:20px;border-top:1px solid var(--line);position:relative}
+.card dl div{padding:12px 0;border-bottom:1px solid var(--line)}
+.card dl div:nth-child(even){padding-left:14px;border-left:1px solid var(--line)}
+.card dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.card dd{margin-top:4px;font-size:16px;font-weight:700;color:var(--T)}
+.card ul{list-style:none;margin-top:16px;display:grid;gap:8px;position:relative}
+.card li{font-size:14px;color:var(--T);display:flex;gap:8px}.card li:before{content:"★";color:var(--B)}
+.card .hint{margin-top:18px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+.card.sw>*:not(.crest){animation:rv .5s var(--ease) both}
+@media (max-width:1100px){.wrap{grid-template-columns:1fr}.card{display:none}
+ .more{display:block;grid-column:1/-1;overflow:hidden;max-height:0;transition:max-height .45s var(--ease)}
+ .row[aria-expanded="true"] .more{max-height:260px}
+ .more .in{display:flex;flex-wrap:wrap;gap:6px 18px;padding:12px 0 4px;font-size:12px;color:var(--gray)}
+ .more .in b{color:var(--T)}.more ul{list-style:none;width:100%;display:grid;gap:4px}.more li{color:var(--T)}.more li:before{content:"★ ";color:var(--B)}}
+@media (max-width:820px){.car .top{flex-direction:column;align-items:flex-start}.sum{gap:22px}
+ .axis,.row{grid-template-columns:minmax(0,1fr);gap:6px}.axis .sp{display:none}.grid{left:0}
+ .row .who img{width:24px;height:24px}.ticks span:nth-child(even){display:none}.bar .tag{display:none}}
+@media (prefers-reduced-motion:reduce){.bar{animation:none}.more{transition:none}}
+</style></head><body>
+<section class="sec car" id="clubes">
+  <div class="top">
+    <div class="sh"><div class="k">Trayectoria · carrera en el tiempo</div><h2>Clubes</h2></div>
+    <div class="sum" id="sum"></div>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div class="wrap">
+    <div class="chart">
+      <div class="axis" aria-hidden="true"><span class="sp"></span><div class="ticks" id="ticks"></div></div>
+      <div class="rows" id="rows"><div class="grid" id="grid" aria-hidden="true"></div></div>
+    </div>
+    <aside class="card" id="card" aria-live="polite"></aside>
+  </div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+// Años de cada club: y0 = llegada; el fin sale del texto de años ("Act." = hoy)
+const NOW=+P.year||new Date().getFullYear()
+const yEnd=c=>/act/i.test(c.y)?NOW:Math.max(...(c.y.match(/\d{4}/g)||[c.y0]).map(Number))
+const CL=[...CLUBS].map(c=>({...c,a:c.y0,b:yEnd(c)})).sort((x,y)=>x.a-y.a||x.b-y.b)
+const Y0=Math.min(...CL.map(c=>c.a)),Y1=NOW+1,span=Y1-Y0,pos=y=>((y-Y0)/span*100)
+// Color por país (el primero que aparece usa el acento 2, el segundo el acento 1…)
+const PAL=['var(--B)','var(--A)','var(--gray)','var(--S)'],countries=[...new Set(CL.map(c=>c.c))].sort((a,b)=>CL.filter(c=>c.c===b).length-CL.filter(c=>c.c===a).length)
+const col=c=>PAL[countries.indexOf(c)%PAL.length]
+const titles=CL.flatMap(c=>c.t),loanish=c=>/préstamo/i.test(c.i)
+sum.innerHTML=[[CL.length,'Clubes'],[countries.length,'Países'],[titles.length,'Títulos'],[NOW-Y0+1,'Temporadas']].map(([v,l])=>`<div><b>${v}</b><small>${l}</small></div>`).join('')
+legend.innerHTML=countries.map(c=>`<span><i style="--c:${col(c)}"></i>${c}</span>`).join('')+(CL.some(loanish)?'<span><i class="loan"></i>Préstamo</span>':'')+(titles.length?'<span><i class="star">★</i>Título</span>':'')
+const yrs=[];for(let y=Y0;y<=NOW;y++)yrs.push(y)
+ticks.innerHTML=yrs.map(y=>`<span style="left:${pos(y+.5)}%">'${String(y).slice(2)}</span>`).join('')
+grid.innerHTML=yrs.map(y=>`<i style="left:${pos(y)}%"></i>`).join('')+`<i class="now" style="left:${pos(NOW+.5)}%"></i>`
+const tYear=t=>+(t.match(/\d{4}/)||[0])[0]
+const link=c=>c.cur?'Club actual':c.i||'Pase'
+rows.insertAdjacentHTML('beforeend',CL.map((c,k)=>{const L=pos(c.a),Wd=pos(c.b+1)-L,yrsN=c.b-c.a+1
+ const stars=c.t.map(t=>tYear(t)).filter(y=>y>=c.a&&y<=c.b).map(y=>`<span class="st" style="left:${(y+.5-c.a)/yrsN*100}%" aria-hidden="true">★</span>`).join('')
+ return `<button type="button" class="row${c.cur?' cur':''}" aria-expanded="false" data-k="${k}" aria-label="${c.n}, ${c.y}, ${c.c}">
+ <span class="who"><img src="${c.l}" alt=""><span>${c.n}<small>${c.y}</small></span></span>
+ <span class="track"><span class="bar${loanish(c)?' loan':''}" style="left:${L}%;width:${Wd}%;--c:${col(c.c)};--d:${.15+k*.07}s">${stars}<span class="tag">${c.cur?'Actual':c.i&&!loanish(c)?c.i:''}</span></span></span>
+ <span class="more"><span class="in"><span>País <b>${c.c}</b></span><span>Vínculo <b>${link(c)}</b></span><span>Temporadas <b>${yrsN}</b></span>${c.t.length?'<ul>'+c.t.map(t=>`<li>${t}</li>`).join('')+'</ul>':''}</span></span></button>`}).join(''))
+const B=[...rows.querySelectorAll('.row')]
+function show(k){const c=CL[k];B.forEach((b,i)=>b.setAttribute('aria-expanded',i===k))
+ card.classList.remove('sw');card.offsetWidth;card.classList.add('sw')
+ card.innerHTML=`<img class="crest" src="${c.l}" alt=""><div class="k">${c.cur?'Club actual':'Paso '+(k+1)+' de '+CL.length}</div>
+ <div class="hd"><img src="${c.l}" alt="Escudo de ${c.n}"><h3>${c.n}</h3></div>
+ <dl><div><dt>Años</dt><dd>${c.y}</dd></div><div><dt>País</dt><dd>${c.c}</dd></div><div><dt>Vínculo</dt><dd>${link(c)}</dd></div><div><dt>Temporadas</dt><dd>${c.b-c.a+1}</dd></div></dl>
+ ${c.t.length?'<ul>'+c.t.map(t=>`<li>${t}</li>`).join('')+'</ul>':''}<div class="hint">Tocá otra barra para ver ese club</div>`}
+B.forEach((b,i)=>b.onclick=()=>{const open=b.getAttribute('aria-expanded')==='true';if(open&&matchMedia('(max-width:1100px)').matches){b.setAttribute('aria-expanded','false');return}show(i)})
+show(CL.findIndex(c=>c.cur))
+</script>
+</body></html>
