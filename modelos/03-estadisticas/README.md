@@ -80,3 +80,16 @@ Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía 
 - **C5. Odómetro:** La sección se queda fija mientras scrolleás y cada tramo cambia de número: los dígitos giran como un odómetro, con el recorte de fondo y una lectura que sale de cruzar los datos (un gol cada 191 minutos, 41% de efectividad)
 
 En React, `StatsMarcador.jsx` se monta dentro de `StatsSection.jsx` con `STATS_DESIGN = 'marcador'`: toma goles, partidos, tiros, minutos y valoración de `useSeasonStats` (API-Football) y completa con `seasonStats` lo que falte. El radar dibuja `stats` de 50 a 100 con la media al centro.
+
+## Kit azul (diseñado para Ronaldo Martínez)
+
+Opciones en paleta oscura azul (fondo `#050B14`, azul Vélez `#4D93D6` y dorado `#D4A84B`) con tipografía Nippo, desde [`kits/azul`](../../kits/azul/). Los datos salen de `kits/azul/player.js`. En React se portaron con Bebas Neue, Barlow Condensed y Barlow, como el resto del starter.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| A4 | **Dossier con anillo** | ✅ Aplicado en Ronaldo Martínez | [html](previews/azul-4-dossier.html) · ![](previews/azul-4-dossier.jpg) |
+
+- **A4. Dossier con anillo (aplicado en Ronaldo Martínez):** el N4 mejorado. Folio y título, la cifra de goles gigante con lecturas cruzadas (goles por partido, minutos por gol), el tablero de la temporada con la **valoración en un anillo de carga** (solo el número en el centro), el ranking de atributos con barras y la ficha en una fila al pie.
+  - **React:** [`react/StatsDossierAzul.jsx`](react/StatsDossierAzul.jsx). Lee `stats` (atributos), `seasonStats`, `number`, `position`, `age`, `height`, `weight`, `foot` y `birthPlace`.
+  - **Temporada:** `useSeasonStats` (API-Football vía Firestore) con respaldo en `playerData.seasonStats`; los rótulos se buscan sin acentos con `seasonTiles()`. Copiá [`03-estadisticas/react/useSeasonStats.js`](useSeasonStats.js) a `src/hooks/` y [`seasonTiles.js`](seasonTiles.js) a `src/lib/`. Si el proyecto no tiene la sincronización, el hook puede devolver `null` y se usan los valores fijos.
+  - Lo monta `StatsSection.jsx` junto con la grilla de clubes, dentro de la sección `#estadisticas`.

@@ -60,3 +60,14 @@ Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía 
 - **C4. Escudos:** Franja con los escudos de sus 8 clubes en gris (Alianza a color) y debajo logo, derechos, crédito y Volver arriba.
 
 La firma cambia la primera "O" del apellido por el dorsal en rojo (RAM9S). Si el apellido no tiene O, el dorsal va al final. El tamaño se ajusta midiendo el texto real.
+
+## Kit azul (diseñado para Ronaldo Martínez)
+
+Opciones en paleta oscura azul (fondo `#050B14`, azul Vélez `#4D93D6` y dorado `#D4A84B`) con tipografía Nippo, desde [`kits/azul`](../../kits/azul/). Los datos salen de `kits/azul/player.js`. En React se portaron con Bebas Neue, Barlow Condensed y Barlow, como el resto del starter.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| A3 | **Firma** | ✅ Aplicado en Ronaldo Martínez | [html](previews/azul-3-firma.html) · ![](previews/azul-3-firma.jpg) |
+
+- **A3. Firma (aplicado en Ronaldo Martínez):** escudo con posición y club, botón "Volver arriba", links a redes y contactos, y la firma gigante a todo el ancho con los dos últimos caracteres en contorno (en Ronaldo, `ronaldo77`). Abajo, derechos y crédito de Sportfolio.
+  - **React:** [`react/FooterFirmaAzul.jsx`](react/FooterFirmaAzul.jsx). La firma es la constante `SIGNATURE`; un `ResizeObserver` ajusta el tamaño de letra para que ocupe justo el ancho. La entrada usa `IntersectionObserver` y no ScrollTrigger, porque el footer es lo último y su posición cambia cuando cargan las secciones de arriba.

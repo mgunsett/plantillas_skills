@@ -70,3 +70,15 @@ Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía 
 - **C4. Hoja de contactos:** Visor grande con la foto completa y una tira numerada en blanco y negro para elegir.
 
 En React, cada foto lleva `group` ('u' club actual, 's' selección, 'c' clubes anteriores) para el contador del pie.
+
+## Kit azul (diseñado para Ronaldo Martínez)
+
+Opciones en paleta oscura azul (fondo `#050B14`, azul Vélez `#4D93D6` y dorado `#D4A84B`) con tipografía Nippo, desde [`kits/azul`](../../kits/azul/). Los datos salen de `kits/azul/player.js`. En React se portaron con Bebas Neue, Barlow Condensed y Barlow, como el resto del starter.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| A5 | Revelado | Alternativa | [html](previews/azul-5-revelado.html) · ![](previews/azul-5-revelado.jpg) |
+| A6 | Capítulos | Alternativa | [html](previews/azul-6-capitulos.html) · ![](previews/azul-6-capitulos.jpg) |
+
+- **A5. Revelado:** mosaico en columnas que respeta la forma de cada foto; las fotos se revelan de abajo hacia arriba al entrar en pantalla, los filtros tienen una pestaña que se desliza (recortada con `clip-path`) y cada foto se abre creciendo desde su lugar en la grilla (FLIP, en `kits/azul/flip-lb.js`). En el celular, la foto abierta se cierra arrastrándola hacia abajo.
+- **A6. Capítulos:** la galería contada en etapas (club actual, Selección y clubes anteriores): índice fijo que sigue el scroll, una foto de apertura por capítulo y un carril deslizable con el resto. Al pasar el mouse por el carril, las demás fotos bajan un poco. Ojo: el sticky necesita `overflow-x: clip` (no `hidden`) en `html` y `body`.

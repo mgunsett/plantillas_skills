@@ -1,0 +1,39 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clubes 1 · Línea de tiempo</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.tl{position:relative;display:grid;grid-template-columns:repeat(var(--n,7),1fr);gap:0}
+.tl:before{content:"";position:absolute;left:0;right:0;top:118px;height:2px;background:linear-gradient(90deg,var(--line),var(--lime))}
+.st{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 8px;animation:rv .9s var(--ease) both}
+.st .yr{font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--gray);height:34px}
+.st .crest{width:96px;height:96px;border-radius:50%;background:var(--bg2);border:1.5px solid var(--line);display:grid;place-items:center;position:relative;z-index:1;margin-bottom:22px}
+.st .crest img{width:58px;height:58px;object-fit:contain}
+.st h3{font-size:16px;font-weight:700;text-transform:uppercase;line-height:1.1;min-height:36px}
+.st .ct{font-size:11px;letter-spacing:.2em;color:var(--gray);text-transform:uppercase;margin-top:6px}
+.chip{margin-top:12px;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:5px 9px;border:1px solid var(--line);color:var(--gray);border-radius:999px}
+.st.cur .yr{color:var(--lime)}
+.st.cur .crest{border-color:var(--lime);box-shadow:0 0 0 6px #4d93d622;background:#12203a}
+.st.cur .chip{background:var(--lime);color:#050b14;border-color:var(--lime)}
+.st.own .chip{border-color:var(--mag);color:var(--mag)}
+.title{margin-top:10px;font-size:12px;color:var(--lime);display:flex;gap:6px;align-items:center}
+.title:before{content:"★";color:var(--mag)}
+@media (max-width:900px){
+  .tl{grid-template-columns:1fr;gap:0}
+  .tl:before{left:36px;right:auto;top:0;bottom:0;width:2px;height:auto;background:linear-gradient(0deg,var(--line),var(--lime))}
+  .st{display:grid;grid-template-columns:74px 1fr;grid-template-rows:auto auto auto;column-gap:16px;text-align:left;align-items:start;padding:0 0 24px}
+  .st>*{grid-column:2}.st .crest{grid-column:1;grid-row:1/5;width:74px;height:74px;margin:0}.st .crest img{width:44px;height:44px}
+  .st .yr{height:auto;margin-top:6px}.st h3{min-height:0;margin-top:4px}
+  .st .tags{grid-column:2;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .chip{margin-top:8px}.title{margin-top:8px}
+}
+</style></head><body>
+<section class="sec" id="clubes">
+  <div class="sh"><div class="k">Trayectoria</div><h2>Clubes</h2></div>
+  <div class="tl" id="tl"></div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+document.getElementById('tl').style.setProperty('--n',CLUBS.length);document.getElementById('tl').innerHTML=[...CLUBS].reverse().map((c,k)=>`<div class="st${c.cur?' cur':''}${c.own?' own':''}" style="animation-delay:${k*.08}s">
+<div class="yr">${c.y}</div><div class="crest"><img src="${c.l}" alt="Escudo de ${c.n}"></div><h3>${c.n}</h3><div class="ct">${c.c}</div>
+<div class="tags"><span class="chip">${c.cur?'Actual':c.own?'Dueño del pase':c.i||'Pase'}</span>${c.t.map(t=>`<span class="title">${t}</span>`).join('')}</div></div>`).join('')
+</script>
+</body></html>

@@ -1,0 +1,128 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prensa 6 · En portada</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* En portada: una nota por vez en grande, con su foto, y abajo las pestañas
+   de cada medio con una barra que avanza. Pasa sola, pero se frena al pasar
+   el mouse, al usar el teclado o si la pestaña del navegador no está visible. */
+.pt{--out:cubic-bezier(.23,1,.32,1);--line2:rgba(255,255,255,.08);--dur:7000ms}
+.pt .mast{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:18px;border-bottom:2px solid var(--bone);margin-bottom:34px}
+.pt .mast .sh{margin:0}
+.pt .ed{text-align:right;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);line-height:1.8}
+.pt .ed b{color:var(--mag)}
+.stage{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:stretch;min-height:440px}
+.story{display:flex;flex-direction:column;justify-content:space-between;gap:26px}
+.story .src{display:flex;align-items:center;gap:14px}
+.story .src img{width:48px;height:48px;border-radius:12px;object-fit:cover;background:#fff}
+.story .src b{display:block;font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.story .src span{display:block;margin-top:4px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gray)}
+.story h3{margin-top:24px;font-size:clamp(32px,3.6vw,56px);font-weight:700;line-height:1.02;text-transform:uppercase;text-wrap:balance}
+.story h3 q{quotes:"“" "”"}
+.story h3 q:before,.story h3 q:after{color:var(--mag)}
+.story p{margin-top:18px;max-width:46ch;font-size:17px;line-height:1.5;color:#c3cfdd}
+.story .go{align-self:flex-start;display:inline-flex;align-items:center;gap:12px;padding:15px 22px;border-radius:999px;background:var(--lime);color:#050b14;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;transition:transform 160ms var(--out)}
+.story .go:active{transform:scale(.97)}
+.story .go:focus-visible{outline:2px solid var(--bone);outline-offset:3px}
+.story .go svg{transition:transform 200ms var(--out)}
+.pic{position:relative;border-radius:20px;overflow:hidden;background:#0b1626;min-height:320px}
+.pic img.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pic:after{content:"";position:absolute;inset:0;background:linear-gradient(200deg,transparent 50%,rgba(5,11,20,.7))}
+.pic .badge{position:absolute;left:18px;bottom:18px;z-index:2;display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:999px;background:rgba(5,11,20,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.pic .badge img{width:26px;height:26px;object-fit:contain}
+.swap{will-change:opacity,transform,filter}
+
+/* Pestañas con barra de avance */
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:40px;border-top:1px solid var(--line2)}
+.tab{position:relative;display:block;padding:18px 20px 16px 0;border:0;background:none;color:var(--gray);text-align:left;cursor:pointer;transition:color 200ms ease}
+.tab+.tab{padding-left:20px;border-left:1px solid var(--line2)}
+.tab:focus-visible{outline:2px solid var(--lime);outline-offset:-2px}
+.tab small{display:block;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+.tab b{display:block;margin-top:6px;font-size:18px;font-weight:700;text-transform:uppercase}
+.tab .bar{position:absolute;left:0;right:0;top:-1px;height:2px;overflow:hidden}
+.tab+.tab .bar{left:0}
+.tab .bar i{display:block;height:100%;background:var(--mag);transform:scaleX(0);transform-origin:left}
+.tab[aria-selected=true]{color:var(--bone)}
+.tab.done .bar i{transform:scaleX(1);background:rgba(255,255,255,.18)}
+@media (hover:hover) and (pointer:fine){
+ .tab:not([aria-selected=true]):hover{color:#c9d5e3}
+ .story .go:hover svg{transform:translateX(4px)}
+}
+@media (max-width:900px){
+ .pt .mast{margin-bottom:22px}
+ .stage{grid-template-columns:1fr;gap:22px;min-height:0}
+ .pic{order:-1;min-height:0;aspect-ratio:4/3}
+ .story h3{margin-top:16px;font-size:28px}
+ .story p{font-size:15px;margin-top:12px}
+ .story{gap:20px}
+ .tabs{margin-top:28px}
+ .tab{padding:14px 10px 12px 0}.tab+.tab{padding-left:10px}
+ .tab b{font-size:14px}
+ .tab small{font-size:9px;letter-spacing:.16em}
+}
+@media (prefers-reduced-motion:reduce){.story .go svg{transition:none}}
+</style></head><body>
+<section class="sec pt" id="press">
+  <div class="mast">
+    <div class="sh"><div class="k">En los medios</div><h2>Prensa</h2></div>
+    <div class="ed">Edición N.º <b>{{number}}</b><br>Temporada {{seasonLabel}}</div>
+  </div>
+  <div class="stage" id="stage" role="tabpanel" aria-live="polite">
+    <div class="story swap" id="story"></div>
+    <div class="pic swap" id="pic"></div>
+  </div>
+  <div class="tabs" id="tabs" role="tablist" aria-label="Notas de prensa"></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+(()=>{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches
+const AR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+// Foto y club de cada nota según de qué etapa habla
+const clubOf=n=>{const t=(n.t+' '+n.x+' '+n.u).toLowerCase();return CLUBS.find(c=>/selecci|albirroja|fecha fifa/.test(t)?/selecci/i.test(c.n):t.includes(c.n.toLowerCase().split(' ')[0]))}
+const photoOf=c=>{const k=!c?'u':/selecci/i.test(c.n)?'s':c.cur?'u':'c';const name=c?c.n.split(' ')[0]:'';return(GAL.find(g=>g.c===k&&name&&g.a.includes(name))||GAL.find(g=>g.c===k)||GAL[0])}
+const N=PRESS.map(n=>{const club=clubOf(n);return{...n,club,ph:photoOf(club)}}).reverse() // la más nueva primero
+tabs.innerHTML=N.map((n,i)=>`<button class="tab" role="tab" id="pt${i}" aria-controls="stage" type="button"><span class="bar"><i></i></span><small>${String(i+1).padStart(2,'0')} · ${n.d}</small><b>${n.medio}</b></button>`).join('')
+const T=[...tabs.children]
+const story_=n=>`<div><div class="src"><img src="${n.logo}" alt=""><div><b>${n.medio}</b><span>${n.d}</span></div></div><h3><q>${n.t}</q></h3><p>${n.x}</p></div><a class="go" href="${n.u}" target="_blank" rel="noopener">Leer la nota ${AR}</a>`
+const pic_=n=>`<img class="ph" src="${n.ph.s}" alt="${n.ph.a}">${n.club?`<span class="badge"><img src="${n.club.l}" alt="">${n.club.n}</span>`:''}`
+let cur=-1,run=null,busy=[]
+function render(i){story.innerHTML=story_(N[i]);pic.innerHTML=pic_(N[i])}
+function show(i,{instant=false}={}){
+  if(i===cur)return
+  const prev=cur;cur=i
+  T.forEach((t,k)=>{t.setAttribute('aria-selected',k===i);t.tabIndex=k===i?0:-1;t.classList.toggle('done',k<i)})
+  if(prev<0||instant||reduce||!story.animate){render(i);return}
+  // Cambio: sale rápido con blur y entra con ease-out
+  busy.forEach(a=>a.cancel())
+  const out=[{opacity:1,filter:'blur(0)',transform:'none'},{opacity:0,filter:'blur(4px)',transform:'translateY(-6px)'}]
+  const a=story.animate(out,{duration:120,easing:'ease',fill:'forwards'}),b=pic.animate([{opacity:1},{opacity:0}],{duration:120,easing:'ease',fill:'forwards'})
+  busy=[a,b]
+  a.onfinish=()=>{render(i);busy.forEach(x=>x.cancel())
+    busy=[story.animate([{opacity:0,filter:'blur(4px)',transform:'translateY(8px)'},{opacity:1,filter:'blur(0)',transform:'none'}],{duration:260,easing:'cubic-bezier(.23,1,.32,1)'}),
+          pic.animate([{opacity:0,transform:'scale(1.03)'},{opacity:1,transform:'none'}],{duration:320,easing:'cubic-bezier(.23,1,.32,1)'})]}
+}
+// Avance automático con la barra de la pestaña activa (barra lineal; pausa real con WAAPI)
+const DUR=7000
+function startBar(){
+  if(run)run.cancel();run=null
+  T.forEach(t=>t.querySelector('.bar i').getAnimations().forEach(x=>x.cancel()))
+  if(reduce)return
+  const bar=T[cur].querySelector('.bar i')
+  if(manual){bar.animate([{transform:'scaleX(1)'},{transform:'scaleX(1)'}],{duration:1,fill:'forwards'});T.forEach(t=>t!==T[cur]&&t.querySelector('.bar i').getAnimations().forEach(x=>x.cancel()));return}
+  run=bar.animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:DUR,easing:'linear',fill:'forwards'})
+  run.onfinish=()=>{show((cur+1)%N.length);if(cur===0)T.forEach(t=>t.classList.remove('done'));startBar()}
+  if(paused())run.pause()
+}
+let hover=false,focusIn=false,visible=false,manual=false
+const paused=()=>hover||focusIn||!visible||document.hidden||manual
+const sync=()=>{if(!run)return;paused()?run.pause():run.play()}
+const sec=document.querySelector('.pt')
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){sec.addEventListener('mouseenter',()=>{hover=true;sync()});sec.addEventListener('mouseleave',()=>{hover=false;sync()})}
+sec.addEventListener('focusin',()=>{focusIn=true;sync()});sec.addEventListener('focusout',()=>{focusIn=false;sync()})
+document.addEventListener('visibilitychange',sync)
+new IntersectionObserver(([e])=>{visible=e.isIntersecting;sync()},{threshold:.35}).observe(sec)
+// Elegir una nota a mano frena el avance: el lector decidió qué leer
+T.forEach((t,i)=>t.addEventListener('click',()=>{manual=true;show(i);startBar()}))
+tabs.addEventListener('keydown',e=>{const d={ArrowRight:1,ArrowLeft:-1}[e.key];if(!d)return;e.preventDefault();manual=true;const n=(cur+d+N.length)%N.length;show(n,{instant:true});startBar();T[n].focus()})
+show(0,{instant:true});startBar()
+})()
+</script>
+</body></html>

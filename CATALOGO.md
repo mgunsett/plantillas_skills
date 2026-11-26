@@ -6,21 +6,22 @@ Hay dos estilos:
 
 - **Clásico (Keki / Ivan Colman):** opciones numeradas 1, 2, 3… Paleta del club sobre fondo oscuro cálido, Bebas Neue y Barlow.
 - **Kit claro (Luis Ramos):** opciones C1, C2… Fondo blanco azulado, acento azul del club y rojo, tipografía Nippo. Datos en [`kits/claro/player.js`](kits/claro/). Cubre todas las secciones; ⚛ marca lo aplicado en Luis Ramos, con el componente React en `modelos/<sección>/react/`.
+- **Kit azul (Ronaldo Martínez):** opciones A1, A2… Fondo azul casi negro, azul Vélez y dorado, tipografía Nippo. Es el kit neón recoloreado más 9 modelos nuevos ([`kits/azul`](kits/azul/)); ⚛ marca lo aplicado en Ronaldo, con el componente en `modelos/<sección>/react/*Azul.jsx`.
 - **Kit neón (Héctor Fertoli):** opciones N1 a N4 en cada sección. Fondo casi negro, acento lima y magenta, tipografía Nippo. Los datos del jugador están en un solo archivo ([`kits/neon/player.js`](kits/neon/)), así que se regeneran para otro jugador con `herramientas/previews/empaquetar.mjs`. Las opciones con ⚛ tienen el componente React en `modelos/<sección>/react/`.
 
-| Sección | Clásico | Kit neón | Kit claro | Carpeta |
-|---|---|---|---|---|
-| **Navbar** | (dentro del starter) | — | C1 Cápsula con dorsal · C2 Escudo al centro · C3 Riel lateral · C4 Zócalo de partido · ⚛ C5 Índice a pantalla completa | [00-navbar](modelos/00-navbar/) |
-| **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox | N1 Dorsal gigante · N2 Split editorial · N3 Marquesina · ⚛ N4 Transmisión TV | C1 Split editorial · C2 Marquesina · C3 Transmisión TV · C4 Franjas del club · C5 Portada de revista · ⚛ C6 Split con ficha | [01-hero](modelos/01-hero/) |
-| **MatchBox** (dentro del hero) | ✅ Pestaña lateral "Partidos" | ⚛ M1 Marcador de TV · ⚛ M2 Tarjeta con pestañas · ⚛ M3 Dos tickets (Polaco Fydriszewski) | — | [01-hero](modelos/01-hero/#matchbox-último-resultado-y-próximo-partido-diseñado-para-polaco-fydriszewski) |
-| **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | — | — | [02-final](modelos/02-final/) |
-| **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés · 4 Anillos y tarjetas | N1 Marcador · N2 Ficha de scouting · ⚛ N3 Radar central · N4 Dossier | ⚛ C1 Marcador · C2 Ficha de scouting · C3 Radar central · C4 Dossier · C5 Odómetro | [03-estadisticas](modelos/03-estadisticas/) |
-| **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | N1 Programa · N2 Stories · ⚛ N3 Temporadas · N4 Paneles | C1 Programa · C2 Stories · ⚛ C3 Temporadas · C4 Paneles · C5 Mazo de reels | [04-videos](modelos/04-videos/) |
-| **Galería** | ✅ 1 Pestañas y mosaico · 2 Álbumes · 3 Carriles | ⚛ N1 Mosaico con pestañas · N2 Carriles · N3 Álbum editorial · N4 Hoja de contactos | C1 Mosaico con pestañas · ⚛ C2 Carriles · C3 Álbum editorial · C4 Hoja de contactos | [05-galeria](modelos/05-galeria/) |
-| **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada · 4 Zócalo · 5 Pase a pase | N1 Titulares · N2 Recortes · ⚛ N3 Nota destacada · N4 Lo publicaron | C1 Titulares · C2 Recortes · C3 Nota destacada · C4 Lo publicaron | [06-prensa](modelos/06-prensa/) |
-| **Contacto** | 1 Directorio · 2 Cierre con foto · 3 ¿Para qué escribís? · ✅ 4 Tarjetas mejoradas | N1 Directorio · N2 Cierre con foto · N3 ¿Para qué escribís? · ⚛ N4 Tarjetas grandes | C1 Directorio · C2 Cierre con foto · C3 ¿Para qué escribís? · ⚛ C4 Tarjetas grandes | [07-contacto](modelos/07-contacto/) |
-| **Footer** | ✅ 1 Pulido · 2 Con navegación · 3 Firma | N1 Pulido · N2 Con navegación · ⚛ N3 Firma · N4 Escudos | C1 Pulido · C2 Con navegación · ⚛ C3 Firma · C4 Escudos | [08-footer](modelos/08-footer/) |
-| **Clubes** | (dentro de Estadísticas) | N1 Línea de tiempo · ⚛ N2 Grilla de escudos · N3 Planilla · N4 Árbol de pases | C1 Línea de tiempo · ⚛ C2 Grilla de escudos · C3 Planilla · C4 Escalera · C5 Pasaporte | [09-clubes](modelos/09-clubes/) |
+| Sección | Clásico | Kit neón | Kit claro | Kit azul | Carpeta |
+|---|---|---|---|---|---|
+| **Navbar** | (dentro del starter) | — | C1 Cápsula con dorsal · C2 Escudo al centro · C3 Riel lateral · C4 Zócalo de partido · ⚛ C5 Índice a pantalla completa | ⚛ C5 Índice (en azul) | [00-navbar](modelos/00-navbar/) |
+| **Hero** | ✅ Recorte + apellido gigante + scroll animado + MatchBox | N1 Dorsal gigante · N2 Split editorial · N3 Marquesina · ⚛ N4 Transmisión TV | C1 Split editorial · C2 Marquesina · C3 Transmisión TV · C4 Franjas del club · C5 Portada de revista · ⚛ C6 Split con ficha | ⚛ A5 Split con ficha oscuro | [01-hero](modelos/01-hero/) |
+| **MatchBox** (dentro del hero) | ✅ Pestaña lateral "Partidos" | ⚛ M1 Marcador de TV · ⚛ M2 Tarjeta con pestañas · ⚛ M3 Dos tickets (Polaco Fydriszewski) | — | — | [01-hero](modelos/01-hero/#matchbox-último-resultado-y-próximo-partido-diseñado-para-polaco-fydriszewski) |
+| **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | — | — | — | [02-final](modelos/02-final/) |
+| **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés · 4 Anillos y tarjetas | N1 Marcador · N2 Ficha de scouting · ⚛ N3 Radar central · N4 Dossier | ⚛ C1 Marcador · C2 Ficha de scouting · C3 Radar central · C4 Dossier · C5 Odómetro | ⚛ A4 Dossier con anillo | [03-estadisticas](modelos/03-estadisticas/) |
+| **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | N1 Programa · N2 Stories · ⚛ N3 Temporadas · N4 Paneles | C1 Programa · C2 Stories · ⚛ C3 Temporadas · C4 Paneles · C5 Mazo de reels | ⚛ A5 Destacado + reels | [04-videos](modelos/04-videos/) |
+| **Galería** | ✅ 1 Pestañas y mosaico · 2 Álbumes · 3 Carriles | ⚛ N1 Mosaico con pestañas · N2 Carriles · N3 Álbum editorial · N4 Hoja de contactos | C1 Mosaico con pestañas · ⚛ C2 Carriles · C3 Álbum editorial · C4 Hoja de contactos | A5 Revelado · A6 Capítulos | [05-galeria](modelos/05-galeria/) |
+| **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada · 4 Zócalo · 5 Pase a pase | N1 Titulares · N2 Recortes · ⚛ N3 Nota destacada · N4 Lo publicaron | C1 Titulares · C2 Recortes · C3 Nota destacada · C4 Lo publicaron | ⚛ A5 Cronología · A6 En portada | [06-prensa](modelos/06-prensa/) |
+| **Contacto** | 1 Directorio · 2 Cierre con foto · 3 ¿Para qué escribís? · ✅ 4 Tarjetas mejoradas | N1 Directorio · N2 Cierre con foto · N3 ¿Para qué escribís? · ⚛ N4 Tarjetas grandes | C1 Directorio · C2 Cierre con foto · C3 ¿Para qué escribís? · ⚛ C4 Tarjetas grandes | ⚛ A1 Directorio | [07-contacto](modelos/07-contacto/) |
+| **Footer** | ✅ 1 Pulido · 2 Con navegación · 3 Firma | N1 Pulido · N2 Con navegación · ⚛ N3 Firma · N4 Escudos | C1 Pulido · C2 Con navegación · ⚛ C3 Firma · C4 Escudos | ⚛ A3 Firma | [08-footer](modelos/08-footer/) |
+| **Clubes** | (dentro de Estadísticas) | N1 Línea de tiempo · ⚛ N2 Grilla de escudos · N3 Planilla · N4 Árbol de pases | C1 Línea de tiempo · ⚛ C2 Grilla de escudos · C3 Planilla · C4 Escalera · C5 Pasaporte · C6 Carrera en el tiempo | ⚛ A2 Grilla de escudos · A5 Carrera en el tiempo · A6 Vitrina | [09-clubes](modelos/09-clubes/) |
 
 ## Cuándo conviene cada uno
 
@@ -62,6 +63,16 @@ Hay dos estilos:
 | tiene notas en medios conocidos | Prensa N4 (Lo publicaron) |
 | tiene representante y agencia de marketing | Contacto N4 (Tarjetas grandes) o N3 |
 | tiene un apellido corto o con fuerza | Footer N3 (Firma) |
+| tiene un apodo o firma con dorsal (como `ronaldo77`) | Footer A3 (Firma, con el dorsal en contorno) |
+| tiene un recorte festejando y la paleta del club es oscura | Hero A5 (Split con ficha oscuro) |
+| tiene una valoración o nota promedio para destacar | Estadísticas A4 (Dossier con anillo) |
+| tiene un highlight largo de YouTube y algunos reels | Videos A5 (Destacado + reels) |
+| tuvo préstamos que se superponen en el tiempo | Clubes A5 o C6 (Carrera en el tiempo) |
+| quiere contar cada club con detalle sin hacer larga la sección | Clubes A6 (Vitrina) |
+| tiene fotos de formatos muy distintos | Galería A5 (Revelado) |
+| tiene fotos de varias etapas (club, Selección, anteriores) | Galería A6 (Capítulos) |
+| tiene notas que cuentan una historia en orden | Prensa A5 (Cronología) |
+| tiene pocas notas pero con buena foto de cada etapa | Prensa A6 (En portada) |
 
 ## Reglas de diseño comunes a todos los modelos
 

@@ -82,3 +82,16 @@ Seis opciones en paleta clara (blanco, azul del club y rojo) con tipografía Nip
   - **Datos extra en `playerData`:** `heroCutout`, `heroCutoutAlt` y `country` (por ejemplo, 'Perú'; `nationality` queda para el gentilicio).
   - **Montaje:** el hero mide `100svh` (mínimo 640 px en desktop y 780 en mobile) y no es sticky. Si venías del hero del starter, sacá el `mt="-100vh"` de `App.jsx`.
   - **Pendiente:** con el celular en horizontal usa el diseño mobile y ocupa casi dos pantallas.
+
+## Kit azul (diseñado para Ronaldo Martínez)
+
+Opciones en paleta oscura azul (fondo `#050B14`, azul Vélez `#4D93D6` y dorado `#D4A84B`) con tipografía Nippo, desde [`kits/azul`](../../kits/azul/). Los datos salen de `kits/azul/player.js`. En React se portaron con Bebas Neue, Barlow Condensed y Barlow, como el resto del starter.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| A5 | **Split con ficha (oscuro)** | ✅ Aplicado en Ronaldo Martínez | [html](previews/azul-5-split-ficha.html) · ![](previews/azul-5-split-ficha.jpg) |
+
+- **A5. Split con ficha (aplicado en Ronaldo Martínez):** el C6 en modo oscuro. A la izquierda, píldora con dorsal y posición, nombre en gris y apellido gigante en el acento, club y bandera, 4 números de la temporada (goles en dorado) y dos botones. A la derecha, panel en diagonal con degradé del club, el dorsal en contorno, un brillo detrás del recorte festejando y la tarjeta de partidos translúcida.
+  - **React:** [`react/HeroSplitFichaAzul.jsx`](react/HeroSplitFichaAzul.jsx). Lee `name`, `fullName`, `number`, `position`, `currentClub`, `logoCurrentClub`, `nationality`, `nationalityFlag`, `heroCutout`, `heroCutoutAlt` y `seasonStats`; los partidos salen de `useMatches` (panel `/admin`).
+  - **Temporada:** `useSeasonStats` (API-Football vía Firestore) con respaldo en `playerData.seasonStats`; los rótulos se buscan sin acentos con `seasonTiles()`. Copiá [`03-estadisticas/react/useSeasonStats.js`](../03-estadisticas/react/useSeasonStats.js) a `src/hooks/` y [`seasonTiles.js`](../03-estadisticas/react/seasonTiles.js) a `src/lib/`. Si el proyecto no tiene la sincronización, el hook puede devolver `null` y se usan los valores fijos.
+  - Mobile: el recorte entero arriba dentro del panel y los datos abajo, sin taparse.

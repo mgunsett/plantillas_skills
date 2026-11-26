@@ -67,3 +67,15 @@ Opciones en paleta clara (blanco azulado, azul del club y rojo) con tipografía 
 - **C5. Mazo de reels:** Los reels apilados como cartas verticales 9:16. Se arrastran con el mouse o se deslizan con el dedo para pasar al siguiente; al costado, el año gigante en contorno y el título cambian con la carta.
 
 En React, cada video necesita `year`, `club` y `clubLogo` en `playerData.videos`.
+
+## Kit azul (diseñado para Ronaldo Martínez)
+
+Opciones en paleta oscura azul (fondo `#050B14`, azul Vélez `#4D93D6` y dorado `#D4A84B`) con tipografía Nippo, desde [`kits/azul`](../../kits/azul/). Los datos salen de `kits/azul/player.js`. En React se portaron con Bebas Neue, Barlow Condensed y Barlow, como el resto del starter.
+
+| # | Modelo | Estado | Preview |
+|---|---|---|---|
+| A5 | **Destacado + reels** | ✅ Aplicado en Ronaldo Martínez | [html](previews/azul-5-destacado.html) · ![](previews/azul-5-destacado.jpg) |
+
+- **A5. Destacado + reels (aplicado en Ronaldo Martínez):** un highlight grande de YouTube con panel de datos (club, goles y valoración de la temporada) y, debajo, 3 reels de Instagram en 9:16. En mobile los reels pasan a un carrusel con snap y puntos.
+  - **React:** [`react/VideosDestacadoAzul.jsx`](react/VideosDestacadoAzul.jsx). El iframe de `youtube-nocookie` se carga recién al tocar play. Lee `videos` (el primero es el destacado: `title`, `url`, `club`, `crest`), `reels` (`title`, `club`, `cover`, `url`), `socialMedia` (Instagram) y `seasonStats`.
+  - **Temporada:** `useSeasonStats` (API-Football vía Firestore) con respaldo en `playerData.seasonStats`; los rótulos se buscan sin acentos con `seasonTiles()`. Copiá [`03-estadisticas/react/useSeasonStats.js`](../03-estadisticas/react/useSeasonStats.js) a `src/hooks/` y [`seasonTiles.js`](../03-estadisticas/react/seasonTiles.js) a `src/lib/`. Si el proyecto no tiene la sincronización, el hook puede devolver `null` y se usan los valores fijos.
