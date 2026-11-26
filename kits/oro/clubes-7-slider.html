@@ -1,0 +1,70 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clubes 7 · Slider de cards</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Slider de cards: una card alta por club que se desliza con flechas, arrastre o swipe (scroll-snap).
+   El club actual abre la fila en oro. Abajo, barra de progreso y contador. */
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.hd .sh{margin-bottom:0}
+.ar{display:flex;gap:10px}
+.ar button{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--lime);background:transparent;color:var(--lime);display:grid;place-items:center;cursor:pointer;transition:background-color .2s,color .2s,transform .16s ease-out,opacity .2s}
+.ar button:active{transform:scale(.94)}
+.ar button:disabled{opacity:.3;cursor:default}
+.ar svg{width:20px;height:20px}
+@media (hover:hover) and (pointer:fine){.ar button:not(:disabled):hover{background:var(--lime);color:var(--on-acc)}}
+.track{margin:40px -60px 0;padding:0 60px 6px;display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 60px;scrollbar-width:none;cursor:grab;overscroll-behavior-x:contain}
+.track::-webkit-scrollbar{display:none}
+.track.drag{cursor:grabbing;scroll-snap-type:none}
+.track.drag *{pointer-events:none}
+.c{flex:0 0 clamp(240px,22vw,300px);aspect-ratio:3/4.2;scroll-snap-align:start;position:relative;border-radius:20px;overflow:hidden;background:linear-gradient(170deg,#221d16,var(--bg2) 60%);border:1px solid var(--line);padding:22px;display:flex;flex-direction:column;
+  transition:transform .5s var(--ease),border-color .3s}
+.c:before{content:"";position:absolute;left:50%;top:40%;width:80%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,#d6ae4e26,transparent);pointer-events:none}
+.c .no{display:flex;justify-content:space-between;font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gray)}
+.c .no b{color:var(--mag)}
+.c img{position:relative;width:58%;aspect-ratio:1;object-fit:contain;margin:auto;filter:drop-shadow(0 16px 24px #000a);transition:transform .5s var(--ease)}
+.c .yr{font-size:44px;font-weight:700;line-height:.9;color:transparent;-webkit-text-stroke:1px var(--lime);letter-spacing:-.01em}
+.c h3{margin-top:10px;font-size:20px;font-weight:700;text-transform:uppercase;line-height:1.05}
+.c .ct{margin-top:6px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.c .tt{position:absolute;top:52px;left:22px;right:22px;text-align:center;font-size:11px;color:var(--on-acc);background:var(--lime);border-radius:999px;padding:6px 10px;font-weight:700;letter-spacing:.06em}
+.c.cur{background:var(--lime);border-color:var(--lime);color:var(--on-acc)}
+.c.cur:before{background:radial-gradient(closest-side,#fff6,transparent)}
+.c.cur .no,.c.cur .ct{color:var(--on-acc)}.c.cur .no b{color:var(--on-acc)}
+.c.cur .yr{-webkit-text-stroke-color:var(--on-acc)}
+@media (hover:hover) and (pointer:fine){.c:not(.cur):hover{border-color:#d6ae4e99}.c:hover img{transform:translateY(-6px) scale(1.04)}}
+.ft{margin-top:26px;display:flex;align-items:center;gap:20px}
+.bar{flex:1;height:2px;background:var(--line);position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0;background:var(--lime);transform-origin:left;transform:scaleX(var(--p,.1));transition:transform .3s var(--ease)}
+.ct2{font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--gray);font-variant-numeric:tabular-nums}
+.ct2 b{color:var(--bone)}
+@media (max-width:820px){
+  .track{margin:28px -20px 0;padding:0 20px 6px;scroll-padding:0 20px;gap:12px}
+  .c{flex-basis:68vw;padding:18px}.c .yr{font-size:36px}.c h3{font-size:17px}.c .tt{top:46px;left:18px;right:18px}
+  .ar button{width:44px;height:44px}
+}
+</style></head><body>
+<section class="sec" id="clubes">
+  <div class="hd"><div class="sh"><div class="k">Trayectoria</div><h2>Clubes</h2></div>
+    <div class="ar"><button id="pv" aria-label="Club anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button><button id="nx" aria-label="Club siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+  <div class="track" id="tr" tabindex="0" aria-label="Clubes de su carrera, deslizables"></div>
+  <div class="ft"><div class="bar"><i id="pb"></i></div><div class="ct2" id="cnt"></div></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+// "2022 — 2023" → "2022–23"; "2024 — Act." → "2024–Hoy"
+const yr=y=>{const[a,b]=y.split(' — ');return b?a+'–'+(b==='Act.'?'Hoy':b.slice(2)):a}
+const tr=document.getElementById('tr'),N=CLUBS.length,pad=n=>String(n).padStart(2,'0')
+tr.innerHTML=CLUBS.map((c,i)=>`<article class="c${c.cur?' cur':''}"><div class="no"><span>${pad(i+1)} / ${pad(N)}</span><b>${c.cur?'Actual':c.i}</b></div>
+${c.t[0]?`<div class="tt">★ ${c.t[0]}</div>`:''}<img src="${c.l}" alt="Escudo de ${c.n}" loading="lazy" draggable="false">
+<div><div class="yr">${yr(c.y)}</div><h3>${c.n}</h3><div class="ct">${c.c}</div></div></article>`).join('')
+const cards=[...tr.children],step=()=>cards[1].offsetLeft-cards[0].offsetLeft
+function upd(){const max=tr.scrollWidth-tr.clientWidth,p=max?tr.scrollLeft/max:1,idx=Math.min(N,Math.round(tr.scrollLeft/step())+1)
+  document.getElementById('pb').style.setProperty('--p',Math.max(.08,p));document.getElementById('cnt').innerHTML=`<b>${pad(idx)}</b> / ${pad(N)}`
+  pv.disabled=tr.scrollLeft<4;nx.disabled=tr.scrollLeft>max-4}
+tr.addEventListener('scroll',()=>requestAnimationFrame(upd),{passive:true});addEventListener('resize',upd);upd()
+pv.onclick=()=>tr.scrollBy({left:-step(),behavior:'smooth'});nx.onclick=()=>tr.scrollBy({left:step(),behavior:'smooth'})
+tr.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();nx.click()}if(e.key==='ArrowLeft'){e.preventDefault();pv.click()}})
+// Arrastre con mouse (en touch el swipe es nativo)
+let d=null
+tr.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;d={x:e.clientX,s:tr.scrollLeft,m:false}})
+addEventListener('pointermove',e=>{if(!d)return;const dx=e.clientX-d.x;if(Math.abs(dx)>4&&!d.m){d.m=true;tr.classList.add('drag')}if(d.m)tr.scrollLeft=d.s-dx})
+addEventListener('pointerup',()=>{if(!d)return;if(d.m){tr.classList.remove('drag');const i=Math.round(tr.scrollLeft/step());tr.scrollTo({left:i*step(),behavior:'smooth'})}d=null})
+</script>
+</body></html>

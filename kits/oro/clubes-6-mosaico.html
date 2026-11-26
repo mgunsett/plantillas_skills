@@ -1,0 +1,58 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clubes 6 · Mosaico</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Mosaico: grilla tipo bento. El club actual ocupa un bloque grande en oro, el club con título va ancho
+   y el resto en baldosas iguales. Cada baldosa revela el escudo a color al pasar el mouse. */
+.g{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(200px,auto);grid-auto-flow:dense;gap:12px}
+.t{position:relative;border-radius:16px;background:var(--bg2);border:1px solid var(--line);padding:22px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;
+  opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease),border-color .3s,background-color .3s}
+.in .t{opacity:1;transform:none;transition-delay:calc(var(--i) * 50ms)}
+.t .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.t img.cr{width:64px;height:64px;object-fit:contain;filter:grayscale(1) brightness(1.15);opacity:.85;transition:filter .4s var(--ease),opacity .4s,transform .4s var(--ease)}
+.t .yr{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--gray);text-align:right}
+.t h3{font-size:19px;font-weight:700;text-transform:uppercase;line-height:1.05}
+.t .ct{display:flex;gap:8px;align-items:center;margin-top:6px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.t .ct i{font-style:normal;padding:3px 7px;border-radius:999px;border:1px solid var(--line);color:var(--lime);letter-spacing:.14em}
+.t .tt{margin-top:10px;font-size:12px;color:var(--lime)}
+.t .big{position:absolute;right:-6px;bottom:-22px;font-size:120px;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1px #d6ae4e26;pointer-events:none}
+/* Club actual: bloque 2x2 en oro */
+.t.cur{grid-column:span 2;grid-row:span 2;background:var(--lime);border-color:var(--lime);color:var(--on-acc);padding:30px}
+.t.cur img.cr{width:150px;height:150px;filter:none;opacity:1}
+.t.cur .yr,.t.cur .ct{color:var(--on-acc)}
+.t.cur .ct i{border-color:#0f0d0a55;color:var(--on-acc)}
+.t.cur h3{font-size:clamp(34px,3.6vw,56px)}
+.t.cur .lbl{font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase}
+.t.cur .big{font-size:240px;-webkit-text-stroke:1.5px #0f0d0a22;right:-10px;bottom:-60px}
+.t.ti{grid-column:span 2}
+.t.ti .tt{display:inline-flex;gap:8px;align-items:center;padding:7px 12px;border-radius:999px;background:var(--acc-l)}
+@media (hover:hover) and (pointer:fine){.t:not(.cur):hover{background:#221d16;border-color:#d6ae4e80}.t:not(.cur):hover img.cr{filter:none;opacity:1;transform:scale(1.06)}}
+.sum{border-radius:16px;border:1px dashed var(--line);background:transparent;display:grid;align-content:center;gap:10px;padding:20px 22px}
+.sum div{display:flex;align-items:baseline;gap:12px}
+.sum b{font-size:44px;min-width:56px;font-weight:700;color:var(--lime);line-height:.9}
+.sum small{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gray)}
+@media (max-width:1000px){.g{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){
+  .g{gap:8px;grid-auto-rows:minmax(160px,auto)}
+  .t{padding:16px;border-radius:12px}.t img.cr{width:44px;height:44px}.t h3{font-size:14px}.t .yr{font-size:9px}.t .ct{font-size:8px;letter-spacing:.14em}.t .ct i{display:none}
+  .t.cur{grid-row:span 1;padding:20px}.t.cur img.cr{width:84px;height:84px}.t.cur h3{font-size:30px}.t.cur .big{font-size:150px;bottom:-40px}
+  .t .big{font-size:80px}
+  .sum{padding:16px}.sum b{font-size:30px;min-width:40px}.sum small{font-size:8px;letter-spacing:.14em}
+}
+@media (prefers-reduced-motion:reduce){.t{opacity:1;transform:none}}
+</style></head><body>
+<section class="sec" id="clubes">
+  <div class="sh"><div class="k">Trayectoria</div><h2>Clubes</h2></div>
+  <div class="g" id="g"></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const titles=CLUBS.reduce((a,c)=>a+c.t.length,0),countries=new Set(CLUBS.map(c=>c.c)).size
+const yy=c=>String(c.y0).slice(2)
+const g=document.getElementById('g')
+g.innerHTML=CLUBS.map((c,i)=>{const k=c.cur?'cur':c.t.length?'ti':''
+  return `<article class="t ${k}" style="--i:${i}"><span class="big" aria-hidden="true">'${yy(c)}</span>
+  <div class="top"><img class="cr" src="${c.l}" alt="Escudo de ${c.n}" loading="lazy"><div class="yr">${c.cur?'<span class="lbl">Club actual</span><br>':''}${c.y}</div></div>
+  <div><h3>${c.n}</h3><div class="ct">${c.c}${c.i?`<i>${c.i}</i>`:''}</div>${c.t.map(t=>`<div class="tt">★ ${t}</div>`).join('')}</div></article>`}).join('')+
+  `<div class="sum t" style="--i:${CLUBS.length}"><div><b class="tab">${CLUBS.length}</b><small>Clubes</small></div><div><b class="tab">${countries}</b><small>Países</small></div><div><b class="tab">${titles}</b><small>${titles===1?'Título':'Títulos'}</small></div></div>`
+new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){g.classList.add('in');o.disconnect()}},{rootMargin:'0px 0px -15% 0px'}).observe(g)
+</script>
+</body></html>
