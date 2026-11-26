@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="base.css">
 <style>
 /* Split en capas: texto a la izquierda; a la derecha una escena en profundidad.
-   Atrás, el dorsal gigante relleno con una foto de cancha; adelante, el recorte. En desktop las capas se mueven a distinta velocidad siguiendo el mouse. */
+   Atrás, el dorsal gigante relleno con una foto de cancha; adelante, el recorte. */
 .hero{position:relative;height:calc(100 * var(--sv));min-height:640px;overflow:hidden;display:grid;grid-template-columns:.95fr 1.05fr;background:var(--bg)}
 .txt{position:relative;z-index:6;display:flex;flex-direction:column;justify-content:center;padding:96px 32px 40px 60px}
 .eb{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
@@ -33,7 +33,7 @@ h1 .n2{display:block;font-size:clamp(84px,10.4vw,180px);color:var(--lime);margin
 .scene{position:relative}
 .glow{position:absolute;left:50%;top:52%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
   background:radial-gradient(closest-side,#d6ae4e40,#d6ae4e10 55%,transparent 72%);z-index:0}
-.lay{position:absolute;inset:0;will-change:transform}
+.lay{position:absolute;inset:0}
 .num{position:absolute;left:44%;top:50%;transform:translate(-50%,-54%);font-weight:700;line-height:.8;letter-spacing:-.04em;white-space:nowrap;
   font-size:min(100vh,50vw);color:transparent;background:var(--ph) 50% 40%/cover;-webkit-background-clip:text;background-clip:text;
   -webkit-text-stroke:2px #d6ae4e;filter:grayscale(1) sepia(.7) brightness(.55) contrast(1.25);
@@ -88,16 +88,5 @@ gN.textContent=an;gV.textContent=av
 bar.innerHTML=Array.from({length:20},(_,i)=>`<span class="${i<on?'on':''}" style="--i:${i}"></span>`).join('')
 // 3 cifras de la temporada
 stats.innerHTML=SEASON_ORDER(['pj','asis','val']).slice(0,3).map(s=>`<div class="${s.hl?'hl':''}"><b>${s.v}</b><small>${s.l}</small></div>`).join('')
-// Profundidad: cada capa se corre según su data-z, con inercia. Solo mouse y sin "reducir movimiento".
-const sc=document.getElementById('scene'),L=[...sc.querySelectorAll('.lay')]
-if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
-  let tx=0,ty=0,x=0,y=0,raf=0
-  const tick=()=>{x+=(tx-x)*.07;y+=(ty-y)*.07
-    L.forEach(l=>{const z=+l.dataset.z;l.style.transform=`translate3d(${(x*z).toFixed(2)}px,${(y*z*.5).toFixed(2)}px,0)`})
-    raf=Math.abs(tx-x)+Math.abs(ty-y)>.002?requestAnimationFrame(tick):0}
-  const hero=document.getElementById('hero')
-  hero.addEventListener('pointermove',e=>{const r=sc.getBoundingClientRect();tx=(e.clientX-r.left-r.width/2)/(r.width/2);ty=(e.clientY-r.top-r.height/2)/(r.height/2);if(!raf)raf=requestAnimationFrame(tick)})
-  hero.addEventListener('pointerleave',()=>{tx=ty=0;if(!raf)raf=requestAnimationFrame(tick)})
-}
 </script>
 </body></html>
