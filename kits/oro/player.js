@@ -25,7 +25,9 @@ window.P = {
   statsHook: 'La cifra que lo define: titular en la temporada en que Cusco FC fue subcampeón de la Liga 1.',
   zoneText: 'Juega de <b>extremo derecho</b>: abre la cancha, encara hacia adentro y llega al área para definir o asistir.',
   dossierLead: 'hoy es el 26 de',            // Estadísticas 4: "…hace 36 años y {dossierLead} <club>"
-  claim: 'Velocidad por la banda',           // Hero (Portada): frase grande de tapa
+  claim: 'Velocidad por la banda',
+  homeCity: 'Cusco', homeAltitude: '3.399',  // Hero 6 (Muro inca): ciudad del club y altura en m s. n. m.
+  cardNo: '26',                              // Hero 7 (Cromo): número de figurita           // Hero (Portada): frase grande de tapa
   instagram: { user: '_silvanicolas', h: '@_silvanicolas', u: 'https://www.instagram.com/_silvanicolas/' },
   year: '2026', seasonLabel: '2025 / 2026', seasonShort: '2025/26',
 
