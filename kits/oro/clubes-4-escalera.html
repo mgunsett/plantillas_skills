@@ -1,0 +1,45 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clubes 4 · Escalera</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Cada club es un escalón: del debut (abajo a la izquierda) al club actual (arriba a la derecha) */
+.stairs{display:flex;align-items:flex-end;gap:6px;height:clamp(420px,40vw,560px);margin-top:10px}
+.step{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;justify-content:flex-start;gap:8px;padding:16px 14px;background:var(--bg2);border:1px solid var(--line);border-bottom:0;height:calc(var(--h) * 1%);transform-origin:bottom;animation:up .9s var(--ease) both;animation-delay:calc(var(--i) * .07s)}
+@keyframes up{from{transform:scaleY(0);opacity:0}}
+.step img{width:46px;height:46px;object-fit:contain}
+.step b{font-size:14px;font-weight:700;text-transform:uppercase;line-height:1.1;color:var(--acc)}
+.step small{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+.step .tag{position:absolute;top:-28px;left:0;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--acc2)}
+.step .yr{margin-top:auto;font-size:clamp(26px,2.6vw,40px);font-weight:700;line-height:.9;color:transparent;-webkit-text-stroke:1.5px #d6ae4e55}
+.step.cur{background:var(--acc);border-color:var(--acc)}
+.step.cur b,.step.cur small{color:var(--on-acc)}.step.cur .yr{-webkit-text-stroke-color:#0f0d0a66}
+.step.cur .tt{font-size:11px;color:#fff;background:var(--acc2);padding:5px 8px;align-self:flex-start;letter-spacing:.06em}
+.base{height:10px;background:var(--acc2)}
+.sum{display:flex;gap:40px;margin-top:26px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+.sum b{font-size:30px;color:var(--acc);letter-spacing:0;margin-right:8px}
+@media (max-width:820px){
+  .stairs{flex-direction:column;height:auto;gap:6px;align-items:stretch}
+  .step{height:auto;margin-left:calc((100 - var(--h)) * .45%);flex-direction:row;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--line);transform-origin:left;animation-name:sx}
+  @keyframes sx{from{transform:scaleX(.6);opacity:0}}
+  .step img{width:36px;height:36px}.step .tag{position:static;order:5;margin-left:auto}
+  .step .yr{margin:0 0 0 auto;font-size:22px}
+  .step.cur .tt{display:none}
+  .base{display:none}
+  .sum{gap:20px;flex-wrap:wrap}
+}
+</style></head><body>
+<section class="sec" id="clubes">
+  <div class="sh"><div class="k">Trayectoria · {{clubCount}} clubes</div><h2>Clubes</h2></div>
+  <div class="stairs" id="stairs"></div>
+  <div class="base"></div>
+  <div class="sum" id="sum"></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+// Del más antiguo al actual; el alto de cada escalón crece de forma pareja
+const L=[...CLUBS].sort((a,b)=>(!!a.cur-!!b.cur)||(a.y0-b.y0)),n=L.length,mob=matchMedia('(max-width:820px)').matches
+const order=mob?[...L].reverse():L
+document.getElementById('stairs').innerHTML=order.map(c=>{const k=L.indexOf(c),h=Math.round(34+66*k/(n-1))
+ return `<div class="step${c.cur?' cur':''}" style="--h:${h};--i:${k}">${c.i?`<span class="tag">${c.i}</span>`:''}<img src="${c.l}" alt=""><div><b>${c.n}</b><br><small>${c.c}</small></div>${c.cur&&c.t.length?`<span class="tt">★ ${c.t[0]}</span>`:''}<span class="yr">${String(c.y0).slice(2).padStart(3,"'")}</span></div>`}).join('')
+const countries=new Set(CLUBS.map(c=>c.c)).size,titles=CLUBS.reduce((a,c)=>a+c.t.length,0)
+document.getElementById('sum').innerHTML=`<span><b>${n}</b>clubes</span><span><b>${countries}</b>países</span>`+(titles?`<span><b>${titles}</b>${titles>1?'títulos':'título'}</span>`:'')
+</script>
+</body></html>

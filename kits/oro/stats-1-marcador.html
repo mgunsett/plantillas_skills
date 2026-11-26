@@ -1,0 +1,61 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Estadísticas 1 · Marcador</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.board{display:grid;grid-template-columns:1.1fr 1fr;gap:2px;background:var(--line);border:1px solid var(--line)}
+.main{background:var(--lime);color:#0F0D0A;padding:34px 38px;display:flex;flex-direction:column;justify-content:space-between;min-height:340px}
+.main small{font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
+.main b{font-size:clamp(150px,24vw,340px);line-height:.78;font-weight:700;letter-spacing:-.02em}
+.main p{font-size:15px;font-weight:500;max-width:30ch}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.t{background:var(--bg2);padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+.t small{font-size:10px;font-weight:700;letter-spacing:.24em;color:var(--gray);text-transform:uppercase}
+.t b{font-size:clamp(40px,4vw,62px);line-height:.9;font-weight:700}
+.t.hl b{color:var(--mag)}
+.t:last-child{grid-column:span 2;flex-direction:row;align-items:flex-end}
+.prof{display:grid;grid-template-columns:repeat(6,1fr);margin-top:34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.prof div{padding:16px 18px;border-left:1px solid var(--line)}
+.prof div:first-child{border-left:0;padding-left:0}
+.prof small{display:block;font-size:10px;letter-spacing:.22em;color:var(--gray);text-transform:uppercase;margin-bottom:6px}
+.prof strong{font-size:16px;font-weight:500}
+.attrs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 48px;margin-top:38px}
+.a .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.a .top span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#e6dcc8}
+.a .top b{font-size:22px;color:var(--lime)}
+.seg{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.seg i{height:8px;background:#ffffff14;transform-origin:left;animation:sg .6s var(--ease) both}
+.seg i.on{background:var(--lime)}
+@keyframes sg{from{transform:scaleX(0)}}
+@media (max-width:820px){
+  .board{grid-template-columns:1fr}
+  .main{min-height:0;gap:10px;padding:24px}
+  .main b{font-size:44vw}
+  .t{padding:18px}.t b{font-size:34px}
+  .prof{grid-template-columns:repeat(2,1fr)}
+  .prof div{border-left:0;border-top:1px solid var(--line);padding:12px 0}
+  .prof div:nth-child(-n+2){border-top:0}
+  .attrs{grid-template-columns:1fr;gap:16px}
+}
+</style></head><body>
+<section class="sec" id="estadisticas">
+  <div class="sh"><div class="k">Temporada {{seasonLabel}}</div><h2>Estadísticas</h2></div>
+  <div class="board">
+    <div class="main"><small id="mainL"></small><b class="tab" id="mainV"></b><p>{{statsHook}}</p></div>
+    <div class="tiles" id="tiles"></div>
+  </div>
+  <div class="prof">
+    <div><small>Posición</small><strong>{{position}}</strong></div>
+    <div><small>Pie hábil</small><strong>{{foot}}</strong></div>
+    <div><small>Edad</small><strong>{{age}} años</strong></div>
+    <div><small>Altura</small><strong>{{height}} m</strong></div>
+    <div><small>Peso</small><strong>{{weight}} kg</strong></div>
+    <div><small>Origen</small><strong>{{birthPlaceShort}}</strong></div>
+  </div>
+  <div class="attrs" id="attrs"></div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const A=ATTRS,[M,...R]=SEASON_ORDER(['pj','pases','goles','tiros','min','val'])
+mainL.textContent=M.ll||M.l;mainV.textContent=M.v
+tiles.innerHTML=R.map(s=>`<div class="t${s.hl?' hl':''}"><small>${s.ll||s.l}</small><b class="tab">${s.v}</b></div>`).join('')
+document.getElementById('attrs').innerHTML=A.map(([l,v],k)=>`<div class="a"><div class="top"><span>${l}</span><b class="tab">${v}</b></div><div class="seg" role="img" aria-label="${l}: ${v} de 100">${Array.from({length:10},(_,i)=>`<i class="${i<Math.round(v/10)?'on':''}" style="animation-delay:${k*.08+i*.03}s"></i>`).join('')}</div></div>`).join('')
+</script>
+</body></html>

@@ -1,0 +1,39 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Contacto 4 · Tarjetas</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:44px}.hd .sh{margin:0}
+.hd p{font-size:14px;color:var(--gray);max-width:34ch;line-height:1.5}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g a{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:260px;padding:30px;background:var(--bg2);color:#fff;text-decoration:none;overflow:hidden;transition:background .35s var(--ease),color .35s var(--ease)}
+.g a.hl{background:var(--lime);color:#0F0D0A}
+.g .top{display:flex;justify-content:space-between;align-items:flex-start}
+.g .lg{width:64px;height:64px;border-radius:50%;background:#0F0D0A;display:grid;place-items:center;color:var(--lime);font-size:28px}
+.g .lg img{width:80%;height:80%;object-fit:contain}
+.g .ar{width:48px;height:48px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:18px;transition:transform .35s var(--ease)}
+.g .r{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--mag)}
+.g a.hl .r{color:#0F0D0A;opacity:.7}
+.g h3{margin-top:8px;font-size:clamp(26px,2.6vw,40px);text-transform:uppercase;line-height:1}
+.g .h{margin-top:8px;font-size:14px;opacity:.75}
+.g .wm{position:absolute;right:-24px;bottom:-34px;width:190px;height:190px;display:grid;place-items:center;font-size:190px;line-height:0;opacity:.08;pointer-events:none;color:#fff}
+.g .wm img{width:100%;height:100%;object-fit:contain;filter:grayscale(1) brightness(1.6)}
+.g a.hl .wm{opacity:.22;color:#0F0D0A}.g a.hl .wm img{filter:grayscale(1) brightness(.4);mix-blend-mode:multiply}
+@media (max-width:820px){.g .wm{width:140px;height:140px;font-size:140px}}
+.g a:focus-visible{outline:2px solid var(--mag);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){.g a:not(.hl):hover{background:#1f2617}.g a:hover .ar{transform:rotate(45deg)}}
+@media (max-width:820px){.g{grid-template-columns:1fr}.g a{min-height:200px;padding:22px}}
+</style></head><body>
+<section class="sec" id="contact">
+  <div class="hd"><div class="sh"><div class="k">Hablemos</div><h2>Contacto</h2></div></div>
+  <div class="g" id="g"></div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const [ig,tm]=CONTACT.social
+const C=[
+ {role:'Directo con '+P.first,n:'Instagram',h:ig.h,u:ig.u,lg:IG,wm:IG},
+ {role:'Ficha profesional',n:'Transfermarkt',h:'Trayectoria y valor de mercado',u:tm.u,lg:'<img src="img/tm.svg" alt="">',wm:'<img src="img/tm.svg" alt="">'},
+ {...CONTACT.reps[0],lg:`<img src="${CONTACT.reps[0].img}" alt="">`,wm:`<img src="${CONTACT.reps[0].img}" alt="">`,hl:1},
+ {...CONTACT.reps[1],lg:`<img src="${CONTACT.reps[1].img}" alt="">`,wm:`<img src="${CONTACT.reps[1].img}" alt="">`}]
+g.innerHTML=C.map((c,i)=>`<a class="rv ${c.hl?'hl':''}" style="animation-delay:${i*.07}s" href="${c.u}" target="_blank" rel="noopener"><span class="wm" aria-hidden="true">${c.wm}</span><div class="top"><span class="lg">${c.lg}</span><span class="ar" aria-hidden="true">↗</span></div><div><div class="r">${c.role}</div><h3>${c.n}</h3><div class="h">${c.h}${c.for?' · '+c.for:''}</div></div></a>`).join('')
+</script>
+</body></html>

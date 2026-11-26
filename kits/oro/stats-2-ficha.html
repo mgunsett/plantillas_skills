@@ -1,0 +1,66 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Estadísticas 2 · Ficha de scouting</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.card{border:1px solid var(--line);background:linear-gradient(180deg,#1a1712,#0F0D0A);display:grid;grid-template-columns:1fr 1.05fr 1fr}
+.col{padding:30px 32px;border-left:1px solid var(--line)}
+.col:first-child{border-left:0}
+.ct{font-size:11px;font-weight:700;letter-spacing:.26em;color:var(--lime);text-transform:uppercase;margin-bottom:20px;display:flex;justify-content:space-between}
+.ct em{font-style:normal;color:var(--gray)}
+.id{display:flex;align-items:flex-end;gap:16px;margin-bottom:20px}
+.id b{font-size:84px;line-height:.8;font-weight:700;color:transparent;-webkit-text-stroke:1.5px var(--lime)}
+.id strong{display:block;font-size:26px;font-weight:700;text-transform:uppercase;line-height:.95}
+.id span{font-size:12px;color:var(--mag);letter-spacing:.18em;font-weight:700}
+dl{display:grid;grid-template-columns:auto 1fr}
+dt,dd{padding:10px 0;border-top:1px solid #ffffff10;font-size:13px}
+dt{color:var(--gray);letter-spacing:.14em;text-transform:uppercase;font-size:10px;font-weight:700;display:flex;align-items:center}
+dd{text-align:right;font-weight:500}
+.pitch{width:100%;height:auto;display:block}
+.zone{margin-top:14px;font-size:13px;color:#e6dcc8;line-height:1.5}
+.zone b{color:var(--lime)}
+.bar{margin-bottom:16px}
+.bar .top{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;color:#e6dcc8}
+.bar .top b{color:var(--bone);font-size:15px}
+.seg{display:grid;grid-template-columns:repeat(20,1fr);gap:2px}
+.seg i{height:10px;background:#ffffff12}.seg i.on{background:var(--lime)}.seg i.on.hi{background:var(--mag)}
+.season{grid-column:1/-1;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr)}
+.season div{padding:22px 24px;border-left:1px solid var(--line)}
+.season div:first-child{border-left:0}
+.season b{display:block;font-size:40px;font-weight:700;line-height:1}
+.season b.hl{color:var(--mag)}
+.season small{font-size:10px;letter-spacing:.2em;color:var(--gray);text-transform:uppercase}
+@media (max-width:1100px){.card{grid-template-columns:1fr 1fr}.col:nth-child(3){grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}.season{grid-template-columns:repeat(3,1fr)}.season div:nth-child(4){border-left:0}.season div:nth-child(n+4){border-top:1px solid var(--line)}}
+@media (max-width:640px){.card{grid-template-columns:1fr}.col{border-left:0!important;border-top:1px solid var(--line);padding:22px 18px}.col:first-child{border-top:0}
+  .season{grid-template-columns:repeat(2,1fr)}.season div{padding:16px 18px;border-left:0;border-top:1px solid var(--line)}.season div:nth-child(even){border-left:1px solid var(--line)}.season div:nth-child(-n+2){border-top:0}.season b{font-size:30px}}
+</style></head><body>
+<section class="sec" id="estadisticas">
+  <div class="sh"><div class="k">Informe de scouting</div><h2>Estadísticas</h2></div>
+  <div class="card">
+    <div class="col">
+      <div class="ct">Perfil <em>{{seasonShort}}</em></div>
+      <div class="id"><b>{{number}}</b><div><strong>{{first}}<br>{{last}}</strong><span style="text-transform:uppercase">{{position}}</span></div></div>
+      <dl><dt>Pie hábil</dt><dd>{{foot}}</dd><dt>Edad</dt><dd>{{age}} años · {{birthDate}}</dd><dt>Altura / peso</dt><dd>{{height}} m · {{weight}} kg</dd><dt>Origen</dt><dd>{{birthPlace}}, {{nationality}}</dd><dt>Club actual</dt><dd>{{club}} ({{clubCountryCode}})</dd></dl>
+    </div>
+    <div class="col">
+      <div class="ct">Zona de influencia</div>
+      <svg class="pitch" viewBox="0 0 300 200" role="img" aria-label="Cancha con la zona de influencia en el mediocampo central">
+        <defs><radialGradient id="h"><stop offset="0" stop-color="#D2603F" stop-opacity=".85"/><stop offset=".45" stop-color="#D6AE4E" stop-opacity=".45"/><stop offset="1" stop-color="#D6AE4E" stop-opacity="0"/></radialGradient></defs>
+        <rect x="1" y="1" width="298" height="198" fill="#10140c" stroke="#d6ae4e55"/>
+        <ellipse cx="160" cy="100" rx="78" ry="62" fill="url(#h)"/>
+        <g fill="none" stroke="#d6ae4e66"><line x1="150" y1="1" x2="150" y2="199"/><circle cx="150" cy="100" r="28"/><rect x="1" y="50" width="44" height="100"/><rect x="255" y="50" width="44" height="100"/><rect x="1" y="78" width="14" height="44"/><rect x="285" y="78" width="14" height="44"/></g>
+        <circle cx="150" cy="100" r="2.5" fill="#d6ae4e"/>
+      </svg>
+      <p class="zone">{{{zoneText}}}</p>
+    </div>
+    <div class="col">
+      <div class="ct">Atributos <em>0 – 100</em></div>
+      <div id="bars"></div>
+    </div>
+    <div class="season" id="season"></div>
+  </div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const A=ATTRS,mx=Math.max(...A.map(a=>a[1]))
+season.innerHTML=SEASON.map(s=>`<div><b class="tab${s.hl?' hl':''}">${s.v}</b><small>${s.l}</small></div>`).join('')
+document.getElementById('bars').innerHTML=A.map(([l,v])=>`<div class="bar"><div class="top"><span>${l}</span><b class="tab">${v}</b></div><div class="seg" role="img" aria-label="${l}: ${v} de 100">${Array.from({length:20},(_,i)=>`<i class="${i<Math.round(v/5)?'on':''}${v===mx?' hi':''}"></i>`).join('')}</div></div>`).join('')
+</script>
+</body></html>

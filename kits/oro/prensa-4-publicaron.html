@@ -1,0 +1,35 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prensa 4 · Lo publicaron</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:40px}.hd .sh{margin:0}
+.ej{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mag);border:1px dashed var(--mag);padding:7px 10px;border-radius:4px}
+.strip{display:flex;align-items:center;gap:22px;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:40px}
+.strip .t{font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gray);white-space:nowrap}
+.strip ul{display:flex;gap:18px;list-style:none;flex-wrap:wrap}
+.strip li{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.strip img{width:44px;height:44px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--line)}
+.q{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.q a{position:relative;display:flex;flex-direction:column;background:var(--bg2);padding:30px 28px 26px;color:#fff;text-decoration:none;border-top:3px solid var(--lime);transition:transform .35s var(--ease)}
+.q a:nth-child(2){border-color:var(--mag)}
+.q .qm{font-size:96px;line-height:.6;font-weight:700;color:var(--lime);height:44px}
+.q a:nth-child(2) .qm{color:var(--mag)}
+.q h3{font-size:clamp(20px,1.8vw,26px);line-height:1.15;text-transform:uppercase;flex:1}
+.q .ft{display:flex;align-items:center;gap:10px;margin-top:26px;padding-top:18px;border-top:1px solid #ffffff14;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.q .ft img{width:30px;height:30px;border-radius:6px;object-fit:cover}
+.q .ft span{color:var(--gray);white-space:nowrap}
+.q .ft i{margin-left:auto;font-style:normal;color:var(--lime);font-size:16px}
+.q a:focus-visible{outline:2px solid var(--mag);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){.q a:hover{transform:translateY(-6px)}}
+@media (max-width:820px){.strip{flex-direction:column;align-items:flex-start;gap:14px}.q{grid-template-columns:1fr}}
+</style></head><body>
+<section class="sec" id="press">
+  <div class="hd"><div class="sh"><div class="k">En los medios</div><h2>Prensa</h2></div></div>
+  <div class="strip"><span class="t">Lo publicaron</span><ul id="lg"></ul></div>
+  <div class="q" id="q"></div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+lg.innerHTML=PRESS.map(p=>`<li><img src="${p.logo}" alt="">${p.medio}</li>`).join('')
+q.innerHTML=PRESS.map((p,i)=>`<a class="rv" style="animation-delay:${i*.08}s" href="${p.u}" target="_blank" rel="noopener" aria-label="Leer en ${p.medio}: ${p.t}"><span class="qm" aria-hidden="true">“</span><h3>${p.t}</h3><div class="ft"><img src="${p.logo}" alt="">${p.medio}<span>· ${p.d}</span><i aria-hidden="true">↗</i></div></a>`).join('')
+</script>
+</body></html>

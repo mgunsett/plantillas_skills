@@ -1,0 +1,92 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Videos 5 · Mazo</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Los reels apilados como un mazo de cartas verticales (9:16). Se arrastra o desliza
+   la de arriba para pasar a la siguiente; el texto de al lado sigue a la carta activa. */
+.wrap{display:grid;grid-template-columns:1fr auto 1fr;gap:56px;align-items:center}
+.side h3{font-size:clamp(40px,4.6vw,76px);font-weight:700;line-height:.9;text-transform:uppercase;color:var(--acc)}
+.side .yr{font-size:clamp(90px,10vw,170px);font-weight:700;line-height:.8;color:transparent;-webkit-text-stroke:2px var(--acc2);display:block;margin-bottom:10px}
+.side .m{display:flex;align-items:center;gap:12px;margin-top:20px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray)}
+.side .m img{width:34px;height:34px;object-fit:contain}
+.side .sw{transition:opacity .35s,transform .5s var(--ease)}
+.side .sw.out{opacity:0;transform:translateY(14px)}
+.deck{position:relative;width:min(360px,80vw);aspect-ratio:9/16;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.card{position:absolute;inset:0;border-radius:22px;overflow:hidden;background:var(--deep);box-shadow:0 24px 60px #07060540;transition:transform .6s var(--ease),opacity .4s,filter .6s;will-change:transform;cursor:grab}
+.card:active{cursor:grabbing}
+.card img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#07060566,transparent 26%,transparent 55%,#070605e6)}
+.card .tp{position:absolute;top:16px;left:16px;right:16px;z-index:2;display:flex;align-items:center;gap:10px;color:#fff;font-size:12px;font-weight:700;letter-spacing:.06em}
+.card .tp img{width:30px;height:30px;border-radius:50%;background:#fff;object-fit:contain;padding:3px}
+.card .tp span{margin-left:auto;font-weight:500;opacity:.8;font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.card .bt{position:absolute;left:18px;right:18px;bottom:18px;z-index:2;color:#fff}
+.card .bt b{display:block;font-size:22px;line-height:1;text-transform:uppercase}
+.card .bt small{display:block;margin-top:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.card .pl{position:absolute;left:50%;top:50%;z-index:2;width:74px;height:74px;margin:-37px 0 0 -37px;border-radius:50%;display:grid;place-items:center;background:#ffffffe6;color:var(--acc);box-shadow:0 0 0 10px #ffffff33;transition:transform .3s var(--ease)}
+.card .pl svg{width:28px;height:28px;margin-left:4px}
+@media (hover:hover){.card .pl:hover{transform:scale(1.08)}}
+.card .stamp{position:absolute;top:44%;z-index:3;padding:6px 12px;border:3px solid;border-radius:6px;font-weight:700;font-size:20px;letter-spacing:.1em;text-transform:uppercase;opacity:0}
+.card .stamp.l{right:20px;color:var(--acc2);transform:rotate(12deg)}
+.card .stamp.r{left:20px;color:#fff;transform:rotate(-12deg)}
+.ctl{display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+.cnt{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gray)}
+.cnt b{font-size:54px;letter-spacing:0;color:var(--acc);display:block;line-height:1}
+.ar{display:flex;gap:10px}
+.ar button{width:56px;height:56px;border-radius:50%;border:1.5px solid var(--acc);color:var(--acc);font-size:20px;transition:background .25s,color .25s}
+.ar button:last-child{background:var(--acc);color:var(--on-acc)}
+@media (hover:hover){.ar button:hover{background:var(--acc2);border-color:var(--acc2);color:#fff}}
+.dots{display:flex;gap:6px}.dots i{width:22px;height:4px;border-radius:2px;background:var(--line);transition:background .3s,width .4s var(--ease)}
+.dots i.on{background:var(--acc2);width:42px}
+.tip{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+.ig{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);text-decoration:none;border-bottom:2px solid var(--acc2);padding-bottom:4px}
+@media (max-width:980px){
+  .wrap{grid-template-columns:1fr;gap:26px;justify-items:center;text-align:center}
+  .side{order:-1}.side .m{justify-content:center}
+  .side .yr{font-size:84px}.side h3{font-size:38px}
+  .ctl{align-items:center;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:16px}
+  .cnt{display:none}.ctl .tip{width:100%;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){.card,.side .sw{transition:none}}
+</style></head><body>
+<section class="sec" id="videos">
+  <div class="sh"><div class="k">Highlights · {{instagram.h}}</div><h2>Videos</h2></div>
+  <div class="wrap">
+    <div class="side"><div class="sw" id="sw"><span class="yr" id="yr"></span><h3 id="tt"></h3><div class="m"><img id="cr" src="" alt=""><span id="lg"></span></div></div></div>
+    <div class="deck" id="deck" aria-roledescription="carrusel" aria-label="Videos"></div>
+    <div class="ctl">
+      <div class="cnt"><b id="ct"></b>de {{videos.length}} reels</div>
+      <div class="dots" id="dots"></div>
+      <div class="ar"><button type="button" id="pv" aria-label="Video anterior">←</button><button type="button" id="nx" aria-label="Video siguiente">→</button></div>
+      <span class="tip">Deslizá la carta o usá las flechas</span>
+      <a class="ig" id="ig" href="#" target="_blank" rel="noopener">Ver en Instagram ↗</a>
+    </div>
+  </div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const deck=document.getElementById('deck'),n=VIDS.length
+deck.innerHTML=VIDS.map((v,i)=>`<div class="card" data-i="${i}"><img src="${v.img}" alt="${v.f}"><div class="tp"><img src="${v.crest}" alt="">${v.club}<span>'${v.yr}</span></div>
+<button class="pl" type="button" aria-label="Reproducir ${v.f}">${PLAY}</button><div class="bt"><b>${v.t}</b><small>${v.lg}</small></div><span class="stamp l">Siguiente</span><span class="stamp r">Anterior</span></div>`).join('')
+dots.innerHTML=VIDS.map(()=>'<i></i>').join('')
+const C=[...deck.children];let AT=0
+// La carta de arriba sale volando y vuelve al fondo; "anterior" trae la del fondo desde el otro lado
+function lay(skip){C.forEach((c,i)=>{if(c===skip)return;const k=(i-AT+n)%n;c.style.zIndex=n-k;c.style.transform=`translate(${k*16}px,${k*-14}px) rotate(${k*3.5}deg) scale(${1-k*.06})`
+  c.style.filter=k?`brightness(${1-k*.18})`:'';c.style.pointerEvents=k?'none':'';c.querySelector('.pl').tabIndex=k?-1:0;c.setAttribute('aria-hidden',!!k)})
+ const v=VIDS[AT];sw.classList.add('out');setTimeout(()=>{yr.textContent="'"+v.yr;tt.textContent=v.f;cr.src=v.crest;lg.textContent=v.club+' · '+v.lg;sw.classList.remove('out')},200)
+ ct.textContent=String(AT+1).padStart(2,'0');ig.href='https://www.instagram.com/reel/'+v.ig+'/';[...dots.children].forEach((d,i)=>d.classList.toggle('on',i===AT))}
+function go(step){if(step>0){const c=C[AT];c.style.transform='translate(-130%,-6%) rotate(-24deg)';c.style.opacity=0;AT=(AT+1)%n;lay(c)
+  setTimeout(()=>{c.style.transition='none';c.style.opacity='';lay();c.offsetWidth;c.style.transition=''},380)}
+ else{AT=(AT+n-1)%n;const c=C[AT];c.style.transition='none';c.style.transform='translate(130%,-6%) rotate(24deg)';c.style.opacity=0;c.style.zIndex=n+1;c.offsetWidth;c.style.transition='';c.style.opacity='';lay()}}
+nx.onclick=()=>go(1);pv.onclick=()=>go(-1)
+deck.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)})
+// Arrastre con mouse o dedo
+let x0=null,dx=0,moved=false
+deck.addEventListener('pointerdown',e=>{if(e.target.closest('.pl'))return;x0=e.clientX;dx=0;moved=false;C[AT].style.transition='none';deck.setPointerCapture(e.pointerId)})
+deck.addEventListener('pointermove',e=>{if(x0==null)return;dx=e.clientX-x0;if(Math.abs(dx)>4)moved=true;const c=C[AT];c.style.transform=`translate(${dx}px,${Math.abs(dx)*-.08}px) rotate(${dx/18}deg)`
+ c.querySelector('.stamp.l').style.opacity=Math.max(0,-dx/90);c.querySelector('.stamp.r').style.opacity=Math.max(0,dx/90)})
+function end(){if(x0==null)return;x0=null;const c=C[AT];c.style.transition='';c.querySelectorAll('.stamp').forEach(s=>s.style.opacity=0)
+ if(Math.abs(dx)>90)go(dx<0?1:-1);else lay()}
+deck.addEventListener('pointerup',end);deck.addEventListener('pointercancel',end)
+// Play: abre el reel en Instagram (en React se puede embeber)
+deck.addEventListener('click',e=>{const b=e.target.closest('.pl');if(!b||moved)return;open('https://www.instagram.com/reel/'+VIDS[AT].ig+'/','_blank','noopener')})
+lay()
+</script>
+</body></html>

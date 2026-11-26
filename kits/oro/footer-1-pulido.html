@@ -1,0 +1,28 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Footer 1 · Pulido</title>
+<link rel="stylesheet" href="base.css">
+<style>
+footer{background:#090806;border-top:1px solid var(--line);padding:34px 60px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.logo{font-weight:700;font-size:32px;letter-spacing:.08em;color:var(--lime);text-decoration:none}.logo span{color:var(--mag)}
+.mid{display:flex;align-items:center;gap:18px}
+.so{display:flex;gap:8px}
+.so a{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--lime);font-size:17px;transition:border-color .3s var(--ease)}
+.so img{width:18px;height:18px}
+.cp{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+a:focus-visible{outline:2px solid var(--mag);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){.so a:hover{border-color:var(--lime)}}
+@media (max-width:820px){footer{padding:36px 20px}.row{flex-direction:column;text-align:center;gap:18px}.mid{flex-direction:column;gap:14px}}
+</style></head><body>
+<div class="pre">· fin de contacto ·</div>
+<footer><div class="row">
+  <a class="logo" href="#hero" aria-label="Volver al inicio">{{initials}}<span>_</span></a>
+  <div class="mid"><div class="so" id="so"></div><span class="cp">© {{year}} {{full}} · Todos los derechos reservados</span></div>
+  <span id="dev"></span>
+</div></footer>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const [ig,tm]=CONTACT.social
+so.innerHTML=`<a href="${ig.u}" target="_blank" rel="noopener" aria-label="Instagram">${IG}</a><a href="${tm.u}" target="_blank" rel="noopener" aria-label="Transfermarkt"><img src="img/tm.svg" alt=""></a>`
+dev.outerHTML=DEV
+</script>
+</body></html>

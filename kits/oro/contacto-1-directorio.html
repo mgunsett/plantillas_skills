@@ -1,0 +1,38 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Contacto 1 · Directorio</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.g{display:grid;grid-template-columns:1fr 1.6fr;gap:60px}
+.intro p{font-size:16px;line-height:1.55;color:#e6dcc8;max-width:34ch}
+.intro .soc{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
+.intro .soc a{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);text-decoration:none;border:1.5px solid var(--lime);padding:11px 16px;border-radius:999px}
+.intro .soc img{width:16px;height:16px}
+ul{list-style:none;border-top:1px solid var(--line)}
+li a{display:grid;grid-template-columns:72px 1fr auto;gap:24px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line);color:#fff;text-decoration:none;transition:padding .3s var(--ease)}
+li .lg{width:72px;height:72px;border-radius:50%;background:#221e17;display:grid;place-items:center;overflow:hidden}
+li .lg img{width:80%;height:80%;object-fit:contain}
+li .lg.ig{color:var(--lime);font-size:30px}
+.r{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--mag)}
+li h3{margin-top:6px;font-size:clamp(22px,2.2vw,32px);text-transform:uppercase;line-height:1.05}
+li .f{margin-top:6px;font-size:13px;color:var(--gray)}
+.cta{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);white-space:nowrap}
+.cta i{font-style:normal;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--lime);display:grid;place-items:center;font-size:18px;transition:background .3s var(--ease),color .3s var(--ease)}
+li a:focus-visible,.soc a:focus-visible{outline:2px solid var(--mag);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){li a:hover{padding-left:14px}li a:hover .cta i{background:var(--lime);color:#0F0D0A}}
+@media (max-width:820px){.g{grid-template-columns:1fr;gap:28px}li a{grid-template-columns:56px 1fr;gap:16px;padding:20px 0}li .lg{width:56px;height:56px}.cta{grid-column:2}.cta span{display:inline}}
+</style></head><body>
+<section class="sec" id="contact">
+  <div class="g">
+    <div class="intro"><div class="sh"><div class="k">Hablemos</div><h2>Contacto</h2></div>
+      <p>Para clubes, marcas o prensa: elegí con quién hablar y escribí directo por Instagram.</p>
+      <div class="soc" id="soc"></div></div>
+    <ul id="ul"></ul>
+  </div>
+</section>
+
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+const ig=CONTACT.social[0],tm=CONTACT.social[1]
+soc.innerHTML=`<a href="${tm.u}" target="_blank" rel="noopener"><img src="img/tm.svg" alt="">Transfermarkt ↗</a>`
+const rows=[...CONTACT.reps.map(r=>({...r,lg:`<img src="${r.img}" alt="">`})),{role:'Directo con '+P.first,n:'Instagram personal',h:ig.h,u:ig.u,for:'Saludos, prensa y colaboraciones',lg:IG,ig:1}]
+ul.innerHTML=rows.map((r,i)=>`<li class="rv" style="animation-delay:${i*.08}s"><a href="${r.u}" target="_blank" rel="noopener"><span class="lg ${r.ig?'ig':''}">${r.lg}</span><div><div class="r">${r.role}</div><h3>${r.n}</h3><div class="f">${r.h} · ${r.for}</div></div><span class="cta"><span>Escribir</span><i aria-hidden="true">↗</i></span></a></li>`).join('')
+</script>
+</body></html>
