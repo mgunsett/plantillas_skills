@@ -1,0 +1,87 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hero 8 · Split puerta inca</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Split puerta inca: texto a la izquierda; a la derecha un paramento de piedra con una puerta trapezoidal de doble jamba
+   (la forma de las portadas incas de Cusco) en dorado. El recorte sale de la puerta y la cabeza pasa por encima del dintel. */
+.hero{position:relative;height:calc(100 * var(--sv));min-height:640px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;background:var(--bg)}
+.txt{position:relative;z-index:5;display:flex;flex-direction:column;justify-content:center;padding:96px 48px 40px 60px}
+.pill{align-self:flex-start;display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border:1px solid var(--line);border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--bone)}
+.pill img{width:28px;height:28px;object-fit:contain}
+.pill span{color:var(--gray)}
+h1{margin-top:24px;font-weight:700;text-transform:uppercase;line-height:.86}
+h1 .n1{display:block;font-size:clamp(30px,3.4vw,58px);color:var(--bone);letter-spacing:.04em}
+h1 .n2{display:block;font-size:clamp(84px,10.6vw,184px);color:var(--lime);margin-left:-.04em}
+.pos{margin-top:16px;display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--bone)}
+.pos img{width:26px;height:17px;object-fit:cover;border-radius:2px}
+.pos b{color:var(--mag)}
+.bio{max-width:44ch;margin-top:18px;color:#d3c8b2;font-size:15px;line-height:1.6;font-weight:300}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:28px;max-width:520px}
+.stats div{background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+.stats b{display:block;font-size:28px;font-weight:700;color:var(--bone);font-variant-numeric:tabular-nums;line-height:1}
+.stats small{display:block;margin-top:6px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.stats .hl{border-color:var(--mag)}.stats .hl b{color:var(--mag)}
+.ctas{display:flex;gap:12px;margin-top:28px}
+.btn{font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:15px 24px;border-radius:4px;border:1.5px solid var(--lime);color:var(--lime);text-decoration:none;transition:transform .16s ease-out,background-color .2s ease,color .2s ease}
+.btn.solid{background:var(--lime);color:var(--on-acc)}
+.btn:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--lime);color:var(--on-acc)}.btn.solid:hover{background:transparent;color:var(--lime)}}
+/* Lado derecho: piedra + puerta */
+.vis{position:relative;overflow:hidden;background:#15120d;
+  background-image:repeating-linear-gradient(0deg,#0a090799 0 2px,transparent 2px 92px),
+                   repeating-linear-gradient(90deg,#0a090766 0 2px,transparent 2px 168px),
+                   radial-gradient(80% 70% at 50% 40%,#2a2318 0%,#15120d 80%)}
+.vis:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,#0f0d0a00 18%),linear-gradient(0deg,#0f0d0acc 0%,#0f0d0a00 24%);pointer-events:none;z-index:4}
+.door{position:absolute;left:50%;bottom:0;width:min(84%,580px);height:80%;transform:translateX(-50%);z-index:1;
+  clip-path:polygon(16% 0,84% 0,100% 100%,0 100%);background:linear-gradient(180deg,#f0cf78 0%,var(--lime) 45%,#8a6a24 100%);
+  animation:dr 1.2s var(--ease) both}
+@keyframes dr{from{clip-path:polygon(16% 100%,84% 100%,100% 100%,0 100%)}}
+.door.j2{width:min(66%,450px);height:71%;background:linear-gradient(180deg,#3a2c12,#0f0d0a);animation-delay:.12s}
+.door.j2:before{content:attr(data-n);position:absolute;left:50%;top:6%;transform:translateX(-50%);font-weight:700;font-size:min(40vh,30vw);line-height:.8;color:transparent;-webkit-text-stroke:2px #d6ae4e55}
+.player{position:absolute;left:50%;bottom:0;height:86%;transform:translateX(-50%);z-index:3;filter:drop-shadow(0 24px 40px #000c);animation:pl 1.3s var(--ease) .35s both}
+@keyframes pl{from{opacity:0;transform:translate(-50%,6%)}}
+.mt{position:absolute;right:28px;bottom:28px;z-index:6;display:grid;grid-template-columns:auto auto;background:#0f0d0ae6;border:1px solid var(--line);border-radius:4px;backdrop-filter:blur(8px)}
+.mt div{padding:10px 14px}.mt div+div{border-left:1px solid var(--line)}
+.mt small{display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.mt strong{display:block;margin-top:4px;font-size:14px;color:var(--bone);font-variant-numeric:tabular-nums}
+.mt strong em{font-style:normal;color:var(--mag)}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;grid-template-rows:52% auto;height:auto;min-height:calc(100 * var(--sv))}
+  .vis{grid-row:1;min-height:420px}
+  .vis:after{background:linear-gradient(0deg,var(--bg) 0%,#0f0d0a00 22%)}
+  .door{width:78%;height:76%}.door.j2{width:62%;height:68%}
+    .player{height:86%}
+  .mt{display:none}
+  .txt{grid-row:2;padding:4px 20px 28px}
+  .pill{font-size:10px}
+  h1{margin-top:14px}h1 .n1{font-size:8vw}h1 .n2{font-size:22vw}
+  .pos{font-size:11px;margin-top:10px}
+  .bio{display:none}
+  .stats{margin-top:18px;gap:6px}.stats div{padding:10px 8px;text-align:center}.stats b{font-size:20px}.stats small{font-size:8px;letter-spacing:.12em}
+  .ctas{margin-top:18px}.btn{flex:1;text-align:center;padding:14px 10px}
+}
+</style></head><body>
+<header class="nav"><div class="links"><a>Inicio</a><a>Estadísticas</a></div><div class="logo">{{initials}}<span>_</span></div><div class="links"><a>Videos</a><a>Galería</a><a class="cta">Contacto</a></div><div class="burger"></div></header>
+<section class="hero" id="hero">
+  <div class="txt">
+    <div class="pill rv" style="animation-delay:.2s"><img src="{{crest}}" alt="">{{club}} <span>· {{league}}</span></div>
+    <h1><span class="n1 rv" style="animation-delay:.3s">{{first}}</span><span class="n2 rv" style="animation-delay:.38s">{{last}}</span></h1>
+    <p class="pos rv" style="animation-delay:.46s"><img src="{{flag}}" alt="{{nationality}}">{{position}} <b>#{{number}}</b></p>
+    <p class="bio rv" style="animation-delay:.54s">{{bio}}</p>
+    <div class="stats rv" id="stats" style="animation-delay:.62s"></div>
+    <div class="ctas rv" style="animation-delay:.7s"><a class="btn solid" href="#videos">Ver jugadas</a><a class="btn" href="#contact">Contacto</a></div>
+  </div>
+  <div class="vis">
+    <div class="door" aria-hidden="true"></div>
+    <div class="door j2" data-n="{{number}}" aria-hidden="true"></div>
+    <img class="player" src="{{photos.heroFront}}" alt="{{alts.heroFront}}" fetchpriority="high">
+    <div class="mt rv" style="animation-delay:1s">
+      <div><small>Último</small><strong>{{lastMatch.home}} <em>{{lastMatch.hs}}-{{lastMatch.as}}</em> {{lastMatch.away}}</strong></div>
+      <div><small>Próximo · {{nextMatch.date}}</small><strong>{{nextMatch.home}} vs {{nextMatch.away}}</strong></div>
+    </div>
+  </div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+// 4 cifras: partidos (destacado), goles, asistencias y valoración
+document.getElementById('stats').innerHTML=SEASON_ORDER(['pj','goles','asis','val']).slice(0,4).map(s=>`<div class="${s.hl?'hl':''}"><b>${s.v}</b><small>${s.l}</small></div>`).join('')
+</script>
+</body></html>
