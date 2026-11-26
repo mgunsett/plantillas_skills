@@ -35,7 +35,7 @@ def glyph_paths(font, text):
     return out, x
 
 
-def build_svg(initials, font_path, bar, text, bg, pad, rx=12):
+def build_svg(initials, font_path, bar, text, bg, pad, rx=12, slash=True):
     font = TTFont(font_path)
     upm = font['head'].unitsPerEm
     cap = font['OS/2'].sCapHeight or int(upm * 0.7)
@@ -43,14 +43,16 @@ def build_svg(initials, font_path, bar, text, bg, pad, rx=12):
     # Barra inclinada antes de las letras y guion bajo después (como BrandLogo.jsx)
     bar_w, gap = 0.3 * cap, 0.45 * cap
     skew = 0.3 * cap
-    x0 = bar_w + gap + skew
-    parts = [f'<path fill="{bar}" d="M{skew:.1f} {cap*1.15:.1f}L{skew+bar_w:.1f} {cap*1.15:.1f}L{bar_w:.1f} {-cap*0.15:.1f}L0 {-cap*0.15:.1f}Z"/>']
+    x0 = bar_w + gap + skew if slash else 0
+    parts = [f'<path fill="{bar}" d="M{skew:.1f} {cap*1.15:.1f}L{skew+bar_w:.1f} {cap*1.15:.1f}L{bar_w:.1f} {-cap*0.15:.1f}L0 {-cap*0.15:.1f}Z"/>'] if slash else []
     for x, d in paths:
         parts.append(f'<path fill="{text}" transform="translate({x0 + x:.1f} 0)" d="{d}"/>')
     ux = x0 + adv + 0.05 * cap
-    parts.append(f'<path fill="{bar}" transform="translate({ux:.1f} 0)" d="M0 -10H{0.43*cap:.0f}V-90H0Z"/>')
-    total_w = ux + 0.43 * cap
-    total_h = cap * 1.3
+    uw = 0.43 * cap if slash else 0.4 * cap
+    uh = 80 if slash else 0.1 * cap  # sin barra: guion apoyado en la base, más grueso
+    parts.append(f'<path fill="{bar}" transform="translate({ux:.1f} 0)" d="M0 {-10 if slash else 0}H{uw:.0f}V{-10-uh if slash else uh:.0f}H0Z"/>')
+    total_w = ux + uw
+    total_h = cap * 1.3 if slash else cap
     box = 64 * (1 - 2 * pad)
     s = min(box / total_w, box / total_h)
     tx = (64 - total_w * s) / 2
@@ -67,12 +69,15 @@ def main():
     ap.add_argument('--bar', default='#EF2D38')
     ap.add_argument('--text', default='#F3EEE3')
     ap.add_argument('--bg', default='#151212')
+    ap.add_argument('--sin-barra', action='store_true', help='solo iniciales + guion bajo, sin la barra inclinada (estilo RM_)')
+    ap.add_argument('--radio', type=float, default=12, help='radio de las esquinas sobre 64 (12 por defecto)')
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
-    svg = build_svg(a.initials, a.font, a.bar, a.text, a.bg, pad=0.06)
+    slash = not a.sin_barra
+    svg = build_svg(a.initials, a.font, a.bar, a.text, a.bg, pad=0.06 if slash else 0.05, rx=a.radio, slash=slash)
     open(os.path.join(a.out, 'favicon.svg'), 'w').write(svg)
     # Maskable: más margen (zona segura) y sin esquinas redondeadas
-    mask = build_svg(a.initials, a.font, a.bar, a.text, a.bg, pad=0.2, rx=0)
+    mask = build_svg(a.initials, a.font, a.bar, a.text, a.bg, pad=0.2, rx=0, slash=slash)
     with tempfile.TemporaryDirectory() as t:
         ms = os.path.join(t, 'm.svg'); open(ms, 'w').write(mask)
         fs = os.path.join(a.out, 'favicon.svg')
