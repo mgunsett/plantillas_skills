@@ -1,0 +1,118 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hero 8 · Split en capas</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* Split en capas: texto a la izquierda; a la derecha una escena en profundidad.
+   Atrás, el dorsal gigante relleno con una foto de cancha; adelante, el recorte con dos estelas que se recogen al entrar
+   (la velocidad del jugador). En desktop las capas se mueven a distinta velocidad siguiendo el mouse. */
+.hero{position:relative;height:calc(100 * var(--sv));min-height:640px;overflow:hidden;display:grid;grid-template-columns:.95fr 1.05fr;background:var(--bg)}
+.txt{position:relative;z-index:6;display:flex;flex-direction:column;justify-content:center;padding:96px 32px 40px 60px}
+.eb{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gray)}
+.eb i{width:8px;height:8px;border-radius:50%;background:var(--mag);box-shadow:0 0 0 4px #d2603f33}
+h1{margin-top:22px;font-weight:700;text-transform:uppercase;line-height:.86}
+h1 .n1{display:block;font-size:clamp(30px,3.4vw,58px);color:var(--bone);letter-spacing:.04em}
+h1 .n2{display:block;font-size:clamp(84px,10.4vw,180px);color:var(--lime);margin-left:-.04em}
+.bio{max-width:42ch;margin-top:18px;color:#d3c8b2;font-size:15px;line-height:1.6;font-weight:300}
+/* Atributo estrella en barra segmentada */
+.gauge{margin-top:26px;max-width:440px}
+.gauge .hd{display:flex;justify-content:space-between;align-items:baseline;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gray)}
+.gauge .hd b{font-size:30px;letter-spacing:0;color:var(--bone)}
+.gauge .bar{margin-top:8px;display:grid;grid-template-columns:repeat(20,1fr);gap:3px}
+.gauge .bar span{height:10px;background:#2a251c;transform-origin:left;animation:sg .5s var(--ease) both;animation-delay:calc(.9s + var(--i) * 30ms)}
+.gauge .bar span.on{background:var(--lime)}.gauge .bar span.on:last-of-type{background:var(--mag)}
+@keyframes sg{from{opacity:0;transform:scaleY(.2)}}
+.stats{display:flex;margin-top:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:440px}
+.stats div{flex:1;padding:12px 0}.stats div+div{padding-left:18px;border-left:1px solid var(--line)}
+.stats b{display:block;font-size:24px;font-weight:700;color:var(--bone);font-variant-numeric:tabular-nums}
+.stats small{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.stats .hl b{color:var(--mag)}
+.ctas{display:flex;gap:12px;margin-top:26px}
+.btn{font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:15px 24px;border-radius:999px;border:1.5px solid var(--lime);color:var(--lime);text-decoration:none;transition:transform .16s ease-out,background-color .2s ease,color .2s ease}
+.btn.solid{background:var(--lime);color:var(--on-acc)}
+.btn:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--lime);color:var(--on-acc)}.btn.solid:hover{background:transparent;color:var(--lime)}}
+/* Escena */
+.scene{position:relative;overflow:hidden}
+.glow{position:absolute;left:50%;top:52%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(closest-side,#d6ae4e40,#d6ae4e10 55%,transparent 72%);z-index:0}
+.lay{position:absolute;inset:0;will-change:transform}
+.num{position:absolute;left:50%;top:50%;transform:translate(-50%,-54%);font-weight:700;line-height:.8;letter-spacing:-.04em;white-space:nowrap;
+  font-size:min(80vh,40vw);color:transparent;background:var(--ph) 50% 40%/cover;-webkit-background-clip:text;background-clip:text;
+  -webkit-text-stroke:2px #d6ae4e;filter:grayscale(1) sepia(.7) brightness(.55) contrast(1.25);
+  animation:nm 1.6s var(--ease) .1s both}
+@keyframes nm{from{opacity:0;transform:translate(-50%,-48%) scale(1.08)}}
+.num.ln{background:none;-webkit-text-stroke:1px #d6ae4e40;transform:translate(calc(-50% + 18px),calc(-54% + 18px));filter:none;animation-delay:.25s}
+.lines{position:absolute;inset:0;z-index:1;pointer-events:none}
+.lines i{position:absolute;right:-30%;height:2px;width:40%;background:linear-gradient(90deg,transparent,#d6ae4ecc);opacity:0;animation:ln 2.6s linear infinite}
+@keyframes ln{0%{opacity:0;transform:translateX(0)}15%{opacity:.9}100%{opacity:0;transform:translateX(-260%)}}
+.pl{position:absolute;left:50%;bottom:0;height:90%;transform:translateX(-50%);z-index:4;filter:drop-shadow(0 30px 50px #000d)}
+.pl.main{animation:pm 1.3s var(--ease) .35s both}
+@keyframes pm{from{opacity:0;transform:translateX(-10%)}}
+.pl.e1,.pl.e2{z-index:3;filter:grayscale(1) sepia(1) saturate(2.2) hue-rotate(-8deg) brightness(.7);mix-blend-mode:screen}
+.pl.e1{opacity:.4;animation:e1 1.5s var(--ease) .3s both}
+.pl.e2{opacity:.2;animation:e2 1.7s var(--ease) .25s both}
+@keyframes e1{from{opacity:0;transform:translateX(-30%)}to{transform:translateX(-62%)}}
+@keyframes e2{from{opacity:0;transform:translateX(-10%)}to{transform:translateX(-74%)}}
+.fade{position:absolute;inset:auto 0 0 0;height:22%;background:linear-gradient(transparent,var(--bg));z-index:5}
+.mt{position:absolute;right:28px;bottom:28px;z-index:6;display:flex;gap:18px;align-items:center;font-size:12px;color:var(--bone);background:#0f0d0acc;border:1px solid var(--line);border-radius:999px;padding:10px 18px;backdrop-filter:blur(8px)}
+.mt small{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-right:6px}
+.mt em{font-style:normal;color:var(--mag);font-weight:700}
+.mt i{width:1px;height:14px;background:var(--line)}
+@media (prefers-reduced-motion:reduce){.lines{display:none}.pl.e1,.pl.e2{display:none}}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;grid-template-rows:50vh auto;height:auto;min-height:calc(100 * var(--sv))}
+  .scene{grid-row:1;min-height:400px}
+  .num{font-size:min(64vh,112vw)}
+  .pl{height:94%}
+  @keyframes e1{from{opacity:0;transform:translateX(-30%)}to{transform:translateX(-66%)}}
+  @keyframes e2{from{opacity:0;transform:translateX(-10%)}to{transform:translateX(-82%)}}
+  .mt{display:none}
+  .txt{grid-row:2;padding:0 20px 28px}
+  h1{margin-top:14px}h1 .n1{font-size:8vw}h1 .n2{font-size:22vw}
+  .bio{display:none}
+  .gauge{margin-top:16px}.gauge .hd b{font-size:24px}.gauge .bar span{height:8px}
+  .stats{margin-top:16px}.stats b{font-size:20px}
+  .ctas{margin-top:18px}.btn{flex:1;text-align:center;padding:14px 10px}
+}
+</style></head><body>
+<header class="nav"><div class="links"><a>Inicio</a><a>Estadísticas</a></div><div class="logo">{{initials}}<span>_</span></div><div class="links"><a>Videos</a><a>Galería</a><a class="cta">Contacto</a></div><div class="burger"></div></header>
+<section class="hero" id="hero">
+  <div class="txt">
+    <div class="eb rv" style="animation-delay:.2s"><i></i>{{position}} · #{{number}}</div>
+    <h1><span class="n1 rv" style="animation-delay:.3s">{{first}}</span><span class="n2 rv" style="animation-delay:.38s">{{last}}</span></h1>
+    <p class="bio rv" style="animation-delay:.46s">{{bio}}</p>
+    <div class="gauge rv" style="animation-delay:.54s"><div class="hd"><span id="gN"></span><b id="gV"></b></div><div class="bar" id="bar"></div></div>
+    <div class="stats rv" id="stats" style="animation-delay:.62s"></div>
+    <div class="ctas rv" style="animation-delay:.7s"><a class="btn solid" href="#videos">Ver jugadas</a><a class="btn" href="#contact">Contacto</a></div>
+  </div>
+  <div class="scene" id="scene" style="--ph:url({{photos.heroWide}})">
+    <div class="glow"></div>
+    <div class="lay" data-z="-26"><div class="num ln" aria-hidden="true">{{number}}</div><div class="num" aria-hidden="true">{{number}}</div></div>
+    <div class="lines" id="lines" aria-hidden="true"></div>
+    <div class="lay" data-z="-10"><img class="pl e2" src="{{photos.heroFront}}" alt="" aria-hidden="true"><img class="pl e1" src="{{photos.heroFront}}" alt="" aria-hidden="true"></div>
+    <div class="lay" data-z="14"><img class="pl main" src="{{photos.heroFront}}" alt="{{alts.heroFront}}" fetchpriority="high"></div>
+    <div class="fade"></div>
+    <div class="mt rv" style="animation-delay:1s"><span><small>Último</small>{{lastMatch.home}} <em>{{lastMatch.hs}}-{{lastMatch.as}}</em> {{lastMatch.away}}</span><i></i><span><small>Próximo</small>{{nextMatch.home}} vs {{nextMatch.away}} · {{nextMatch.date}}</span></div>
+  </div>
+</section>
+<script src="player.js"></script><script src="kit.js"></script><script src="bind.js"></script><script>
+// Atributo más alto en la barra (20 segmentos, el último encendido en terracota)
+const [an,av]=[...ATTRS].sort((a,b)=>b[1]-a[1])[0],on=Math.round(av/5)
+gN.textContent=an;gV.textContent=av
+bar.innerHTML=Array.from({length:20},(_,i)=>`<span class="${i<on?'on':''}" style="--i:${i}"></span>`).join('')
+// 3 cifras de la temporada
+stats.innerHTML=SEASON_ORDER(['pj','asis','val']).slice(0,3).map(s=>`<div class="${s.hl?'hl':''}"><b>${s.v}</b><small>${s.l}</small></div>`).join('')
+// Líneas de velocidad
+lines.innerHTML=[18,34,57,71,86].map((t,i)=>`<i style="top:${t}%;animation-delay:${(i*.53).toFixed(2)}s;animation-duration:${(2.2+i*.35).toFixed(2)}s"></i>`).join('')
+// Profundidad: cada capa se corre según su data-z, con inercia. Solo mouse y sin "reducir movimiento".
+const sc=document.getElementById('scene'),L=[...sc.querySelectorAll('.lay')]
+if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  let tx=0,ty=0,x=0,y=0,raf=0
+  const tick=()=>{x+=(tx-x)*.07;y+=(ty-y)*.07
+    L.forEach(l=>{const z=+l.dataset.z;l.style.transform=`translate3d(${(x*z).toFixed(2)}px,${(y*z*.5).toFixed(2)}px,0)`})
+    raf=Math.abs(tx-x)+Math.abs(ty-y)>.002?requestAnimationFrame(tick):0}
+  const hero=document.getElementById('hero')
+  hero.addEventListener('pointermove',e=>{const r=sc.getBoundingClientRect();tx=(e.clientX-r.left-r.width/2)/(r.width/2);ty=(e.clientY-r.top-r.height/2)/(r.height/2);if(!raf)raf=requestAnimationFrame(tick)})
+  hero.addEventListener('pointerleave',()=>{tx=ty=0;if(!raf)raf=requestAnimationFrame(tick)})
+}
+</script>
+</body></html>
