@@ -15,7 +15,7 @@ Hay dos estilos:
 | **MatchBox** (dentro del hero) | ✅ Pestaña lateral "Partidos" | ⚛ M1 Marcador de TV · ⚛ M2 Tarjeta con pestañas · ⚛ M3 Dos tickets (Polaco Fydriszewski) | — | [01-hero](modelos/01-hero/#matchbox-último-resultado-y-próximo-partido-diseñado-para-polaco-fydriszewski) |
 | **Final / torneo** | ✅ "La Quinta": número gigante, cuenta regresiva, estrellas, camino a la final, galería | — | — | [02-final](modelos/02-final/) |
 | **Estadísticas** | ✅ 1 Ficha de scouting · 2 Marcador · 3 Palmarés · 4 Anillos y tarjetas | N1 Marcador · N2 Ficha de scouting · ⚛ N3 Radar central · N4 Dossier | ⚛ C1 Marcador · C2 Ficha de scouting · C3 Radar central · C4 Dossier · C5 Odómetro | [03-estadisticas](modelos/03-estadisticas/) |
-| **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · ✅ 4b Cards + riel de Instagram | N1 Programa · N2 Stories · ⚛ N3 Temporadas · N4 Paneles | C1 Programa · C2 Stories · ⚛ C3 Temporadas · C4 Paneles · C5 Mazo de reels | [04-videos](modelos/04-videos/) |
+| **Videos** | 1 Programa · 2 Stories · 3 Temporadas · 4a Cards en foco · 4b Cards + riel de Instagram · ✅⚛ 6 Compacto + riel · 7 Programa con ficha · 8 Pantalla de estadio · 9 Split | N1 Programa · N2 Stories · ⚛ N3 Temporadas · N4 Paneles | C1 Programa · C2 Stories · ⚛ C3 Temporadas · C4 Paneles · C5 Mazo de reels | [04-videos](modelos/04-videos/) |
 | **Galería** | ✅ 1 Pestañas y mosaico · 2 Álbumes · 3 Carriles | ⚛ N1 Mosaico con pestañas · N2 Carriles · N3 Álbum editorial · N4 Hoja de contactos | C1 Mosaico con pestañas · ⚛ C2 Carriles · C3 Álbum editorial · C4 Hoja de contactos | [05-galeria](modelos/05-galeria/) |
 | **Prensa** | ✅ 1 Titulares · 2 Recortes · 3 Destacada · 4 Zócalo · 5 Pase a pase | N1 Titulares · N2 Recortes · ⚛ N3 Nota destacada · N4 Lo publicaron | C1 Titulares · C2 Recortes · ⚛ C3 Nota destacada · C4 Lo publicaron | [06-prensa](modelos/06-prensa/) |
 | **Contacto** | 1 Directorio · 2 Cierre con foto · 3 ¿Para qué escribís? · ✅ 4 Tarjetas mejoradas | N1 Directorio · N2 Cierre con foto · N3 ¿Para qué escribís? · ⚛ N4 Tarjetas grandes | C1 Directorio · C2 Cierre con foto · C3 ¿Para qué escribís? · ⚛ C4 Tarjetas grandes | [07-contacto](modelos/07-contacto/) |
@@ -32,6 +32,7 @@ Hay dos estilos:
 | tiene carrera larga y pocos títulos | Estadísticas 4 (Anillos y tarjetas) o Marcador + tarjetas de clubes |
 | tiene pocos videos largos | Videos 1 (Programa) |
 | sube reels seguido | Videos 4b (riel) o 2 (Stories) |
+| tiene un compacto en YouTube y además reels | Videos 6 (Compacto + riel), 8 (Pantalla de estadio) o 9 (Split) |
 | tiene videos de varios clubes | Videos 3 (Temporadas) |
 | tiene muchas fotos por categoría | Galería 2 (Álbumes) |
 | tiene pocas fotos | Galería 3 (Carriles) |

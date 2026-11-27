@@ -6,7 +6,11 @@
 | 2 | Stories | Alternativa | [html](previews/opcion-2-stories.html) · ![](previews/opcion-2-stories.jpg) |
 | 3 | Temporadas | Alternativa | [html](previews/opcion-3-temporadas.html) · ![](previews/opcion-3-temporadas.jpg) |
 | 4a | Cards en foco | Alternativa | [html](previews/opcion-4-cards.html) · ![](previews/opcion-4-cards.jpg) |
-| 4b | **Cards + riel de Instagram** | ✅ Aplicado en Keki | [html](previews/opcion-4-riel.html) · ![](previews/opcion-4-riel.jpg) |
+| 4b | Cards + riel de Instagram | Base del 6 | [html](previews/opcion-4-riel.html) · ![](previews/opcion-4-riel.jpg) |
+| 6 | **Compacto + riel** | ✅ Aplicado en Keki | [html](previews/opcion-6-pantalla-riel.html) · ![](previews/opcion-6-pantalla-riel.jpg) |
+| 7 | Programa con ficha | Alternativa | [html](previews/opcion-7-programa-ficha.html) · ![](previews/opcion-7-programa-ficha.jpg) |
+| 8 | Pantalla de estadio | Alternativa | [html](previews/opcion-8-pantalla-estadio.html) · ![](previews/opcion-8-pantalla-estadio.jpg) |
+| 9 | Split con reels al costado | Alternativa | [html](previews/opcion-9-split.html) · ![](previews/opcion-9-split.jpg) |
 
 ## 4b. Cards + riel de Instagram (aplicado)
 
@@ -20,6 +24,17 @@
 - **Detalles técnicos:**
   - Las flechas usan `slider.scrollTo()`. Con `scrollIntoView()` se corría toda la sección hacia los costados.
   - La sección tiene `overflow: clip` (con `@supports`) para que nada se desborde.
+
+## 6. Compacto + riel (aplicado en Keki)
+
+Un video principal de YouTube (compacto de la temporada) a todo el ancho, arriba del 4b sin cambios (riel de Instagram + cards de reels).
+
+- **React:** [`react/HighlightVideo.jsx`](react/HighlightVideo.jsx). Va en `VideosSection.jsx` dentro del `wrapRef`, antes de las cards; tiene la clase `video-card`, así entra en la misma animación de las cards.
+- **Datos:** `playerData.highlight = { youtubeId, title, source, date, cover, coverPos }`. Si no hay `youtubeId`, no se muestra.
+- Muestra la portada con título y botón; al tocarla carga el reproductor de `youtube-nocookie.com` con autoplay (no se carga YouTube hasta el clic).
+- En pantallas bajas el 16:9 se limita a ~72vh de alto. En mobile el botón sube al 42% para no pisar el título.
+
+**7. Programa con ficha:** compacto a la izquierda y ficha (título, texto, etiquetas, botones) al lado; reels debajo con el año en contorno. **8. Pantalla de estadio:** el compacto con marco de esquinas doradas y "HIGHLIGHTS 2026" en contorno detrás; los reels se montan sobre su borde inferior. **9. Split:** compacto a la izquierda y reels en 2×2 a la derecha, todo en una pantalla.
 
 ## Alternativas
 
